@@ -48,8 +48,8 @@
                     android:id="@+id/radio_pirates_login"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
                     android:layout_marginStart="20dp"
+                    android:layout_marginEnd="10dp"
                     android:fontFamily="@font/din_next_arabic_light_p30doenload_com"
                     android:text="@string/advertiser_radio_button"
                     android:textColor="@android:color/white"
@@ -69,8 +69,8 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:layout_marginTop="12dp"
+                android:layout_marginBottom="8dp"
                 android:textColorHint="@android:color/white">
 
                 <AutoCompleteTextView
@@ -93,8 +93,8 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:textColorHint="@android:color/white">
 
                 <EditText
@@ -118,8 +118,8 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:layout_marginBottom="24dp"
                 android:layout_marginTop="24dp"
+                android:layout_marginBottom="24dp"
                 android:background="@drawable/btn_rounded_corner"
                 android:fontFamily="@font/din_next_arabic_light_p30doenload_com"
                 android:gravity="center"
@@ -138,6 +138,8 @@
                 android:gravity="center"
                 android:text="@string/no_account_yet_create_one_tv"
                 android:textColor="@android:color/white" />
+
+            <include layout="@layout/providers_logins" />
 
         </LinearLayout>
     </ScrollView>
