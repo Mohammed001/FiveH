@@ -221,11 +221,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         return super.dispatchTouchEvent(ev);
     }
 
-//    private void signIn() {
-//        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-//        startActivityForResult(signInIntent, RC_SIGN_IN);
-//    }
-
     private void initviews() {
         input_name = findViewById(R.id.input_name);
         input_email = findViewById(R.id.input_email);
@@ -469,12 +464,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.insta_login:
                 doinstalogin();
                 break;
-            case R.id.google_login:
-
-                break;
-            case R.id.twitter_login:
-
-                break;
             case R.id.link_login:
                 finish();
                 break;
@@ -495,4 +484,5 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         Snackbar.make(findViewById(R.id.root), "welcome: " + name, Snackbar.LENGTH_SHORT).show();
         // todo: logout code is {mApp.resetAccessToken();}
     }
+
 }

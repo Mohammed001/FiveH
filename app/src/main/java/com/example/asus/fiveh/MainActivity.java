@@ -22,6 +22,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.example.asus.fiveh.main_ad_adapter.MainAdAdapter;
 import com.example.asus.fiveh.utils.Utils;
