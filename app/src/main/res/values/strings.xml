@@ -53,7 +53,6 @@
     <string name="title_activity_login">Sign in</string>
     <string name="or_text_in_circle">OR</string>
     <string name="AD_TITLE_FIXED">AD description</string>
-    <string name="msg_enter_your_ad_description">Enter your Ad description</string>
     <string name="title_activity_navigation" translatable="false">Navigation</string>
 
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
@@ -66,5 +65,6 @@
     <string name="log_out">Log out</string>
     <string name="muhammad_sulaiman">Muhammad Sulaiman</string>
     <string name="golden_user">golden user</string>
+    <string name="ad_iamge">Avertise image</string>
 
 </resources>

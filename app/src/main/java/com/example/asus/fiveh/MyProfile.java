@@ -66,6 +66,12 @@ public class MyProfile extends AppCompatActivity implements View.OnClickListener
     }
 
     @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return super.onSupportNavigateUp();
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (FLAG == NAME) {
