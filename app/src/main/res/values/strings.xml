@@ -1,0 +1,68 @@
+<resources>
+    <string name="app_name" translatable="false">FiveH</string>
+
+    <string name="facebook_app_id" translatable="false">767730763567388</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb767730763567388</string>
+
+    <string name="twitter_consumer_key" translatable="false">4Os4L1k1V2mwEEfvqvk8aeWGO</string>
+    <string name="twitter_consumer_secret" translatable="false">kc1UVp7Rc4E5OLDIpwq95D8WUGcLezv5ux2dOoS5CQxMWYjDcq</string>
+
+    <string name="insta_client_id" translatable="false">0ef253d29c5147bd8e3c02f3cfa87f11</string>
+    <string name="insta_client_secret" translatable="false">f2c8865bfe844258a333939b1dfe3187</string>
+    <string name="insta_client_callbackuri" translatable="false">http://localhost</string>
+    sha1 is not used in code, but set here just as a NOTE..
+    <string name="sha1_debug" translatable="false">5F:21:EA:75:14:53:C3:0D:28:8B:2A:24:26:F2:2D:8D:34:7E:5D:10</string>
+
+    <string name="my_profile">Profile</string>
+    <string name="my_ads_or_my_money">My Ads</string>
+    <string name="my_money">My Account</string>
+    <string name="yellow_pages">Companies</string>
+    <string name="app_settings">App Settings</string>
+    <string name="about">About</string>
+    <string name="logout">SignOut</string>
+    <string name="login">SignIn</string>
+    <string name="greed">Advertiser</string>
+    <string name="advertiser">Client</string>
+    <string name="search_hint">Search in Companies</string>
+    <string name="temp_msg">this activity holds money info</string>
+
+    <string-array name="options_when_signup">
+        <item>Normal</item>
+        <item>Silver</item>
+        <item>Gold</item>
+    </string-array>
+
+    <string-array name="options_when_create_ad">
+        <item>Facebook</item>
+        <item>Tweeter</item>
+        <item>Instagram</item>
+    </string-array>
+
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="explain_service">In order to take advantage of our service you have to have a user account to keep tracking your progress and points</string>
+    <string name="account_type_radio_button">account type</string>
+    <string name="advertiser_radio_button">advertiser</string>
+    <string name="user_radio_button">user</string>
+    <string name="login_btn">Login</string>
+    <string name="no_account_yet_create_one_tv">No account yet? Create one</string>
+    <string name="re_enter_password_et">re-enter password</string>
+    <string name="create_account_btn">Create account</string>
+    <string name="already_a_member_login_tv">Already a member? Login</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="or_text_in_circle">OR</string>
+    <string name="AD_TITLE_FIXED">AD description</string>
+    <string name="msg_enter_your_ad_description">Enter your Ad description</string>
+    <string name="title_activity_navigation" translatable="false">Navigation</string>
+
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+
+    <string name="action_settings" translatable="false">Settings</string>
+    <string name="my_accounts">My accounts</string>
+    <string name="my_points">Points</string>
+    <string name="app_preferences">Preferences</string>
+    <string name="log_out">Log out</string>
+
+</resources>

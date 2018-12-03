@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="my_profile">بروفايلي</string>
+    <string name="my_ads_or_my_money">اعلاناتي</string>
+    <string name="my_money">حسابي</string>
+    <string name="yellow_pages">الدليل</string>
+    <string name="app_settings">اعدادات التطبيق</string>
+    <string name="about">حول التطبيق</string>
+    <string name="logout">خروج</string>
+    <string name="login">تسجيل دخول</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">الايميل</string>
+    <string name="prompt_password">كلمة السر</string>
+    <string name="action_sign_in_short">تسجيل الدخول</string>
+
+    <string name="greed">معلن</string>
+    <string name="advertiser">متلقي</string>
+    <string name="search_hint">ابحث في الدليل</string>
+    <string name="temp_msg">يتم في هذه الصفحة عرض المعلومات المالية الخاصة بالمتلقي</string>
+
+    <string-array name="options_when_create_ad">
+        <item>فيسبوك</item>
+        <item>تويتر</item>
+        <item>انستغرام</item>
+    </string-array>
+
+    <string-array name="options_when_signup">
+        <item>عادي</item>
+        <item>فضي</item>
+        <item>ذهبي</item>
+    </string-array>
+    <string name="title_activity_login">تسجيل دخول</string>
+    <string name="account_type_radio_button">نوع الحساب</string>
+    <string name="advertiser_radio_button">معلن</string>
+    <string name="user_radio_button">مستخدم</string>
+    <string name="login_btn">تسجيل دخول</string>
+    <string name="no_account_yet_create_one_tv">لا تملك حساب؟ أنشئ واحداً</string>
+    <string name="re_enter_password_et">اعادة ادخال كلمة المرور</string>
+    <string name="create_account_btn">أنشئ الحساب</string>
+    <string name="already_a_member_login_tv">عضو بالفعل؟ سجل دخول</string>
+    <string name="explain_service">للاستفادة من الخدمة يجب أن يكون لديك حساب  معرف على التطبيق للاطلاع على حسابك وعدد نقاطك.     </string>
+    <string name="or_text_in_circle">أو</string>
+    <string name="AD_TITLE_FIXED">نص الإعلان</string>
+    <string name="msg_enter_your_ad_description">أدخل نص الإعلان</string>
+    <string name="my_accounts">حساباتي</string>
+    <string name="my_points">نقاطي</string>
+    <string name="app_preferences">تخصيص التطبيق</string>
+    <string name="log_out">تسجيل الخروج</string>
+
+    <string name="action_settings">Settings</string>
+</resources>

@@ -1,0 +1,117 @@
+https://www.journaldev.com/10024/android-recyclerview-android-cardview-example-tutorial
+
+tips and tricks material design ...
+
+
+https://www.journaldev.com/9357/android-actionbar-example-tutorial
+
+https://sourcey.com/beautiful-android-login-and-signup-screens-with-material-design/
+
+https://www.journaldev.com/9652/android-progressdialog-example
+
+https://github.com/jaredrummler/MaterialSpinner
+
+https://stackoverflow.com/questions/5151591/android-left-to-right-slide-animation
+
+https://stackoverflow.com/questions/20082535/hint-in-search-widget-within-action-bar-is-not-showing-up
+
+https://chiuki.github.io/advanced-android-textview/#/
+
+https://stackoverflow.com/questions/13903611/reverse-the-direction-of-a-linearlayout
+
+<View
+     android:layout_width="match_parent"
+     android:layout_height="1dp"
+     android:background="#000000" />
+
+https://github.com/codepath/android_guides/wiki/Accessing-the-Camera-and-Stored-Media
+
+************
+run emulater to access the internet
+************
+C:\Users\jdoe\AppData\Local\Android\sdk\emulator\emulator.exe -list-avds
+C:\Users\jdoe\AppData\Local\Android\sdk\emulator\emulator.exe -avd Nexus_5X_API_25 -dns-server 8.8.8.8
+
+
+
+//    private void take_picture_from_gallery() {
+//        Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+//                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//        startActivityForResult(pickPhoto, 1);//one can be replaced with any action code
+//    }
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (resultCode == RESULT_OK) {
+//            Uri selectedImage = data.getData();
+//            test_img.setImageURI(selectedImage);
+//        }
+//    }
+
+
+
+new Handler().postDelayed(new Runnable() {
+    @Override
+    public void run() {
+        /* Create an Intent that will start the MainActivity. */
+    }
+}, SPLASH_DISPLAY_LENGTH);
+
+
+https://stackoverflow.com/questions/16314651/customize-android-facebook-login-button
+https://stackoverflow.com/questions/31327897/custom-facebook-login-button-android/31332928
+https://stackoverflow.com/questions/44740399/change-facebook-googles-login-buttons-shape-style
+
+
+
+
+https://proandroiddev.com/enter-animation-using-recyclerview-and-layoutanimation-part-1-list-75a874a5d213
+*******************
+
+https://proandroiddev.com/enter-animation-using-recyclerview-and-layoutanimation-part-2-grids-688829b1d29b
+
+https://antonioleiva.com/layout-animations-on-recyclerview/
+
+https://www.survivingwithandroid.com/2013/04/android-listview-animation-2.html
+
+https://blog.stylingandroid.com/recyclerview-animations-add-remove-items/
+_________________
+https://stackoverflow.com/questions/26724964/how-to-animate-recyclerview-items-when-they-appear
+
+https://stackoverflow.com/questions/28297038/android-listview-item-animates-after-scrolling
+
+https://stackoverflow.com/questions/26724964/how-to-animate-recyclerview-items-when-they-appear
+
+https://stackoverflow.com/questions/7055470/animate-list-items-in-listview
+______________
+https://github.com/wasabeef/recyclerview-animators
+
+https://github.com/ksoichiro/Android-ObservableScrollView/blob/master/docs/quick-start/animation.md
+______________
+
+
+144X144 logo
+96X96 drawer icons
+
+
+<android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="0dp"
+    android:layout_height="150dp"
+    android:layout_weight="1"
+    card_view:cardBackgroundColor="@color/test_color"
+    card_view:cardCornerRadius="10dp"
+    card_view:cardElevation="5dp"
+    card_view:cardUseCompatPadding="true">
+
+    <TextView android:id="@+id/activity_choose_login_type_greed_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="@string/advertiser"
+        android:textSize="24sp"
+        tools:targetApi="lollipop" />
+
+</android.support.v7.widget.CardView>
