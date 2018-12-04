@@ -27,6 +27,7 @@
         android:layout_width="0dp"
         android:layout_height="225dp"
         android:layout_weight="5"
+        android:contentDescription="@string/ad_iamge"
         android:scaleType="fitXY"
         app:srcCompat="@drawable/image_ad" />
 

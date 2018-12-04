@@ -66,5 +66,12 @@
     <string name="muhammad_sulaiman">Muhammad Sulaiman</string>
     <string name="golden_user">golden user</string>
     <string name="ad_iamge">Avertise image</string>
+    <string name="title_activity_test_git_hubcode" translatable="false">TestGitHubcode</string>
+
+
+    <string name="read_more">show more</string>
+    <string name="read_less">show less</string>
+
+    <string name="very_long_text" translatable="false">LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng textttttt</string>
 
 </resources>

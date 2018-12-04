@@ -51,4 +51,6 @@
     <string name="muhammad_sulaiman">محمد سليمان</string>
     <string name="golden_user">مستخدم ذهبي</string>
     <string name="ad_iamge">صورة الاعلان</string>
+    <string name="read_more" translatable="false">قراءة المزيد</string>
+    <string name="read_less" translatable="false">اخفاء النص</string>
 </resources>
