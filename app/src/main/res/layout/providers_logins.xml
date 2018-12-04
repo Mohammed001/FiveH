@@ -93,6 +93,7 @@
                 android:foregroundGravity="center"
                 android:gravity="center_vertical"
                 android:visibility="invisible" />
+
         </FrameLayout>
 
         <Space
@@ -113,7 +114,7 @@
                 android:visibility="visible" />
 
             <com.twitter.sdk.android.core.identity.TwitterLoginButton
-                android:id="@+id/login_button"
+                android:id="@+id/twitter_login_button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:foregroundGravity="center"

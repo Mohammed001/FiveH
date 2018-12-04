@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,7 +14,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,7 +29,6 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -49,10 +46,9 @@ import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterConfig;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
-import com.twitter.sdk.android.core.identity.TwitterLoginButton;
+import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 
 import static com.example.asus.fiveh.utils.Utils.ADVERTISER;
@@ -69,14 +65,29 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     TextView link_login;
 
     ImageView insta_login;
-    ImageView loginButton;
+    ImageView facebookLoginButton;
+    ImageView googleloginButton;
+
     CallbackManager callbackManager;
     int temp_user_type = -1;
     private InstagramApp mApp;
     private HashMap<String, String> userInfoHashmap = new HashMap<>();
     private static final int RC_SIGN_IN = 9001;
     private GoogleSignInClient mGoogleSignInClient;
-    TwitterLoginButton twitterloginButton;
+    //    TwitterLoginButton twitterloginButton;
+    TwitterAuthClient mTwitterAuthClient;
+    ImageView twitterbtn;
+
+    private void initTwitter() {
+        TwitterConfig config = new TwitterConfig.Builder(this)
+                .logger(new DefaultLogger(Log.DEBUG))
+                .twitterAuthConfig(new TwitterAuthConfig(
+                        getString(R.string.twitter_consumer_key),
+                        getString(R.string.twitter_consumer_secret))
+                ).debug(true).build();
+
+        Twitter.initialize(config);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,47 +109,38 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
-    private void signIn() {
+    private void initviews() {
+        twitterbtn = findViewById(R.id.twitter_login);
+        input_name = findViewById(R.id.input_name);
+        input_email = findViewById(R.id.input_email);
+        input_password = findViewById(R.id.input_password);
+        btn_signup = findViewById(R.id.btn_signup);
+        link_login = findViewById(R.id.link_login);
+        findViewById(R.id.radio_pirates).setOnClickListener(this);
+        findViewById(R.id.radio_ninjas).setOnClickListener(this);
+        insta_login = findViewById(R.id.insta_login);
+        googleloginButton = findViewById(R.id.google_login);
+    }
+
+    private void setlistener() {
+        btn_signup.setOnClickListener(this);
+        link_login.setOnClickListener(this);
+        insta_login.setOnClickListener(this);
+        googleloginButton.setOnClickListener(this);
+        twitterbtn.setOnClickListener(this);
+    }
+
+    private void googleSignIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
 //        FirebaseAuth.getInstance().signOut();
     }
 
     private void twitterOnCreate() {
-        twitterloginButton = findViewById(R.id.login_button);
-        twitterloginButton.setCallback(new Callback<TwitterSession>() {
-            @Override
-            public void success(Result<TwitterSession> result) {
-
-//                TwitterSession session = TwitterCore.getInstance().getSessionManager().getActiveSession();
-//                TwitterAuthToken authToken = session.getAuthToken();
-//                String token = authToken.token;
-//                String secret = authToken.secret;
-
-                // Do something with result, which provides a TwitterSession for making API calls
-                String username = result.data.getUserName();
-                Toast.makeText(SignUpActivity.this, "Hello " + username, Toast.LENGTH_SHORT).show();
-                // todo: read the docs in:
-                // https://github.com/twitter/twitter-kit-android/wiki/Log-In-with-Twitter
-            }
-
-            @Override
-            public void failure(TwitterException exception) {
-                // Do something on failure
-                Toast.makeText(SignUpActivity.this, "failure!", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void initTwitter() {
-        TwitterConfig config = new TwitterConfig.Builder(this)
-                .logger(new DefaultLogger(Log.DEBUG))
-                .twitterAuthConfig(new TwitterAuthConfig(
-                        getString(R.string.twitter_consumer_key),
-                        getString(R.string.twitter_consumer_secret))
-                ).debug(true).build();
-
-        Twitter.initialize(config);
+        mTwitterAuthClient = new TwitterAuthClient();
+//        twitterloginButton = findViewById(R.id.twitter_login_button);
+//        twitterloginButton.setCallback(new Callback<TwitterSession>() {
+//        });
     }
 
     private void revokeAccess() {
@@ -153,21 +155,23 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 });
     }
 
+    SignInButton signInButton;
+
     private void googleOnCreate() {
-        SignInButton signInButton = findViewById(R.id.sign_in_button);
+        signInButton = findViewById(R.id.sign_in_button);
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                .requestIdToken("631557339763-2o6k85slbs4oqcm9ne8i2dti4jjgjhvu.apps.googleusercontent.com")
+                .requestIdToken("631557339763-2o6k85slbs4oqcm9ne8i2dti4jjgjhvu.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signIn();
-            }
-        });
+//        signInButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                googleSignIn();
+//            }
+//        });
     }
 
     private void googleSignout() {
@@ -184,9 +188,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onStart() {
         super.onStart();
-        // hide the keyboard when pressing in the screen
-        getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
@@ -221,30 +222,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         return super.dispatchTouchEvent(ev);
     }
 
-    private void initviews() {
-        input_name = findViewById(R.id.input_name);
-        input_email = findViewById(R.id.input_email);
-        input_password = findViewById(R.id.input_password);
-        btn_signup = findViewById(R.id.btn_signup);
-        link_login = findViewById(R.id.link_login);
-        findViewById(R.id.radio_pirates).setOnClickListener(this);
-        findViewById(R.id.radio_ninjas).setOnClickListener(this);
-        insta_login = findViewById(R.id.insta_login);
-
-    }
-
-    private void setlistener() {
-        btn_signup.setOnClickListener(this);
-        link_login.setOnClickListener(this);
-        insta_login.setOnClickListener(this);
-    }
-
     private void initfb() {
         callbackManager = CallbackManager.Factory.create();
-        loginButton = findViewById(R.id.connectWithFbButton);
-        loginButton.setOnClickListener(this);
-        // loginButton.setAuthType(AUTH_TYPE);
-        // If you are using in a fragment, call loginButton.setFragment(this);
+        facebookLoginButton = findViewById(R.id.connectWithFbButton);
+        facebookLoginButton.setOnClickListener(this);
+        // facebookLoginButton.setAuthType(AUTH_TYPE);
+        // If you are using in a fragment, call facebookLoginButton.setFragment(this);
 
         // Callback registration
         LoginManager.getInstance().registerCallback(callbackManager, new
@@ -283,7 +266,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             mApp.fetchUserName(handler);
             String name = userInfoHashmap.get(InstagramApp.TAG_USERNAME);
             Snackbar.make(findViewById(R.id.root), "hello " + name, Snackbar.LENGTH_SHORT).show();
-//            displayInfoDialogView();
+//            instaDisplayInfoDialogView();
         }
 
     }
@@ -326,7 +309,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         });
     }
 
-    private void displayInfoDialogView() {
+    private void instaDisplayInfoDialogView() {
         android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(
                 SignUpActivity.this);
         alertDialog.setTitle("Profile Info");
@@ -357,7 +340,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
-        twitterloginButton.onActivityResult(requestCode, resultCode, data);
+        mTwitterAuthClient.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN) {
             handleSignInResult(data);
@@ -377,7 +360,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     public void signup() {
         Log.d(TAG, "Signup");
-        if (!validate()) {
+        if (!form_validate()) {
             onSignupFailed();
             return;
         }
@@ -423,7 +406,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         btn_signup.setEnabled(true);
     }
 
-    public boolean validate() {
+    public boolean form_validate() {
         boolean valid = true;
 
         String name = input_name.getText().toString();
@@ -454,6 +437,14 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         return valid;
     }
 
+
+    private void doinstalogin() {
+        mApp.authorize();
+        String name = userInfoHashmap.get(InstagramApp.TAG_USERNAME);
+        Snackbar.make(findViewById(R.id.root), "welcome: " + name, Snackbar.LENGTH_SHORT).show();
+        // todo: logout code is {mApp.resetAccessToken();}
+    }
+
     @Override
     public void onClick(View v) {
 // Check which radio button was clicked
@@ -474,15 +465,35 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         Arrays.asList("email", "public_profile")
                 );
                 break;
+            case R.id.google_login:
+                googleSignIn();
+                break;
+            case R.id.twitter_login:
+                mTwitterAuthClient.authorize(this, new Callback<TwitterSession>() {
+                    @Override
+                    public void success(Result<TwitterSession> result) {
+
+//                TwitterSession session = TwitterCore.getInstance().getSessionManager().getActiveSession();
+//                TwitterAuthToken authToken = session.getAuthToken();
+//                String token = authToken.token;
+//                String secret = authToken.secret;
+
+                        // Do something with result, which provides a TwitterSession for making API calls
+                        String username = result.data.getUserName();
+                        Toast.makeText(SignUpActivity.this, "Hello " + username, Toast.LENGTH_SHORT).show();
+                        // todo: read the docs in:
+                        // https://github.com/twitter/twitter-kit-android/wiki/Log-In-with-Twitter
+                    }
+
+                    @Override
+                    public void failure(TwitterException exception) {
+                        // Do something on failure
+                        Toast.makeText(SignUpActivity.this, "failure!", Toast.LENGTH_SHORT).show();
+                    }
+
+                });
+                break;
         }
 
     }
-
-    private void doinstalogin() {
-        mApp.authorize();
-        String name = userInfoHashmap.get(InstagramApp.TAG_USERNAME);
-        Snackbar.make(findViewById(R.id.root), "welcome: " + name, Snackbar.LENGTH_SHORT).show();
-        // todo: logout code is {mApp.resetAccessToken();}
-    }
-
 }
