@@ -8,10 +8,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.asus.fiveh.loginproviders.FacebookLogin;
+import com.example.asus.fiveh.loginproviders.GoogleLogin;
+import com.example.asus.fiveh.loginproviders.InstagramLogin;
+import com.example.asus.fiveh.loginproviders.TwitterLogin;
 import com.example.asus.fiveh.utils.Utils;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import java.util.Random;
 
@@ -22,42 +28,71 @@ import static com.example.asus.fiveh.utils.Utils.GREED;
  * Created by ASUS on 11/11/2018.
  */
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, GoogleLogin.UPDATEui {
     private static final String TAG = "LoginActivity";
 
     EditText _emailText;
     EditText _passwordText;
     Button _loginButton;
     TextView _signupLink;
+    private static final int RC_SIGN_IN = 9001;
+
+    GoogleLogin googleLogin;
+    FacebookLogin facebookLogin;
+    InstagramLogin instagramLogin;
+    TwitterLogin twitterLogin;
+
+    ImageView insta_login;
+    ImageView facebookLoginButton;
+    ImageView googleloginButton;
+    ImageView twitterbtn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        twitterLogin.initTwitter();
         setContentView(R.layout.activity_login);
-        findViewById(R.id.radio_pirates_login).setOnClickListener(this);
-        findViewById(R.id.radio_ninjas_login).setOnClickListener(this);
+
+        initViews();
+        setListener();
+
+        googleLogin = new GoogleLogin(this);
+        facebookLogin = new FacebookLogin(this);
+        instagramLogin = new InstagramLogin(this);
+        twitterLogin = new TwitterLogin(this);
+
+        facebookLogin.initfb();
+        instagramLogin.instaOnCreate();
+        googleLogin.googleOnCreate();
+        twitterLogin.twitterOnCreate();
+
+    }
+
+    private void setListener() {
+        _loginButton.setOnClickListener(this);
+        _signupLink.setOnClickListener(this);
+    }
+
+    private void initViews() {
         _emailText = findViewById(R.id.email);
         _passwordText = findViewById(R.id.password);
         _loginButton = findViewById(R.id.email_sign_in_button);
         _signupLink = findViewById(R.id.link_signup);
+    }
 
-        _loginButton.setOnClickListener(new View.OnClickListener() {
+    // this method is needed to accomplish {GoogleSignIn} process
+    @Override
+    public void onStart() {
+        super.onStart();
+        googleLogin.googleOnStart();
+    }
 
-            @Override
-            public void onClick(View v) {
-                login();
-            }
-        });
-
-        _signupLink.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // Start the Signup activity
-                Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
-                startActivity(intent);
-            }
-        });
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        facebookLogin.facebookInOnActivityResult(requestCode, resultCode, data);
+        googleLogin.googleOnActivityResult(requestCode, data, RC_SIGN_IN);
+        twitterLogin.twitterOnActivityResult(requestCode, resultCode, data);
     }
 
     public void login() {
@@ -90,18 +125,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
                 }, 3000);
     }
-
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == REQUEST_SIGNUP) {
-//            if (resultCode == RESULT_OK) {
-//                // TODO: Implement successful signup logic here
-//                // By default we just finish the Activity and log them in automatically
-//                this.finish();
-//            }
-//        }
-//    }
 
     public void onLoginSuccess() {
         _loginButton.setEnabled(true);
@@ -147,6 +170,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.email_sign_in_button:
+                login();
+                break;
 
+            case R.id.link_signup:
+                // Start the Signup activity
+                Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
+                startActivity(intent);
+                break;
+        }
+    }
+
+    @Override
+    public void updateui(GoogleSignInAccount account) {
+        if (account == null) {
+            Toast.makeText(this, "null", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, account.getDisplayName(), Toast.LENGTH_SHORT).show();
+        }
     }
 }
