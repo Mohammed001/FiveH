@@ -3,7 +3,6 @@ package com.example.asus.fiveh;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,31 +11,22 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.asus.fiveh.insta.InstagramApp;
+import com.example.asus.fiveh.loginproviders.GoogleLogin;
 import com.example.asus.fiveh.utils.Utils;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.squareup.picasso.Picasso;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.DefaultLogger;
@@ -54,7 +44,7 @@ import java.util.HashMap;
 import static com.example.asus.fiveh.utils.Utils.ADVERTISER;
 import static com.example.asus.fiveh.utils.Utils.GREED;
 
-public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
+public class SignUpActivity extends AppCompatActivity implements View.OnClickListener, GoogleLogin.UPDATEui {
 
     private static final String EMAIL = "email";
     private static final String TAG = SignUpActivity.class.getSimpleName();
@@ -73,7 +63,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private InstagramApp mApp;
     private HashMap<String, String> userInfoHashmap = new HashMap<>();
     private static final int RC_SIGN_IN = 9001;
-    private GoogleSignInClient mGoogleSignInClient;
     //    TwitterLoginButton twitterloginButton;
     TwitterAuthClient mTwitterAuthClient;
     ImageView twitterbtn;
@@ -89,12 +78,15 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         Twitter.initialize(config);
     }
 
+
+    GoogleLogin googleLogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initTwitter();
         setContentView(R.layout.activity_sign_up);
-
+        googleLogin = new GoogleLogin(this);
         initviews();
 
         initfb();
@@ -103,7 +95,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         instaOnCreate();
 
-        googleOnCreate();
+        googleLogin.googleOnCreate();
 
         twitterOnCreate();
 
@@ -130,12 +122,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         twitterbtn.setOnClickListener(this);
     }
 
-    private void googleSignIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-//        FirebaseAuth.getInstance().signOut();
-    }
-
     private void twitterOnCreate() {
         mTwitterAuthClient = new TwitterAuthClient();
 //        twitterloginButton = findViewById(R.id.twitter_login_button);
@@ -143,83 +129,11 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 //        });
     }
 
-    private void revokeAccess() {
-        mGoogleSignInClient.revokeAccess()
-                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        // [START_EXCLUDE]
-                        updateui(null);
-                        // [END_EXCLUDE]
-                    }
-                });
-    }
-
-    SignInButton signInButton;
-
-    private void googleOnCreate() {
-        signInButton = findViewById(R.id.sign_in_button);
-        // Configure Google Sign In
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("631557339763-2o6k85slbs4oqcm9ne8i2dti4jjgjhvu.apps.googleusercontent.com")
-                .requestEmail()
-                .build();
-
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-//        signInButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                googleSignIn();
-//            }
-//        });
-    }
-
-    private void googleSignout() {
-        mGoogleSignInClient.signOut()
-                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        // ...
-                    }
-                });
-    }
-
     // this method is needed to accomplish {GoogleSignIn} process
     @Override
     public void onStart() {
         super.onStart();
-        // Check for existing Google Sign In account, if the user is already signed in
-        // the GoogleSignInAccount will be non-null.
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        updateui(account);
-    }
-
-    private void updateui(GoogleSignInAccount account) {
-        if (account == null) {
-            Toast.makeText(this, "null", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, account.getDisplayName(), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    // hide the keyboard when pressing in the screen
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-            View v = getCurrentFocus();
-
-            if (v instanceof EditText) {
-                Rect outRect = new Rect();
-                v.getGlobalVisibleRect(outRect);
-                if (!outRect.contains((int) ev.getRawX(), (int) ev.getRawY())) {
-                    v.clearFocus();
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    assert imm != null;
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                }
-            }
-        }
-        return super.dispatchTouchEvent(ev);
+        googleLogin.googleOnStart();
     }
 
     private void initfb() {
@@ -342,25 +256,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         callbackManager.onActivityResult(requestCode, resultCode, data);
         mTwitterAuthClient.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_SIGN_IN) {
-            handleSignInResult(data);
-        }
-    }
-
-    private void handleSignInResult(Intent data) {
-        try {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            GoogleSignInAccount account = task.getResult(ApiException.class);
-            updateui(account);
-        } catch (ApiException e) {
-            Log.w(TAG, "Google sign in failed " + e.getStatusCode());
-            updateui(null);
-        }
+        googleLogin.googleOnActivityResult(requestCode, data, RC_SIGN_IN);
     }
 
     public void signup() {
         Log.d(TAG, "Signup");
-        if (!form_validate()) {
+        if (!validate()) {
             onSignupFailed();
             return;
         }
@@ -406,7 +307,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         btn_signup.setEnabled(true);
     }
 
-    public boolean form_validate() {
+    public boolean validate() {
         boolean valid = true;
 
         String name = input_name.getText().toString();
@@ -466,7 +367,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 );
                 break;
             case R.id.google_login:
-                googleSignIn();
+                googleLogin.googleSignIn(RC_SIGN_IN);
                 break;
             case R.id.twitter_login:
                 mTwitterAuthClient.authorize(this, new Callback<TwitterSession>() {
@@ -495,5 +396,14 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 break;
         }
 
+    }
+
+    @Override
+    public void updateui(GoogleSignInAccount account) {
+        if (account == null) {
+            Toast.makeText(this, "null", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, account.getDisplayName(), Toast.LENGTH_SHORT).show();
+        }
     }
 }

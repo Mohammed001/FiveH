@@ -139,7 +139,7 @@ public class MyProfile extends AppCompatActivity implements View.OnClickListener
             new_email = edit.getText().toString();
             // 6. compare with the old name
             if (!current_email.equals(new_email)) {
-                // todo: form_validate new email
+                // todo: validate new email
                 if (isValid(new_email)) {
                     plain.setText(new_email);
                 } else {
