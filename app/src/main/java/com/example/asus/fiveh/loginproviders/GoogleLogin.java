@@ -7,22 +7,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.asus.fiveh.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 public class GoogleLogin {
-    public static final String TAG = GoogleLogin.class.getSimpleName();
+    private static final String TAG = GoogleLogin.class.getSimpleName();
 
-    AppCompatActivity context;
+    private AppCompatActivity context;
     private GoogleSignInClient mGoogleSignInClient;
-    private SignInButton signInButton;
 
     public GoogleLogin(Context context) {
         this.context = (AppCompatActivity) context;
@@ -35,7 +32,6 @@ public class GoogleLogin {
 
 
     public void googleOnCreate() {
-        signInButton = context.findViewById(R.id.sign_in_button);
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("631557339763-2o6k85slbs4oqcm9ne8i2dti4jjgjhvu.apps.googleusercontent.com")
@@ -43,6 +39,8 @@ public class GoogleLogin {
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(context, gso);
+//    private SignInButton signInButton;
+//        signInButton = context.findViewById(R.id.sign_in_button);
 //        signInButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -50,17 +48,6 @@ public class GoogleLogin {
 //            }
 //        });
     }
-
-    public void googleSignout() {
-        mGoogleSignInClient.signOut()
-                .addOnCompleteListener(context, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(context, "googleSignout", Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-
 
     public void googleOnStart() {
         // Check for existing Google Sign In account, if the user is already signed in
@@ -74,7 +61,6 @@ public class GoogleLogin {
             handleSignInResult(data);
         }
     }
-
 
     public void handleSignInResult(Intent data) {
         try {
@@ -93,6 +79,16 @@ public class GoogleLogin {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         ((UPDATEui) context).updateui(null);
+                    }
+                });
+    }
+
+    public void googleSignout() {
+        mGoogleSignInClient.signOut()
+                .addOnCompleteListener(context, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(context, "googleSignout", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
