@@ -40,6 +40,7 @@ public class ReadMoreTextView extends AppCompatTextView {
     private static final int INVALID_END_INDEX = -1;
     private static final boolean DEFAULT_SHOW_TRIM_EXPANDED_TEXT = true;
     private static final String ELLIPSIZE = "... ";
+    private static final String SPACE = "  ";
 
     private CharSequence text;
     private BufferType bufferType;
@@ -71,7 +72,7 @@ public class ReadMoreTextView extends AppCompatTextView {
         this.trimExpandedText = getResources().getString(resourceIdTrimExpandedText);
         this.trimLines = typedArray.getInt(R.styleable.ReadMoreTextView_trimLines, DEFAULT_TRIM_LINES);
         this.colorClickableText = typedArray.getColor(R.styleable.ReadMoreTextView_colorClickableText,
-                ContextCompat.getColor(context, R.color.accent));
+                ContextCompat.getColor(context, R.color.colorAccent));
         this.showTrimExpandedText =
                 typedArray.getBoolean(R.styleable.ReadMoreTextView_showTrimExpandedText, DEFAULT_SHOW_TRIM_EXPANDED_TEXT);
         this.trimMode = typedArray.getInt(R.styleable.ReadMoreTextView_trimMode, TRIM_MODE_LINES);
@@ -143,7 +144,7 @@ public class ReadMoreTextView extends AppCompatTextView {
 
     private CharSequence updateExpandedText() {
         if (showTrimExpandedText) {
-            SpannableStringBuilder s = new SpannableStringBuilder(text, 0, text.length()).append(trimExpandedText);
+            SpannableStringBuilder s = new SpannableStringBuilder(text, 0, text.length()).append(SPACE).append(trimExpandedText);
             return addClickableSpan(s, trimExpandedText);
         }
         return text;

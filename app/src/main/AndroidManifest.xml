@@ -85,7 +85,6 @@
         </activity>
         <activity
             android:name=".TestGitHubcode"
-            android:label="@string/title_activity_test_git_hubcode"
             android:theme="@style/AppTheme.NoActionBar">
 
             <intent-filter>

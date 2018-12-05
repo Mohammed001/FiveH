@@ -138,3 +138,15 @@ ______________
         }
         return super.dispatchTouchEvent(ev);
     }
+
+
+______________
+<com.example.asus.fiveh.utils.ReadMoreTextView
+    android:id="@+id/text2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="30dp"
+    app:colorClickableText="@android:color/darker_gray" />
+
+TextView text2 = findViewById(R.id.text2);
+text2.setText(getString(R.string.very_long_text));
