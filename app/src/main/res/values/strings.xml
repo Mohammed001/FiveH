@@ -71,6 +71,7 @@
 
     <string name="read_more">show more</string>
     <string name="read_less">show less</string>
+    <string name="flower_name_placeholder" translatable="false">show less</string>
 
     <string name="very_long_text" translatable="false">LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng textttttt</string>
 

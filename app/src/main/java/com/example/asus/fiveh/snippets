@@ -150,3 +150,6 @@ ______________
 
 TextView text2 = findViewById(R.id.text2);
 text2.setText(getString(R.string.very_long_text));
+
+__________________
+
