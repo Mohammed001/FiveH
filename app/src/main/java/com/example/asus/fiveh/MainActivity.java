@@ -19,12 +19,22 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.example.asus.fiveh.main_ad_adapter.MainAdAdapter;
+import com.example.asus.fiveh.models.Ad;
 import com.example.asus.fiveh.utils.Utils;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.example.asus.fiveh.utils.Utils.ADVERTISER;
 import static com.example.asus.fiveh.utils.Utils.LOGINUSERNAME_KEY;
@@ -34,9 +44,11 @@ import static com.example.asus.fiveh.utils.Utils.USER_TYPE;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final String TAG = MainActivity.class.getSimpleName();
     FloatingActionButton fab;
     RecyclerView main_rv;
     MainAdAdapter adAdapter;
+    List<Ad> data = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +59,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         fab = findViewById(R.id.fab);
+
+
+        RetrofitAPI service = new RetrofitClient().getClient().create(RetrofitAPI.class);
+        Call<List<Ad>> call = service.listAds();
+        call.enqueue(new Callback<List<Ad>>() {
+            @Override
+            public void onResponse(Call<List<Ad>> call, Response<List<Ad>> response) {
+                data = response.body();
+                if (data != null) {
+                    Log.i(TAG, "onResponse: Number of Ads received: " + data.size());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Ad>> call, Throwable t) {
+                Log.i(TAG, "onFailure" + t.getMessage());
+            }
+        });
 
         main_rv = findViewById(R.id.main_rv);
         adAdapter = new MainAdAdapter(this);
@@ -72,7 +102,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
     }
 
     @Override
