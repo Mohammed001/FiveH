@@ -53,4 +53,5 @@
     <string name="ad_iamge">صورة الاعلان</string>
     <string name="read_more" translatable="false">قراءة المزيد</string>
     <string name="read_less" translatable="false">اخفاء النص</string>
+    <string name="ad_tesxt_placeholder">نص الإعلان</string>
 </resources>

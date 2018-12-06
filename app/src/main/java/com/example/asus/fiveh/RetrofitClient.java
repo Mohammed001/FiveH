@@ -6,8 +6,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
     private Retrofit retrofit = null;
     private static final String BASEURL = "http://services.hanselandpetal.com/";
+    public static final String BASEPHOTOURL = "http://services.hanselandpetal.com/photos/";
 
-    public Retrofit getClient() {
+    Retrofit getClient() {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASEURL)

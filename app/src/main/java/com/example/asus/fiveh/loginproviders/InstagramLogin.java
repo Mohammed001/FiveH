@@ -13,11 +13,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.asus.fiveh.R;
 import com.example.asus.fiveh.insta.InstagramApp;
-import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
+
+//import com.squareup.picasso.Picasso;
 
 public class InstagramLogin {
 
@@ -86,7 +88,7 @@ public class InstagramLogin {
                 .findViewById(R.id.ivProfileImage);
 
         String url = userInfoHashmap.get(InstagramApp.TAG_PROFILE_PICTURE);
-        Picasso.get().load(url).into(ivProfile);
+        Glide.with(context).load(url).into(ivProfile);
 
         String name = userInfoHashmap.get(InstagramApp.TAG_USERNAME);
         tvName.setText(name == null ? "null" : name);

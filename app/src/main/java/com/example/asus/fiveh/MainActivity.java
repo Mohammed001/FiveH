@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,6 +14,7 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -33,8 +36,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.example.asus.fiveh.utils.Utils.ADVERTISER;
 import static com.example.asus.fiveh.utils.Utils.LOGINUSERNAME_KEY;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     RecyclerView main_rv;
     MainAdAdapter adAdapter;
     List<Ad> data = null;
+    SwipeRefreshLayout swiperefreshlayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,29 +59,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.navigation);
         Utils.USER_TYPE = ADVERTISER;
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        fab = findViewById(R.id.fab);
-
-
-        RetrofitAPI service = new RetrofitClient().getClient().create(RetrofitAPI.class);
-        Call<List<Ad>> call = service.listAds();
-        call.enqueue(new Callback<List<Ad>>() {
+        swiperefreshlayout = findViewById(R.id.swiperefreshlayout);
+        swiperefreshlayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onResponse(Call<List<Ad>> call, Response<List<Ad>> response) {
-                data = response.body();
-                if (data != null) {
-                    Log.i(TAG, "onResponse: Number of Ads received: " + data.size());
+            public void onRefresh() {
+                swiperefreshlayout.setRefreshing(false);
+                if (isOnline()) {
+                    doHTTP();
                 }
             }
-
-            @Override
-            public void onFailure(Call<List<Ad>> call, Throwable t) {
-                Log.i(TAG, "onFailure" + t.getMessage());
-            }
         });
+        setSupportActionBar(toolbar);
+        fab = findViewById(R.id.fab);
+        if (isOnline()) {
+            doHTTP();
+        }
+        createDrawer(toolbar);
+    }
 
+    private void createDrawer(Toolbar toolbar) {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void createRecyclerview() {
         main_rv = findViewById(R.id.main_rv);
-        adAdapter = new MainAdAdapter(this);
+        adAdapter = new MainAdAdapter(this, data);
 
         GridLayoutManager layoutManager;
         if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -92,16 +103,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DividerItemDecoration itemDecoration = new DividerItemDecoration(main_rv.getContext(), layoutManager.getOrientation());
         main_rv.addItemDecoration(itemDecoration);
         main_rv.setAdapter(adAdapter);
+    }
 
+    private void doHTTP() {
+        RetrofitAPI service = new RetrofitClient().getClient().create(RetrofitAPI.class);
+        Call<List<Ad>> call = service.listAds();
+        call.enqueue(new Callback<List<Ad>>() {
+            @Override
+            public void onResponse(Call<List<Ad>> call, Response<List<Ad>> response) {
+                if (response.isSuccessful()) {
+                    data = response.body();
+                    if (data != null) {
+                        Log.i(TAG, "onResponse: Number of Ads received: " + data.size());
+                        createRecyclerview();
+                    }
+                }
+            }
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+            @Override
+            public void onFailure(Call<List<Ad>> call, Throwable t) {
+                Log.i(TAG, "onFailure" + t.getMessage());
+                createRecyclerview();
+            }
+        });
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -207,6 +232,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             });
         }
+    }
+
+    protected boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        assert cm != null;
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 }
 

@@ -153,3 +153,7 @@ text2.setText(getString(R.string.very_long_text));
 
 __________________
 
+InputStream in = (InputStream) new URL(imageUrl).getContent();
+				Bitmap bitmap = BitmapFactory.decodeStream(in);
+				flower.setBitmap(bitmap);
+				in.close();
