@@ -21,8 +21,6 @@ import com.example.asus.fiveh.models.ResponseData;
 import com.example.asus.fiveh.utils.Utils;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
-import java.util.Random;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -36,6 +34,9 @@ import static com.example.asus.fiveh.utils.Utils.GREED;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, GoogleLogin.UPDATEui {
     private static final String TAG = LoginActivity.class.getSimpleName();
     public static final long DELAY = 10_000; // ms
+    private static final String USERTYPERESPONSE = "user";
+    private static final String DEBUGEMAIL = "hazem@sadv.sa";
+    private static final String DEBUGPASSWORD = "12345";
 
     EditText _emailText;
     EditText _passwordText;
@@ -49,9 +50,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     TwitterLogin twitterLogin;
 
     ImageView insta_login;
-    ImageView facebookLoginButton;
-    ImageView googleloginButton;
-    ImageView twitterbtn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -107,6 +105,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void login() {
         Log.d(TAG, "Login");
 
+//        email = _emailText.getText().toString();
+//        password = _passwordText.getText().toString();
+
+        email = DEBUGEMAIL;
+        password = DEBUGPASSWORD;
+
         if (!validate()) {
             onLoginFailed();
             return;
@@ -119,8 +123,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         progressDialog.setMessage(getResources().getString(R.string.authing_mag));
         progressDialog.show();
 
-        email = _emailText.getText().toString();
-        password = _passwordText.getText().toString();
 
         // TODO: Implement your own authentication logic here.
         connectToServer();
@@ -149,9 +151,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Log.i(TAG, "onResponse: " + (response.body().getMsg()));
                     ResponseData responseData = response.body().getData();
                     if (responseData != null) {
-                        Log.i(TAG, "onResponse: " + responseData.getUser_name());
-//                        Utils.USER_TYPE = new Random().nextInt(2) + 1 == ADVERTISER ? ADVERTISER : GREED;
-                        Utils.USER_TYPE = responseData.getUserType();
+//                        Log.i(TAG, "onResponse: " + responseData.getUser_name());
+                        String userType = responseData.getUser_type();
+                        Utils.USER_TYPE = userType.equals(USERTYPERESPONSE) ? GREED : ADVERTISER;
                     }
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -164,11 +166,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 progressDialog.dismiss();
 
-            }
+            } // connection succeeded
 
             @Override
             public void onFailure(Call<Response> call, Throwable t) {
-                Toast.makeText(LoginActivity.this, "onFailure " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "onFailure " + t.getMessage(), Toast.LENGTH_LONG).show();
                 progressDialog.dismiss();
 
             }
@@ -176,19 +178,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void onLoginFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "Login failed ", Toast.LENGTH_LONG).show();
         _loginButton.setEnabled(true);
     }
 
     public boolean validate() {
         boolean valid = true;
 
-        String email = _emailText.getText().toString();
-
-        String password = _passwordText.getText().toString();
-
-//        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-        if (email.isEmpty()) {
+        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+//        if (email.isEmpty()) {
             _emailText.setError("enter a valid email address");
             valid = false;
         } else {

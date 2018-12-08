@@ -13,8 +13,9 @@ public interface RetrofitAPI {
     @GET("feeds/flowers.json")
     Call<List<Ad>> listAds();
 
+    // hazem@sadv.sa
     @GET("login.php")
-    Call<Response> call_5H_signin(@Query("login") String user_name, @Query("pass") String password);
+    Call<Response> call_5H_signin(@Query("email") String user_name, @Query("pass") String password);
 
     @GET("logout.php")
     Call<Response> call_5H_logout();

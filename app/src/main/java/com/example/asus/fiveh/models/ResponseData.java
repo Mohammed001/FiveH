@@ -1,50 +1,50 @@
 package com.example.asus.fiveh.models;
 
 public class ResponseData {
-    private int user_insta_id;
-    private int user_twitter_id;
-    private int user_face_id;
-    private int user_google_id;
+    private String user_insta_id;
+    private String user_twitter_id;
+    private String user_face_id;
+    private String user_google_id;
     private String last_login_date;
     private String user_pass;
     private String user_first_name;
 
     private String user_last_name;
     private String user_email;
-    private int user_id;
+    private String user_id;
     private String user_picture;
     private String user_name;
-    private String userType;
+    private String user_type;
 
-    public int getUser_insta_id() {
+    public String getUser_insta_id() {
         return user_insta_id;
     }
 
-    public void setUser_insta_id(int user_insta_id) {
+    public void setUser_insta_id(String user_insta_id) {
         this.user_insta_id = user_insta_id;
     }
 
-    public int getUser_twitter_id() {
+    public String getUser_twitter_id() {
         return user_twitter_id;
     }
 
-    public void setUser_twitter_id(int user_twitter_id) {
+    public void setUser_twitter_id(String user_twitter_id) {
         this.user_twitter_id = user_twitter_id;
     }
 
-    public int getUser_face_id() {
+    public String getUser_face_id() {
         return user_face_id;
     }
 
-    public void setUser_face_id(int user_face_id) {
+    public void setUser_face_id(String user_face_id) {
         this.user_face_id = user_face_id;
     }
 
-    public int getUser_google_id() {
+    public String getUser_google_id() {
         return user_google_id;
     }
 
-    public void setUser_google_id(int user_google_id) {
+    public void setUser_google_id(String user_google_id) {
         this.user_google_id = user_google_id;
     }
 
@@ -88,11 +88,11 @@ public class ResponseData {
         this.user_email = user_email;
     }
 
-    public int getUser_id() {
+    public String getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUser_id(String user_id) {
         this.user_id = user_id;
     }
 
@@ -112,11 +112,11 @@ public class ResponseData {
         this.user_name = user_name;
     }
 
-    public String getUserType() {
-        return userType;
+    public String getUser_type() {
+        return user_type;
     }
 
-    public void setUserType(String userType) {
-        this.userType = userType;
+    public void setUser_type(String user_type) {
+        this.user_type = user_type;
     }
 }
