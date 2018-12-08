@@ -46,7 +46,7 @@ public class MainAdAdapter extends RecyclerView.Adapter<MainAdViewHolder> {
 //        holder.mText.setText(R.string.AD_TITLE_FIXED);
             holder.mText.setText(ad.getName());
 //        holder.mImageView.setImageResource(R.drawable.image_ad);
-            final String imageUrl = RetrofitClient.BASEPHOTOURL + ad.getPhoto();
+            final String imageUrl = RetrofitClient.BASE_ADS_PHOTOS_URL + ad.getPhoto();
             Glide.with(context).load(imageUrl)
                     .apply(new RequestOptions()
                             .placeholder(R.drawable.image_ad))

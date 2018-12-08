@@ -16,10 +16,14 @@ import com.example.asus.fiveh.loginproviders.FacebookLogin;
 import com.example.asus.fiveh.loginproviders.GoogleLogin;
 import com.example.asus.fiveh.loginproviders.InstagramLogin;
 import com.example.asus.fiveh.loginproviders.TwitterLogin;
+import com.example.asus.fiveh.models.Response;
 import com.example.asus.fiveh.utils.Utils;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import java.util.Random;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 import static com.example.asus.fiveh.utils.Utils.ADVERTISER;
 import static com.example.asus.fiveh.utils.Utils.GREED;
@@ -29,7 +33,8 @@ import static com.example.asus.fiveh.utils.Utils.GREED;
  */
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, GoogleLogin.UPDATEui {
-    private static final String TAG = "LoginActivity";
+    private static final String TAG = LoginActivity.class.getSimpleName();
+    private static final long DELAY = 3000;
 
     EditText _emailText;
     EditText _passwordText;
@@ -95,6 +100,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         twitterLogin.twitterOnActivityResult(requestCode, resultCode, data);
     }
 
+    String email;
+    String password;
+
     public void login() {
         Log.d(TAG, "Login");
 
@@ -110,26 +118,41 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
+        email = _emailText.getText().toString();
+        password = _passwordText.getText().toString();
 
         // TODO: Implement your own authentication logic here.
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        // On complete call either onLoginSuccess or onLoginFailed
-                        onLoginSuccess();
+                        // On complete call either connectToServer or onLoginFailed
+//                        onloginsuccess();
+                        connectToServer();
                         // onLoginFailed();
                         progressDialog.dismiss();
                     }
-                }, 3000);
+                }, DELAY);
     }
 
-    public void onLoginSuccess() {
+    public void connectToServer() {
         _loginButton.setEnabled(true);
-        // todo: here we ought to change USER_TYPE based on what we have in DB about this user
-        // here we assign random identity
+
+
+        RetrofitAPI service = new RetrofitClient().getClient().create(RetrofitAPI.class);
+        Call<Response> call = service.call_5H_server(email, password);
+        call.enqueue(new Callback<Response>() {
+            @Override
+            public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                Log.i(TAG, "onResponse: " + (response.body() != null ? response.body().getMsg() : "null"));
+            }
+
+            @Override
+            public void onFailure(Call<Response> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, "onFailure login", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         Utils.USER_TYPE = new Random().nextInt(2) + 1 == ADVERTISER ? ADVERTISER : GREED;
         invalidateOptionsMenu();
 //        finish();
