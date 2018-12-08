@@ -50,6 +50,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        twitterLogin = new TwitterLogin(this);
         twitterLogin.initTwitter();
         setContentView(R.layout.activity_sign_up);
 
@@ -59,7 +60,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         googleLogin = new GoogleLogin(this);
         facebookLogin = new FacebookLogin(this);
         instagramLogin = new InstagramLogin(this);
-        twitterLogin = new TwitterLogin(this);
 
         facebookLogin.initfb();
         instagramLogin.instaOnCreate();

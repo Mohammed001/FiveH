@@ -53,5 +53,6 @@ public class Utils {
         if (context.getSupportActionBar() != null) {
             context.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
     }
 }

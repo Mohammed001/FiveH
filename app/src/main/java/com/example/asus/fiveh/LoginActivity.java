@@ -17,6 +17,7 @@ import com.example.asus.fiveh.loginproviders.GoogleLogin;
 import com.example.asus.fiveh.loginproviders.InstagramLogin;
 import com.example.asus.fiveh.loginproviders.TwitterLogin;
 import com.example.asus.fiveh.models.Response;
+import com.example.asus.fiveh.models.ResponseData;
 import com.example.asus.fiveh.utils.Utils;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
@@ -34,7 +35,7 @@ import static com.example.asus.fiveh.utils.Utils.GREED;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, GoogleLogin.UPDATEui {
     private static final String TAG = LoginActivity.class.getSimpleName();
-    private static final long DELAY = 3000;
+    private static final long DELAY = 10_000; // ms
 
     EditText _emailText;
     EditText _passwordText;
@@ -55,6 +56,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        twitterLogin = new TwitterLogin(this);
         twitterLogin.initTwitter();
         setContentView(R.layout.activity_login);
 
@@ -64,7 +66,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         googleLogin = new GoogleLogin(this);
         facebookLogin = new FacebookLogin(this);
         instagramLogin = new InstagramLogin(this);
-        twitterLogin = new TwitterLogin(this);
 
         facebookLogin.initfb();
         instagramLogin.instaOnCreate();
@@ -139,12 +140,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         _loginButton.setEnabled(true);
 
 
-        RetrofitAPI service = new RetrofitClient().getClient().create(RetrofitAPI.class);
+        RetrofitAPI service = new RetrofitClient().getLoginClient().create(RetrofitAPI.class);
         Call<Response> call = service.call_5H_server(email, password);
         call.enqueue(new Callback<Response>() {
             @Override
             public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
-                Log.i(TAG, "onResponse: " + (response.body() != null ? response.body().getMsg() : "null"));
+                if (response.body() != null) {
+                    Log.i(TAG, "onResponse: " + (response.body().getMsg()));
+                    ResponseData responseData = response.body().getData();
+                    if (responseData != null) {
+                        Log.i(TAG, "onResponse: " + responseData.getUser_name());
+                    }
+                } else {
+                    Log.i(TAG, "onResponse: no JSON!");
+                }
             }
 
             @Override
@@ -174,15 +183,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         String password = _passwordText.getText().toString();
 
-        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+//        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        if (email.isEmpty()) {
             _emailText.setError("enter a valid email address");
             valid = false;
         } else {
             _emailText.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            _passwordText.setError("between 4 and 10 alphanumeric characters");
+//        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
+        if (password.isEmpty()) {
+            _passwordText.setError("no password entered");
             valid = false;
         } else {
             _passwordText.setError(null);
