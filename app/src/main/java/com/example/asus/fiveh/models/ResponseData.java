@@ -9,6 +9,13 @@ public class ResponseData {
     private String user_pass;
     private String user_first_name;
 
+    private String user_last_name;
+    private String user_email;
+    private int user_id;
+    private String user_picture;
+    private String user_name;
+    private String userType;
+
     public int getUser_insta_id() {
         return user_insta_id;
     }
@@ -105,9 +112,11 @@ public class ResponseData {
         this.user_name = user_name;
     }
 
-    private String user_last_name;
-    private String user_email;
-    private int user_id;
-    private String user_picture;
-    private String user_name;
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
 }

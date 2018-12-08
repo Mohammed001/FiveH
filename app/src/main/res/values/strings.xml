@@ -75,5 +75,6 @@
 
     <string name="very_long_text" translatable="false">LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng textttttt</string>
     <string name="ad_tesxt_placeholder">Advertisment text</string>
+    <string name="authing_mag">Authenticating...</string>
 
 </resources>

@@ -26,6 +26,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.asus.fiveh.main_ad_adapter.MainAdAdapter;
 import com.example.asus.fiveh.models.Ad;
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void doHTTP() {
-        RetrofitAPI service = new RetrofitClient().getClient().create(RetrofitAPI.class);
+        RetrofitAPI service = new RetrofitClient().getMainClient().create(RetrofitAPI.class);
         Call<List<Ad>> call = service.listAds();
         call.enqueue(new Callback<List<Ad>>() {
             @Override
@@ -180,6 +181,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_about) {
             build_about();
         } else if (id == R.id.logout) {
+            RetrofitAPI service = new RetrofitClient().getAuthClient().create(RetrofitAPI.class);
+            service.call_5H_logout().enqueue(new Callback<com.example.asus.fiveh.models.Response>() {
+                @Override
+                public void onResponse(Call<com.example.asus.fiveh.models.Response> call, Response<com.example.asus.fiveh.models.Response> response) {
+                    if (response.body() != null) {
+                        Log.i(TAG, "onResponse: " + (response.body().getResult()));
+                        Log.i(TAG, "onResponse: " + response.body().getMsg());
+                    } else {
+                        Log.i(TAG, "onResponse: no JSON!");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<com.example.asus.fiveh.models.Response> call, Throwable t) {
+                    Toast.makeText(MainActivity.this, "onFailure: " + TAG, Toast.LENGTH_SHORT).show();
+                }
+            });
             finish();
         }
 

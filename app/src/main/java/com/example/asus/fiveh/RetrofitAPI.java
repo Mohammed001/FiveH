@@ -14,7 +14,20 @@ public interface RetrofitAPI {
     Call<List<Ad>> listAds();
 
     @GET("login.php")
-    Call<Response> call_5H_server(@Query("login") String user_name, @Query("pass") String password);
+    Call<Response> call_5H_signin(@Query("login") String user_name, @Query("pass") String password);
+
+    @GET("logout.php")
+    Call<Response> call_5H_logout();
+
+    //    signup.php
+    @GET("signup.php")
+    void call_5H_signup(@Query("login") String user_name,
+                                  @Query("pass") String password,
+                                  @Query("user_first_name") String firstn,
+                                  @Query("user_last_name") String lastn,
+                                  @Query("user_email") String email
+    );
+
 
 }
 

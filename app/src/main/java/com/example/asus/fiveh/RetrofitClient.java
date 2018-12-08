@@ -10,10 +10,9 @@ public class RetrofitClient {
     private static final String BASE_ADS_URL = "http://services.hanselandpetal.com/";
     public static final String BASE_ADS_PHOTOS_URL = "http://services.hanselandpetal.com/photos/";
 
-    public static final String BASE_FIVEH_LOGIN_URL = "http://5h.sa/api/";
-    public static final String BASE_FIVEH_SIGNUP_URL = "http://5h.sa/api/signup.php";
+    private static final String BASE_FIVEH_AUTH_URL = "http://5h.sa/api/";
 
-    Retrofit getClient() {
+    Retrofit getMainClient() {
         if (mainRetrofit == null) {
             mainRetrofit = new Retrofit.Builder()
                     .baseUrl(BASE_ADS_URL)
@@ -23,14 +22,14 @@ public class RetrofitClient {
         return mainRetrofit;
     }
 
-    Retrofit getLoginClient() {
-        if (mainRetrofit == null) {
-            mainRetrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_FIVEH_LOGIN_URL)
+    Retrofit getAuthClient() {
+        if (loginRetrofit == null) {
+            loginRetrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_FIVEH_AUTH_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
-        return mainRetrofit;
+        return loginRetrofit;
     }
 
 }

@@ -19,6 +19,7 @@ import com.example.asus.fiveh.loginproviders.TwitterLogin;
 import com.example.asus.fiveh.utils.Utils;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
+import static com.example.asus.fiveh.LoginActivity.DELAY;
 import static com.example.asus.fiveh.utils.Utils.ADVERTISER;
 import static com.example.asus.fiveh.utils.Utils.GREED;
 
@@ -105,6 +106,41 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         twitterLogin.twitterOnActivityResult(requestCode, resultCode, data);
     }
 
+    String name;
+    String email;
+    String password;
+
+    public boolean validate() {
+        boolean valid = true;
+
+        name = input_name.getText().toString();
+        email = input_email.getText().toString();
+        password = input_password.getText().toString();
+
+        if (name.isEmpty() || name.length() < 3) {
+            input_name.setError("at least 3 characters");
+            valid = false;
+        } else {
+            input_name.setError(null);
+        }
+
+        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            input_email.setError("enter a valid email address");
+            valid = false;
+        } else {
+            input_email.setError(null);
+        }
+
+        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
+            input_password.setError("between 4 and 10 alphanumeric characters");
+            valid = false;
+        } else {
+            input_password.setError(null);
+        }
+
+        return valid;
+    }
+
     public void signup() {
         Log.d(TAG, "Signup");
         if (!validate()) {
@@ -134,14 +170,16 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         // onSignupFailed();
                         progressDialog.dismiss();
                     }
-                }, 3000);
+                }, DELAY);
     }
 
     public void onSignupSuccess() {
         Utils.USER_TYPE = (temp_user_type == ADVERTISER & temp_user_type != -1) ? ADVERTISER : GREED;
-        invalidateOptionsMenu();
+//        invalidateOptionsMenu();
         btn_signup.setEnabled(true);
 //        setResult(RESULT_OK, null);
+        RetrofitAPI service = new RetrofitClient().getAuthClient().create(RetrofitAPI.class);
+//        service.call_5H_signup(name, password, )
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
@@ -151,37 +189,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     public void onSignupFailed() {
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
         btn_signup.setEnabled(true);
-    }
-
-    public boolean validate() {
-        boolean valid = true;
-
-        String name = input_name.getText().toString();
-        String email = input_email.getText().toString();
-        String password = input_password.getText().toString();
-
-        if (name.isEmpty() || name.length() < 3) {
-            input_name.setError("at least 3 characters");
-            valid = false;
-        } else {
-            input_name.setError(null);
-        }
-
-        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            input_email.setError("enter a valid email address");
-            valid = false;
-        } else {
-            input_email.setError(null);
-        }
-
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            input_password.setError("between 4 and 10 alphanumeric characters");
-            valid = false;
-        } else {
-            input_password.setError(null);
-        }
-
-        return valid;
     }
 
     @Override

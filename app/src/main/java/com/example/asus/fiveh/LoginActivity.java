@@ -35,7 +35,7 @@ import static com.example.asus.fiveh.utils.Utils.GREED;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, GoogleLogin.UPDATEui {
     private static final String TAG = LoginActivity.class.getSimpleName();
-    private static final long DELAY = 10_000; // ms
+    public static final long DELAY = 10_000; // ms
 
     EditText _emailText;
     EditText _passwordText;
@@ -114,34 +114,34 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         _loginButton.setEnabled(false);
 
-        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
+        progressDialog = new ProgressDialog(LoginActivity.this);
         progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Authenticating...");
+        progressDialog.setMessage(getResources().getString(R.string.authing_mag));
         progressDialog.show();
 
         email = _emailText.getText().toString();
         password = _passwordText.getText().toString();
 
         // TODO: Implement your own authentication logic here.
-
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either connectToServer or onLoginFailed
-//                        onloginsuccess();
-                        connectToServer();
-                        // onLoginFailed();
-                        progressDialog.dismiss();
-                    }
-                }, DELAY);
+        connectToServer();
+//
+//        new android.os.Handler().postDelayed(
+//                new Runnable() {
+//                    public void run() {
+//                        // On complete call either connectToServer or onLoginFailed
+////                        onloginsuccess();
+//                        // onLoginFailed();
+//                    }
+//                }, DELAY);
     }
+
+    ProgressDialog progressDialog;
 
     public void connectToServer() {
         _loginButton.setEnabled(true);
 
-
-        RetrofitAPI service = new RetrofitClient().getLoginClient().create(RetrofitAPI.class);
-        Call<Response> call = service.call_5H_server(email, password);
+        RetrofitAPI service = new RetrofitClient().getAuthClient().create(RetrofitAPI.class);
+        Call<Response> call = service.call_5H_signin(email, password);
         call.enqueue(new Callback<Response>() {
             @Override
             public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
@@ -150,25 +150,29 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     ResponseData responseData = response.body().getData();
                     if (responseData != null) {
                         Log.i(TAG, "onResponse: " + responseData.getUser_name());
+//                        Utils.USER_TYPE = new Random().nextInt(2) + 1 == ADVERTISER ? ADVERTISER : GREED;
+                        Utils.USER_TYPE = responseData.getUserType();
                     }
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
+
                 } else {
                     Log.i(TAG, "onResponse: no JSON!");
                 }
+
+                progressDialog.dismiss();
+
             }
 
             @Override
             public void onFailure(Call<Response> call, Throwable t) {
-                Toast.makeText(LoginActivity.this, "onFailure login", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "onFailure " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+
             }
         });
-
-        Utils.USER_TYPE = new Random().nextInt(2) + 1 == ADVERTISER ? ADVERTISER : GREED;
-        invalidateOptionsMenu();
-//        finish();
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finish();
     }
 
     public void onLoginFailed() {
