@@ -157,3 +157,9 @@ InputStream in = (InputStream) new URL(imageUrl).getContent();
 				Bitmap bitmap = BitmapFactory.decodeStream(in);
 				flower.setBitmap(bitmap);
 				in.close();
+
+
+https://github.com/hdodenhof/CircleImageView
+https://github.com/lopspower/CircularImageView
+https://github.com/Pkmmte/CircularImageView
+Glide and picasso provide this capability?

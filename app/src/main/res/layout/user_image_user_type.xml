@@ -6,19 +6,29 @@
     android:gravity="center"
     android:orientation="horizontal">
 
-    <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:cropToPadding="true"
+    <!--<ImageView xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--android:id="@+id/imageView"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:adjustViewBounds="true"-->
+    <!--android:cropToPadding="true"-->
+    <!--android:paddingTop="@dimen/nav_header_vertical_spacing"-->
+    <!--app:srcCompat="@drawable/my_profile" />-->
+    <!--app:srcCompat="@mipmap/ic_launcher_round" />-->
+
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/profile_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:srcCompat="@drawable/my_profile" /><!--app:srcCompat="@mipmap/ic_launcher_round" />-->
+        android:src="@drawable/my_profile"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="1dp" />
 
     <Space
-        android:layout_width="20dp"
-        android:layout_height="20dp" />
+        android:layout_width="16dp"
+        android:layout_height="16dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
