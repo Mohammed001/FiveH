@@ -34,7 +34,7 @@ public class MainAdAdapter extends RecyclerView.Adapter<MainAdViewHolder> {
     @NonNull
     @Override
     public MainAdViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.row_in_main_activity, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.AD, parent, false);
         return new MainAdViewHolder(view);
     }
 
