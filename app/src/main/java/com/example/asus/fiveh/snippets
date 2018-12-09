@@ -163,3 +163,21 @@ https://github.com/hdodenhof/CircleImageView
 https://github.com/lopspower/CircularImageView
 https://github.com/Pkmmte/CircularImageView
 Glide and picasso provide this capability?
+_____________
+<de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/profile_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:src="@drawable/my_profile"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="1dp" />
+
+http://www.wsdesign.in/
+
+https://medium.com/@rushabhpatel381/android-xml-ui-kit-b02d3d0e049a
+
+https://medium.freecodecamp.org/25-new-android-libraries-which-you-definitely-want-to-try-at-the-beginning-of-2017-45878d5408c0
+
+https://medium.mybridge.co/38-amazing-android-open-source-apps-java-1a62b7034c40
+

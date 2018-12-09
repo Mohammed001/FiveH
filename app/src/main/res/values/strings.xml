@@ -13,6 +13,8 @@
     sha1 is not used in code, but set here just as a NOTE..
     <string name="sha1_debug" translatable="false">5F:21:EA:75:14:53:C3:0D:28:8B:2A:24:26:F2:2D:8D:34:7E:5D:10</string>
 
+    <string name="debugtext">this text is used for debugging purposes</string>
+
     <string name="my_profile">Profile</string>
     <string name="my_ads_or_my_money">My Ads</string>
     <string name="my_money">My Account</string>
@@ -63,8 +65,10 @@
     <string name="my_points">Points</string>
     <string name="app_preferences">Preferences</string>
     <string name="log_out">Log out</string>
-    <string name="muhammad_sulaiman">Muhammad Sulaiman</string>
+    <string name="debug_username">Muhammad Sulaiman</string>
     <string name="golden_user">golden user</string>
+    <string name="silver_user">silver user</string>
+    <string name="diamond_user">diamond user</string>
     <string name="ad_iamge">Avertise image</string>
     <string name="title_activity_test_git_hubcode" translatable="false">TestGitHubcode</string>
 
@@ -74,7 +78,9 @@
     <string name="flower_name_placeholder" translatable="false">show less</string>
 
     <string name="very_long_text" translatable="false">LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng LONG long LoNg LOng textttttt</string>
-    <string name="ad_tesxt_placeholder">Advertisment text</string>
-    <string name="authing_mag">Authenticating...</string>
+    <string name="ad_tesxt_placeholder">Advertisement text</string>
+    <string name="authing_mag">Authenticating…</string>
+    <string name="debug_usertype">golden user</string>
+    <string name="profile_name_label">name</string>
 
 </resources>

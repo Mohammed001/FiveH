@@ -47,12 +47,16 @@
     <string name="app_preferences">تخصيص التطبيق</string>
     <string name="log_out">تسجيل الخروج</string>
 
-    <string name="action_settings">Settings</string>
-    <string name="muhammad_sulaiman">محمد سليمان</string>
+    <string name="debug_username">محمد سليمان</string>
     <string name="golden_user">مستخدم ذهبي</string>
     <string name="ad_iamge">صورة الاعلان</string>
     <string name="read_more" translatable="false">قراءة المزيد</string>
     <string name="read_less" translatable="false">اخفاء النص</string>
     <string name="ad_tesxt_placeholder">نص الإعلان</string>
     <string name="authing_mag">دخول</string>
+    <string name="debugtext" translatable="false">يتم استخدام هذا النص للاختبار</string>
+    <string name="silver_user">مستخدم فضي</string>
+    <string name="diamond_user">مستخدم ألماسي</string>
+    <string name="debug_usertype">مستخدم ذهبي</string>
+    <string name="profile_name_label">الاسم</string>
 </resources>
