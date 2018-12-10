@@ -3,21 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     android:layout_margin="24dp"
     android:fitsSystemWindows="true"
+    android:scrollbars="none"
     tools:context="com.example.asus.fiveh.MyProfile">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:orientation="vertical">
-
-        <!--<ImageView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="72dp"-->
-        <!--android:layout_gravity="center_horizontal"-->
-        <!--android:layout_marginBottom="24dp"-->
-        <!--android:src="@drawable/logo" />-->
 
         <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/profile_image"
@@ -53,108 +50,180 @@
             android:layout_width="match_parent"
             android:layout_height="44dp" />
 
-
-        <!--  Name Label -->
-
+        <!--address-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/t3del1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:gravity="center"
-                android:text="تعديل"
-                android:textColor="#0080ff" />
+                android:layout_gravity="center|start"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:text="@string/profile_address_label" />
+
+            <EditText
+                android:id="@+id/profile_address_value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|end"
+                android:layout_weight="3"
+                android:autofillHints="what is autofillHints"
+                android:hint="@string/profile_address_label"
+                android:inputType="text"
+                tools:targetApi="o" />
+
+        </LinearLayout>
+
+        <!--name-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|start"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:text="@string/profile_name_label" />
+
+            <EditText
+                android:id="@+id/profile_name_value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|end"
+                android:layout_weight="3"
+                android:autofillHints="what is autofillHints"
+                android:hint="@string/debug_username"
+                android:inputType="text"
+                tools:targetApi="o" />
+
+        </LinearLayout>
+
+        <!--age-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|start"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:text="@string/profile_age_label" />
+
+            <EditText
+                android:id="@+id/profile_age_value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|end"
+                android:layout_weight="3"
+                android:autofillHints="what is autofillHints"
+                android:hint="@string/profile_age_label"
+                android:inputType="number"
+                tools:targetApi="o" />
+
+        </LinearLayout>
+
+        <!--gender-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|start"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:text="@string/profile_gender_label" />
+
+            <Spinner
+                android:id="@+id/gender_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|end"
+                android:layout_weight="1.5"
+                android:gravity="start"
+                android:prompt="@string/profile_spinner_promt" />
 
             <Space
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:layout_weight="4">
-
-                <TextView
-                    android:id="@+id/profile_name_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/profile_name_label" />
-
-                <EditText
-                    android:id="@+id/profile_name_et"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:inputType="textCapWords"
-                    android:text="الاسم"
-                    android:visibility="gone" />
-
-            </FrameLayout>
+                android:layout_weight="1.5" />
 
         </LinearLayout>
 
 
-        <!-- Email Label -->
-
+        <!--emails-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/t3del2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:gravity="center"
-                android:text="تعديل"
-                android:textColor="#0080ff" />
+                android:layout_gravity="center|start"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:text="@string/profile_emails_label" />
 
-
-            <Space
+            <!--begin generator {VERTICALL}-->
+            <LinearLayout
+                android:id="@+id/email_generator"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="3"
+                android:orientation="vertical">
 
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:layout_weight="4">
-
-                <TextView
-                    android:id="@+id/profile_email_tv"
+                <!--start sibling-->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="example@email.com" />
+                    android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/profile_email_et"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:inputType="textCapWords"
-                    android:text="الإيميل"
-                    android:visibility="gone" />
+                    <EditText
+                        android:id="@+id/profile_email_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|end"
+                        android:layout_weight="2.5"
+                        android:autofillHints="what is autofillHints"
+                        android:hint="@string/profile_emails_label"
+                        android:inputType="textEmailAddress"
+                        tools:targetApi="o" />
 
-            </FrameLayout>
+                    <ImageView
+                        android:id="@+id/doaddnewemail"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.5"
+                        android:contentDescription="@string/debugtext"
+                        android:src="@drawable/add_view" />
 
+                </LinearLayout>
+                <!--end sibling-->
+
+                <!--new horizontal-->
+                <!--new horizontal-->
+
+            </LinearLayout>
+            <!--end generator {VERTICALL}-->
 
         </LinearLayout>
+
 
         <!-- Signup Button -->
-        <android.support.v7.widget.AppCompatButton
+        <Button
             android:id="@+id/save_changes_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -162,8 +231,9 @@
             android:layout_marginBottom="24dp"
             android:onClick="dododo"
             android:padding="12dp"
-            android:text="حفظ التغييرات" />
+            android:text="@string/save" />
 
     </LinearLayout>
+
 
 </ScrollView>

@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/horizontal_email"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <EditText
+        android:id="@+id/profile_email_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|end"
+        android:layout_weight="2.5"
+        android:autofillHints="what is autofillHints"
+        android:hint="@string/profile_emails_label"
+        android:inputType="textEmailAddress"
+        tools:targetApi="o" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="0.5"
+        android:contentDescription="@string/debugtext"
+        android:src="@drawable/remove_view" />
+
+</LinearLayout>

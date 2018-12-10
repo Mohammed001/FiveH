@@ -82,5 +82,18 @@
     <string name="authing_mag">Authenticating…</string>
     <string name="debug_usertype">golden user</string>
     <string name="profile_name_label">name</string>
+    <string name="save">save</string>
+    <string name="profile_name">Name</string>
+    <string name="profile_age_label">Age</string>
+
+    <string-array name="gender_array">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <string name="profile_spinner_promt">select gender</string>
+    <string name="profile_address_label">Address</string>
+    <string name="profile_gender_label">Gender</string>
+    <string name="profile_emails_label">Email</string>
 
 </resources>

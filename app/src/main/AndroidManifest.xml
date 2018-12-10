@@ -55,16 +55,19 @@
         <activity android:name=".MyAds" />
         <activity android:name=".MyMoney" />
         <activity android:name=".MyProfile" />
-        <!-- android:theme="@style/AppTheme.NoActionBar" -->
         <activity
-            android:name=".Intro"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".MyProfile2"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- android:theme="@style/AppTheme.NoActionBar" -->
+        <activity
+            android:name=".Intro"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
             android:name="com.instagram.instagramapi.InstagramAppClientId"

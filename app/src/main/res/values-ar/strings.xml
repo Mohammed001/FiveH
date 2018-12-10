@@ -59,4 +59,12 @@
     <string name="diamond_user">مستخدم ألماسي</string>
     <string name="debug_usertype">مستخدم ذهبي</string>
     <string name="profile_name_label">الاسم</string>
+    <string name="save">حفظ</string>
+    <string name="profile_name">الاسم</string>
+    <string name="profile_age_label">العمر</string>
+    <string name="profile_spinner_promt">اختر الجنس</string>
+    <string name="profile_address_label">العنوان</string>
+    <string name="profile_gender_label">الجنس</string>
+    <string name="profile_emails_label">الايميل</string>
+
 </resources>
