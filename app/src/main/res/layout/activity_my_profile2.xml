@@ -184,7 +184,7 @@
                 android:layout_weight="3"
                 android:orientation="vertical">
 
-                <!--start sibling-->
+                <!--main sibling-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -213,14 +213,66 @@
                 </LinearLayout>
                 <!--end sibling-->
 
-                <!--new horizontal-->
-                <!--new horizontal-->
-
             </LinearLayout>
             <!--end generator {VERTICALL}-->
 
         </LinearLayout>
 
+        <!--phone numbers-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|start"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:text="@string/profile_phones_label" />
+
+            <!--begin generator {VERTICALL}-->
+            <LinearLayout
+                android:id="@+id/phone_generator"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:orientation="vertical">
+
+                <!--main sibling-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/profile_phone_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|end"
+                        android:layout_weight="2.5"
+                        android:autofillHints="what is autofillHints"
+                        android:hint="@string/profile_emails_label"
+                        android:inputType="phone"
+                        tools:targetApi="o" />
+
+                    <ImageView
+                        android:id="@+id/doaddnewphone"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.5"
+                        android:contentDescription="@string/debugtext"
+                        android:src="@drawable/add_view" />
+
+                </LinearLayout>
+                <!--end sibling-->
+
+            </LinearLayout>
+            <!--end generator {VERTICALL}-->
+
+        </LinearLayout>
 
         <!-- Signup Button -->
         <Button

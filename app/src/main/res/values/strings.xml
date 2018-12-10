@@ -95,5 +95,6 @@
     <string name="profile_address_label">Address</string>
     <string name="profile_gender_label">Gender</string>
     <string name="profile_emails_label">Email</string>
+    <string name="profile_phones_label">Phone</string>
 
 </resources>

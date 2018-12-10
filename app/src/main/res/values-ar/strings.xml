@@ -66,5 +66,6 @@
     <string name="profile_address_label">العنوان</string>
     <string name="profile_gender_label">الجنس</string>
     <string name="profile_emails_label">الايميل</string>
+    <string name="profile_phones_label">Phone</string>
 
 </resources>
