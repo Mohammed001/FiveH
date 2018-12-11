@@ -1,3 +1,12 @@
+when wrapping linearLayout within a scrollview you should consider:
+    1- in {linearLayout}: use padding (not layout_margin)
+    2- in {linearLayout}: don't ever use (layout_gravity="center"), but
+    3- in {scrollView}: use fillViewPort="true".
+
+
+
+https://stackoverflow.com/questions/23024831/android-shared-preferences-example
+
 http://www.vogella.com/tutorials/android.html
 
 https://www.journaldev.com/10024/android-recyclerview-android-cardview-example-tutorial

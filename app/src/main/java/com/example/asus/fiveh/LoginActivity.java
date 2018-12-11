@@ -17,7 +17,7 @@ import com.example.asus.fiveh.loginproviders.GoogleLogin;
 import com.example.asus.fiveh.loginproviders.InstagramLogin;
 import com.example.asus.fiveh.loginproviders.TwitterLogin;
 import com.example.asus.fiveh.models.Response;
-import com.example.asus.fiveh.models.ResponseData;
+import com.example.asus.fiveh.models.User;
 import com.example.asus.fiveh.utils.Utils;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
@@ -149,10 +149,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
                 if (response.body() != null) {
                     Log.i(TAG, "onResponse: " + (response.body().getMsg()));
-                    ResponseData responseData = response.body().getData();
-                    if (responseData != null) {
-//                        Log.i(TAG, "onResponse: " + responseData.getUser_name());
-                        String userType = responseData.getUser_type();
+                    User user = response.body().getData();
+                    if (user != null) {
+//                        Log.i(TAG, "onResponse: " + user.getUser_name());
+                        String userType = user.getUser_type();
                         Utils.USER_TYPE = userType.equals(USERTYPERESPONSE) ? GREED : ADVERTISER;
                     }
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);

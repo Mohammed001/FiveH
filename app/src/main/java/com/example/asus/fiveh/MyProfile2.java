@@ -1,6 +1,8 @@
 package com.example.asus.fiveh;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -24,15 +26,19 @@ import com.example.asus.fiveh.utils.Utils;
 public class MyProfile2 extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     public static final String TAG = MyProfile2.class.getSimpleName();
+    private static final String EMAILS_NO = "EMAILS_NO";
+    private static final String MY_PROFILE_SHAREDPREF_NAME = "my_profile";
     EditText profile_name_value;
     Drawable profile_name_value_drawable;
     Drawable profile_address_value_drawable;
     EditText profile_age_value;
     EditText profile_address_value;
     Spinner spinner;
+    // vertical linearLayout
     LinearLayout email_generator;
     LayoutInflater layoutInflater;
-    ImageView doaddnewemail;
+    ImageView plus_icon_add_new_email;
+    ImageView minus_icon_remove_email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,7 @@ public class MyProfile2 extends AppCompatActivity implements View.OnClickListene
         setContentView(R.layout.activity_my_profile2);
         Utils.displaybackarrow(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        layoutInflater = getLayoutInflater();
 
         profile_name_value = findViewById(R.id.profile_name_value);
         profile_name_value.setOnClickListener(this);
@@ -61,13 +68,21 @@ public class MyProfile2 extends AppCompatActivity implements View.OnClickListene
 
         spinnerIssues();
 
-        doaddnewemail = findViewById(R.id.doaddnewemail);
-        // Parent layout
-        email_generator = findViewById(R.id.email_generator);
-        // Layout inflater
-        layoutInflater = getLayoutInflater();
-        doaddnewemail.setOnClickListener(this);
+//        email_generator = findViewById(R.id.email_generator);
 
+        plus_icon_add_new_email = findViewById(R.id.plus_icon_add_new_email);
+        plus_icon_add_new_email.setOnClickListener(this);
+
+        email_generator = findViewById(R.id.email_generator);
+        SharedPreferences prefs = getSharedPreferences(MY_PROFILE_SHAREDPREF_NAME, MODE_PRIVATE);
+        Editor editor = prefs.edit();
+        int count = prefs.getInt(EMAILS_NO, -1);
+        for (int i = 0; i < count; i++) {
+            // this param is not required bcz {email_generator} is class member variable.. but it make the code clearer  to me!.
+            addNewEmail(email_generator);
+        }
+        // after creating the views we should populate them with saved emails.
+        editor.apply();
     }
 
     private void spinnerIssues() {
@@ -134,18 +149,29 @@ public class MyProfile2 extends AppCompatActivity implements View.OnClickListene
                 profile_address_value.setCursorVisible(true);
                 profile_address_value.setBackground(profile_address_value_drawable);
                 break;
-            case R.id.doaddnewemail:
-                // Add the text layout to the parent layout
-                view = layoutInflater.inflate(R.layout.to_inflate_new_email, email_generator, false);
 
-                // In order to get the view we have to use the new view with text_layout in it
-                LinearLayout horizontal_email = view.findViewById(R.id.horizontal_email);
-//                horizontal_email.setTag();
-                // Add the text view to the parent layout
-                email_generator.addView(horizontal_email);
-
+            case R.id.plus_icon_add_new_email:
+                addNewEmail(email_generator);
+                SharedPreferences prefs = getSharedPreferences(MY_PROFILE_SHAREDPREF_NAME, MODE_PRIVATE);
+                Editor editor = prefs.edit();
+                editor.putInt(EMAILS_NO, email_generator.getChildCount());
+                editor.apply();
                 break;
         }
+    }
+
+    private void addNewEmail(final LinearLayout email_generator) {
+        // Add the text layout to the parent layout
+        final LinearLayout new_horizontal_email = (LinearLayout) layoutInflater.inflate(R.layout.to_inflate_new_email, email_generator, false);
+        ImageView minus = new_horizontal_email.findViewById(R.id.minus_icon_remove_email);
+        minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                email_generator.removeView(new_horizontal_email);
+            }
+        });
+        // Add the text view to the parent layout
+        email_generator.addView(new_horizontal_email);
     }
 
     @Override

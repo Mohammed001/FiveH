@@ -5,8 +5,11 @@
     <!-- view border color and width -->
     <stroke android:width="0.5dp" />
 
+    <!-- Here is the corner radius -->
+    <corners android:radius="5dp" />
+
     <!--view background color-->
-    <solid android:color="#019B10" />
+    <!--<solid android:color="#019B10" />-->
 
     <!-- If you want to add some padding -->
     <!--<padding-->
@@ -15,21 +18,4 @@
     <!--android:right="4dp"-->
     <!--android:top="4dp" />-->
 
-    <!-- Here is the corner radius -->
-    <corners android:radius="5dp" />
-
 </shape>
-
-    <!--todo: try java code--><!--// Set a click listener for Button widget--><!--btn.setOnClickListener(new View.OnClickListener() {--><!--@Override--><!--public void onClick(View v) {-->
-
-    <!--// Initialize a new GradientDrawable--><!--GradientDrawable gd = new GradientDrawable();-->
-
-    <!--// Specify the shape of drawable--><!--gd.setShape(GradientDrawable.RECTANGLE);-->
-
-    <!--// Set the fill color of drawable--><!--gd.setColor(Color.TRANSPARENT); // make the background transparent-->
-
-    <!--// Create a 2 pixels width red colored border for drawable--><!--gd.setStroke(2, Color.RED); // border width and color-->
-
-    <!--// Make the border rounded--><!--gd.setCornerRadius(15.0f); // border corner radius-->
-
-    <!--// Finally, apply the GradientDrawable as TextView background--><!--tv.setBackground(gd);--><!--}--><!--});-->

@@ -1,6 +1,6 @@
 package com.example.asus.fiveh.models;
 
-public class ResponseData {
+public class User {
     private String user_insta_id;
     private String user_twitter_id;
     private String user_face_id;
@@ -119,4 +119,6 @@ public class ResponseData {
     public void setUser_type(String user_type) {
         this.user_type = user_type;
     }
+
+
 }

@@ -3,7 +3,7 @@ package com.example.asus.fiveh.models;
 public class Response {
     private String result;
     private String msg;
-    private ResponseData data;
+    private User data;
 
     public String getResult() {
         return result;
@@ -21,11 +21,11 @@ public class Response {
         this.msg = msg;
     }
 
-    public ResponseData getData() {
+    public User getData() {
         return data;
     }
 
-    public void setData(ResponseData data) {
+    public void setData(User data) {
         this.data = data;
     }
 }
