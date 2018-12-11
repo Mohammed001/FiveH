@@ -48,7 +48,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="44dp" />
+            android:layout_height="40dp" />
 
         <!--address-->
         <LinearLayout
@@ -69,13 +69,22 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|end"
-                android:layout_weight="3"
+                android:layout_weight="2.5"
                 android:autofillHints="what is autofillHints"
                 android:hint="@string/profile_address_label"
                 android:inputType="text"
                 tools:targetApi="o" />
 
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5" />
+
         </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/my_profile" />
 
         <!--name-->
         <LinearLayout
@@ -96,13 +105,22 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|end"
-                android:layout_weight="3"
+                android:layout_weight="2.5"
                 android:autofillHints="what is autofillHints"
                 android:hint="@string/debug_username"
                 android:inputType="text"
                 tools:targetApi="o" />
 
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5" />
+
         </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/my_profile" />
 
         <!--age-->
         <LinearLayout
@@ -123,14 +141,22 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|end"
-                android:layout_weight="3"
+                android:layout_weight="2.5"
                 android:autofillHints="what is autofillHints"
                 android:hint="@string/profile_age_label"
                 android:inputType="number"
                 tools:targetApi="o" />
 
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5" />
+
         </LinearLayout>
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/my_profile" />
         <!--gender-->
         <LinearLayout
             android:layout_width="match_parent"
@@ -161,20 +187,15 @@
 
         </LinearLayout>
 
-
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/my_profile" />
         <!--emails-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|start"
-                android:layout_weight="1"
-                android:gravity="start"
-                android:text="@string/profile_emails_label" />
 
             <!--begin generator {VERTICALL}-->
             <LinearLayout
@@ -190,6 +211,13 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|start"
+                        android:layout_weight="1"
+                        android:gravity="start"
+                        android:text="@string/profile_emails_label" />
                     <EditText
                         android:id="@+id/profile_email_value"
                         android:layout_width="0dp"
@@ -218,6 +246,9 @@
 
         </LinearLayout>
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/my_profile" />
         <!--phone numbers-->
         <LinearLayout
             android:layout_width="match_parent"
@@ -274,6 +305,9 @@
 
         </LinearLayout>
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/my_profile" />
         <!-- Signup Button -->
         <Button
             android:id="@+id/save_changes_btn"
@@ -282,10 +316,10 @@
             android:layout_height="35dp"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
+            android:background="@drawable/btn_rounded_corner2"
             android:onClick="dododo"
             android:text="@string/save" />
 
     </LinearLayout>
-
 
 </ScrollView>

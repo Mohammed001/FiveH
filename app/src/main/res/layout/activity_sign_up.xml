@@ -73,7 +73,7 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/signup_space" />
+                android:layout_height="@dimen/my_profile" />
 
             <!-- Email Label -->
             <android.support.design.widget.TextInputLayout
