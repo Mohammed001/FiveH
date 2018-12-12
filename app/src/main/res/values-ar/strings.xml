@@ -70,5 +70,6 @@
     <string name="debug_ad_text">نص الإعلان: نشاطات مختلفة في معاشهم</string>
     <string name="delete_label">حذف</string>
     <string name="stats_label">احصائيات</string>
+    <string name="preview_label">معاينة</string>
 
 </resources>

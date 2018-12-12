@@ -25,6 +25,7 @@
         android:id="@+id/swiperefreshlayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/main_rv"
             android:layout_width="match_parent"
@@ -33,6 +34,7 @@
             android:layoutAnimation="@anim/layout_animation"
             android:scrollbars="none"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <android.support.design.widget.FloatingActionButton
@@ -42,8 +44,10 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:tooltipText="Create AD"
-        android:visibility="gone"
-        app:srcCompat="@android:drawable/ic_menu_edit"
+        android:visibility="visible"
+        app:backgroundTint="@color/colorPrimary"
+        app:srcCompat="@drawable/add_ad_fb_icon"
         tools:targetApi="o" />
+    <!--app:backgroundTint="@color/orange"-->
 
 </android.support.design.widget.CoordinatorLayout>

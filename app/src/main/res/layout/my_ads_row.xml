@@ -1,39 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginBottom="16dp"
+    android:background="@drawable/btn_rounded_corner"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="12dp">
 
     <ImageView
         android:id="@+id/my_ad_image"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5"
+        android:layout_weight="1"
         android:adjustViewBounds="true"
         android:contentDescription="@string/ad_iamge"
-        android:scaleType="fitXY"
-        app:srcCompat="@drawable/image_ad" />
+        android:scaleType="centerCrop"
+        android:src="@drawable/image_ad" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/darker_gray"
+        android:background="#252525"
         android:padding="12dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            tools:text="source: facebook" />
+            android:text="source: facebook"
+            android:textColor="@android:color/white" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            tools:text="bundle: gold" />
+            android:text="bundle: gold"
+            android:textColor="@android:color/white" />
 
     </RelativeLayout>
 
@@ -41,13 +45,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="12dp"
-        tools:text="@string/debug_ad_text" />
+        android:text="@string/debug_ad_text" />
 
     <TextView
+        android:id="@+id/make_it_clearer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="12dp"
-        tools:text="making it clearer!!!!" />
+        android:text="making it clearer!!!!" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -61,29 +66,31 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:drawableStart="@android:drawable/ic_menu_delete"
-            android:gravity="center"
-            tools:text="@string/delete_label" />
-
+            android:drawableStart="@drawable/delete_ad_icon"
+            android:drawablePadding="4dp"
+            android:gravity="bottom"
+            android:text="@string/delete_label" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
-            android:drawableStart="@android:drawable/ic_menu_view"
-            android:gravity="center"
-            tools:text="preview" />
-
+            android:drawableStart="@drawable/preview_ad_icon"
+            android:drawablePadding="4dp"
+            android:gravity="bottom"
+            android:text="@string/preview_label" />
 
         <TextView
             android:id="@+id/stats_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:drawableStart="@android:drawable/ic_menu_view"
-            android:gravity="center"
-            tools:text="@string/stats_label" />
+            android:drawableStart="@drawable/show_stat_icon"
+            android:drawablePadding="4dp"
+            android:gravity="bottom"
+            android:text="@string/stats_label" />
 
     </RelativeLayout>
 

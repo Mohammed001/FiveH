@@ -144,7 +144,7 @@
                 android:text="@string/create_account_btn"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
-                app:backgroundTint="@android:color/holo_green_light" />
+                app:backgroundTint="#019B10" />
 
             <Space
                 android:layout_width="match_parent"

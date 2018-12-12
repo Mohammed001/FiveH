@@ -12,14 +12,14 @@ import com.example.asus.fiveh.R;
  * Created by ASUS on 11/12/2018.
  */
 
-public class MyAdViewHolder extends RecyclerView.ViewHolder {
+class MyAdViewHolder extends RecyclerView.ViewHolder {
 
-    public TextView mTextView;
-    public ImageView mImageView;
+    TextView mTextView;
+    ImageView mImageView;
 
-    public MyAdViewHolder(View itemView) {
+    MyAdViewHolder(View itemView) {
         super(itemView);
-        mTextView = itemView.findViewById(R.id.my_ad_info);
+        mTextView = itemView.findViewById(R.id.make_it_clearer);
         mImageView = itemView.findViewById(R.id.my_ad_image);
     }
 
