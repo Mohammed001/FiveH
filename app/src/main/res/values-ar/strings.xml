@@ -66,6 +66,9 @@
     <string name="profile_address_label">العنوان</string>
     <string name="profile_gender_label">الجنس</string>
     <string name="profile_emails_label">الايميل</string>
-    <string name="profile_phones_label">Phone</string>
+    <string name="profile_phones_label">الهاتف</string>
+    <string name="debug_ad_text">نص الإعلان: نشاطات مختلفة في معاشهم</string>
+    <string name="delete_label">حذف</string>
+    <string name="stats_label">احصائيات</string>
 
 </resources>

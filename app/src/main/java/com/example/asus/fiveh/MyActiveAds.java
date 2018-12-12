@@ -10,7 +10,7 @@ import android.view.Menu;
 import com.example.asus.fiveh.my_ad_adapter.MyAdAdapter;
 import com.example.asus.fiveh.utils.Utils;
 
-public class MyAds extends AppCompatActivity {
+public class MyActiveAds extends AppCompatActivity {
 
     MyAdAdapter adAdapter;
     RecyclerView recyclerView;

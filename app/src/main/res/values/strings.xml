@@ -96,5 +96,8 @@
     <string name="profile_gender_label">Gender</string>
     <string name="profile_emails_label">Email</string>
     <string name="profile_phones_label">Phone</string>
+    <string name="debug_ad_text">Advertisement text: different activities in life</string>
+    <string name="delete_label">delete</string>
+    <string name="stats_label">stats</string>
 
 </resources>

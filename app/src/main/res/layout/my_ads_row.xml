@@ -1,34 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
     android:gravity="center"
-    android:orientation="horizontal"
-    android:padding="8dp">
-
-    <TextView
-        android:id="@+id/my_ad_info"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="3"
-        android:gravity="center"
-        android:text="TextView"
-        android:textSize="24sp" />
-
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.5" />
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/my_ad_image"
-        android:layout_width="0dp"
-        android:layout_height="225dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="5"
+        android:adjustViewBounds="true"
         android:contentDescription="@string/ad_iamge"
         android:scaleType="fitXY"
         app:srcCompat="@drawable/image_ad" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/darker_gray"
+        android:padding="12dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            tools:text="source: facebook" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            tools:text="bundle: gold" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        tools:text="@string/debug_ad_text" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        tools:text="making it clearer!!!!" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/delete_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:drawableStart="@android:drawable/ic_menu_delete"
+            android:gravity="center"
+            tools:text="@string/delete_label" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:drawableStart="@android:drawable/ic_menu_view"
+            android:gravity="center"
+            tools:text="preview" />
+
+
+        <TextView
+            android:id="@+id/stats_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:drawableStart="@android:drawable/ic_menu_view"
+            android:gravity="center"
+            tools:text="@string/stats_label" />
+
+    </RelativeLayout>
 
 </LinearLayout>

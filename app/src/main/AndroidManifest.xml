@@ -52,7 +52,7 @@
 
 
         </activity>
-        <activity android:name=".MyAds" />
+        <activity android:name=".MyActiveAds" />
         <activity android:name=".MyMoney" />
         <activity android:name=".MyProfile" />
         <activity
