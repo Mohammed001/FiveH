@@ -14,7 +14,7 @@ public interface RetrofitAPI {
     Call<List<Ad>> listAds();
 
     // hazem@sadv.sa
-    @GET("login.php")
+    @GET("connectToLinkedIn.php")
     Call<Response> call_5H_signin(@Query("email") String user_name, @Query("pass") String password);
 
     @GET("logout.php")
@@ -22,7 +22,7 @@ public interface RetrofitAPI {
 
     //    signup.php
     @GET("signup.php")
-    void call_5H_signup(@Query("login") String user_name,
+    void call_5H_signup(@Query("connectToLinkedIn") String user_name,
                                   @Query("pass") String password,
                                   @Query("user_first_name") String firstn,
                                   @Query("user_last_name") String lastn,

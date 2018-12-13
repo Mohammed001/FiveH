@@ -1,9 +1,28 @@
+design
+https://sparkling-dream.animaapp.io/preview/1jTxh5R/home
+
 when wrapping linearLayout within a scrollview you should consider:
     1- in {linearLayout}: use padding (not layout_margin)
     2- in {linearLayout}: don't ever use (layout_gravity="center"), but
     3- in {scrollView}: use fillViewPort="true".
 
+________________
+https://www.linkedin.com/developers/apps/
 
+linkedin package hash: (from code)
+XyHqdRRTww0oiyokJvItjTR+XRA=
+
+keytool -exportcert -alias androiddebugkey -keystore .android/debug.keystore | openssl-0\bin\openssl sha1 -binary | openssl-0\bin\openssl base64
+
+ZhQrTJeDQxdSPSB5pDAOKZCI0gQ=
+
+
+https://github.com/sambhaji213/LinkedIn-Login/
+
+https://github.com/neurospeech/unofficial-linkedin-sdk-android
+
+
+__________________
 
 https://stackoverflow.com/questions/23024831/android-shared-preferences-example
 

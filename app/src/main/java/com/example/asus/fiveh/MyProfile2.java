@@ -66,7 +66,7 @@ public class MyProfile2 extends AppCompatActivity implements View.OnClickListene
         profile_address_value.setBackgroundResource(android.R.color.transparent);
         profile_address_value_drawable = profile_address_value.getBackground();
 
-        spinnerIssues();
+//        spinnerIssues();
 
 //        email_generator = findViewById(R.id.email_generator);
 
@@ -86,7 +86,7 @@ public class MyProfile2 extends AppCompatActivity implements View.OnClickListene
     }
 
     private void spinnerIssues() {
-        spinner = findViewById(R.id.gender_spinner);
+//        spinner = findViewById(R.id.gender_spinner);
 // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.gender_array, android.R.layout.simple_spinner_item);

@@ -81,7 +81,7 @@
     <string name="ad_tesxt_placeholder">Advertisement text</string>
     <string name="authing_mag">Authenticating…</string>
     <string name="debug_usertype">golden user</string>
-    <string name="profile_name_label">name</string>
+    <string name="profile_name_label">Name</string>
     <string name="save">save</string>
     <string name="profile_name">Name</string>
     <string name="profile_age_label">Age</string>
@@ -96,5 +96,9 @@
     <string name="profile_gender_label">Gender</string>
     <string name="profile_emails_label">Email</string>
     <string name="profile_phones_label">Phone</string>
+    <string name="debug_ad_text">Advertisement text: different activities in life</string>
+    <string name="delete_label">delete</string>
+    <string name="stats_label">stats</string>
+    <string name="preview_label">preview</string>
 
 </resources>
