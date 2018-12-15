@@ -209,3 +209,26 @@ https://medium.freecodecamp.org/25-new-android-libraries-which-you-definitely-wa
 
 https://medium.mybridge.co/38-amazing-android-open-source-apps-java-1a62b7034c40
 
+https://github.com/miteshpithadiya/SearchableSpinner
+
+
+<android.support.v7.widget.CardView
+android:id="@+id/yourcardid"
+android:layout_width="wrap_content"
+android:layout_height="40dp"
+android:elevation="1dp"
+android:innerRadius="0dp"
+android:shape="ring"
+android:thicknessRatio="1.9"
+app:cardCornerRadius="20dp">
+<Spinner
+    android:id="@+id/spinner_services"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:paddingLeft="10dp" />
+</android.support.v7.widget.CardView>
+
+https://github.com/afollestad/material-dialogs
+
+https://www.dev2qa.com/android-shape-selector-examples/
+https://www.dev2qa.com/android-layer-list-example/

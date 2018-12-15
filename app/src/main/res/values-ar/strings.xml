@@ -23,6 +23,8 @@
         <item>فيسبوك</item>
         <item>تويتر</item>
         <item>انستغرام</item>
+        <item>لينكد ان</item>
+        <item>موقعنا</item>
     </string-array>
 
     <string-array name="options_when_signup">
@@ -71,5 +73,8 @@
     <string name="delete_label">حذف</string>
     <string name="stats_label">احصائيات</string>
     <string name="preview_label">معاينة</string>
+    <string name="active_accounts_in_my_accounts">تمت اضافة هذه الحسابات مسبقاً</string>
+    <string name="advertisment_type">نوع الاعلان</string>
+    <string name="choose_advertisment_type">اختر نوع الاعلان</string>
 
 </resources>

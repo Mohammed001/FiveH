@@ -1,11 +1,17 @@
 package com.example.asus.fiveh;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.asus.fiveh.utils.ImagePicker;
 import com.example.asus.fiveh.utils.Utils;
@@ -19,7 +25,7 @@ public class CreateNewAd extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_new_ad);
+        setContentView(R.layout.create_ad_template);
         Utils.displaybackarrow(this);
         imageView = findViewById(R.id.ad_image);
 //        imageView.setImageResource(R.drawable.image_ad);
@@ -71,4 +77,48 @@ public class CreateNewAd extends AppCompatActivity {
     public void createAd(View view) {
         finish();
     }
+
+    public void launch_dialog(View view) {
+        AlertDialog.Builder b = new AlertDialog.Builder(this);
+        b.setTitle(getString(R.string.choose_advertisment_type));
+        String[] types = getResources().getStringArray(R.array.options_when_create_ad);
+        b.setItems(types, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                switch (which) {
+                    case 0: // FACEBOOK
+                        Toast.makeText(CreateNewAd.this, "Facebook", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 1: // Twitter
+                        Toast.makeText(CreateNewAd.this, "Twitter", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 2: // Instagram
+                        Toast.makeText(CreateNewAd.this, "Instagram", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 3: // LinkedIn
+                        Toast.makeText(CreateNewAd.this, "LinkedIn", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 4: // Our website
+                        Toast.makeText(CreateNewAd.this, "Our website", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });
+        AlertDialog dialog = b.create();
+
+        // Get the alert dialog ListView instance
+        ListView listView = dialog.getListView();
+
+        // Set the divider color of alert dialog list view
+//        listView.setDivider(getResources().getDrawable(R.drawable.line));
+        listView.setDivider(new ColorDrawable(Color.RED));
+
+        // Set the divider height of alert dialog list view
+        listView.setDividerHeight(3);
+
+        // Finally, display the alert dialog
+        dialog.show();
+    }
+
 }

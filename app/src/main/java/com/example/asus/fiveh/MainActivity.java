@@ -26,6 +26,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.asus.fiveh.main_ad_adapter.MainAdAdapter;
@@ -53,10 +54,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     List<Ad> data = null;
     SwipeRefreshLayout swiperefreshlayout;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
         setContentView(R.layout.navigation);
         Utils.USER_TYPE = ADVERTISER;
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -240,6 +241,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
+        LinearLayout linearLayout = findViewById(R.id.image_user_bundle);
+        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
         if (USER_TYPE == ADVERTISER) {
             fab.setVisibility(View.VISIBLE);
             fab.setOnClickListener(new View.OnClickListener() {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -20,36 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="25dp" />
 
-        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/profile_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:paddingTop="@dimen/nav_header_vertical_spacing"
-            android:src="@drawable/my_profile"
-            app:civ_border_color="#FF000000"
-            app:civ_border_width="1dp" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="16dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/debug_username"
-            android:textColor="@android:color/black" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="4dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/debug_usertype" />
+        <include layout="@layout/image_user_bundle" />
 
         <Space
             android:layout_width="match_parent"
@@ -89,7 +60,7 @@
         </LinearLayout>
 
         <Space
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/my_profile"
             android:layout_height="@dimen/my_profile" />
 
         <!--name-->
@@ -163,8 +134,9 @@
         </LinearLayout>
 
         <Space
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/my_profile"
             android:layout_height="@dimen/my_profile" />
+
         <!--emails-->
         <LinearLayout
             android:layout_width="match_parent"
@@ -224,8 +196,9 @@
         </LinearLayout>
 
         <Space
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/my_profile"
             android:layout_height="@dimen/my_profile" />
+
         <!--phone numbers-->
         <LinearLayout
             android:layout_width="match_parent"
@@ -284,8 +257,9 @@
         </LinearLayout>
 
         <Space
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/my_profile"
             android:layout_height="@dimen/my_profile" />
+
         <!-- Signup Button -->
         <Button
             android:id="@+id/save_changes_btn"
@@ -298,15 +272,4 @@
 
     </LinearLayout>
 
-</ScrollView>
-
-
-    <!--gender--><!--<LinearLayout--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:orientation="horizontal">-->
-
-    <!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_height="wrap_content"--><!--android:layout_gravity="center|start"--><!--android:layout_weight="1"--><!--android:gravity="start"--><!--android:text="@string/profile_gender_label" />-->
-
-    <!--<Spinner--><!--android:id="@+id/gender_spinner"--><!--android:layout_width="0dp"--><!--android:layout_height="wrap_content"--><!--android:layout_gravity="center|end"--><!--android:layout_weight="1.5"--><!--android:gravity="start"--><!--android:prompt="@string/profile_spinner_promt" />-->
-
-    <!--<Space--><!--android:layout_width="0dp"--><!--android:layout_height="wrap_content"--><!--android:layout_weight="1.5" />-->
-
-    <!--</LinearLayout>-->
+</android.support.v4.widget.NestedScrollView>

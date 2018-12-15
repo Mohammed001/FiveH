@@ -36,8 +36,10 @@
 
     <string-array name="options_when_create_ad">
         <item>Facebook</item>
-        <item>Tweeter</item>
+        <item>Twitter</item>
         <item>Instagram</item>
+        <item>LinkedIn</item>
+        <item>Our website</item>
     </string-array>
 
     <string name="prompt_email">Email</string>
@@ -100,5 +102,8 @@
     <string name="delete_label">delete</string>
     <string name="stats_label">stats</string>
     <string name="preview_label">preview</string>
+    <string name="active_accounts_in_my_accounts">These accounts have been added previously</string>
+    <string name="advertisment_type">Advertisment type</string>
+    <string name="choose_advertisment_type">choose advertisment type</string>
 
 </resources>

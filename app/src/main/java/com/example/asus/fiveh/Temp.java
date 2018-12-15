@@ -48,6 +48,7 @@ public class Temp extends AppCompatActivity {
     }
 
     private static Scope buildScope() {
+        // todo
         return Scope.build(Scope.R_BASICPROFILE);
     }
 
