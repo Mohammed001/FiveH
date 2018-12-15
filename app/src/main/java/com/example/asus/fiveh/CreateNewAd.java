@@ -6,15 +6,20 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.asus.fiveh.utils.ImagePicker;
 import com.example.asus.fiveh.utils.Utils;
+
+import java.util.Objects;
 
 public class CreateNewAd extends AppCompatActivity {
     private static final int PICK_IMAGE_ID = 234; // the number doesn't matter
@@ -105,19 +110,43 @@ public class CreateNewAd extends AppCompatActivity {
                 }
             }
         });
+
         AlertDialog dialog = b.create();
-
-        // Get the alert dialog ListView instance
         ListView listView = dialog.getListView();
+//        listView.setDivider(new ColorDrawable(Color.GRAY));
+        listView.setDivider(getResources().getDrawable(R.drawable.line));
 
-        // Set the divider color of alert dialog list view
-//        listView.setDivider(getResources().getDrawable(R.drawable.line));
-        listView.setDivider(new ColorDrawable(Color.RED));
-
-        // Set the divider height of alert dialog list view
         listView.setDividerHeight(3);
-
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(R.drawable.dialog_bg);
+//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         // Finally, display the alert dialog
+        dialog.show();
+//        dialog.getWindow().setLayout(1000, 1000); //Controlling width and height.
+
+
+
+    }
+
+    public void vv(View v){
+        View view = getLayoutInflater().inflate(R.layout.sheet_dialog, null);
+        final BottomSheetDialog dialog = new BottomSheetDialog(this);
+        dialog.setContentView(view);
+        TextView camera_sel = view.findViewById(R.id.camera);
+        TextView gallery_sel = view.findViewById(R.id.gallery);
+        camera_sel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(CreateNewAd.this, "Camera", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+        gallery_sel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(CreateNewAd.this, "Gallery", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
         dialog.show();
     }
 

@@ -3,10 +3,9 @@
 
     <item android:gravity="center">
         <shape android:shape="rectangle">
-            <padding android:right="40dp" />
-            <padding android:left="40dp" />
             <size android:height="1dp" />
-            <solid android:color="#0000FF" />
+            <size android:width="300dp" />
+            <solid android:color="@android:color/darker_gray" />
         </shape>
 
     </item>

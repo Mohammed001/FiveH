@@ -42,9 +42,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:onClick="launch_dialog"
+                android:onClick="vv"
                 android:text="@string/choose_advertisment_type" />
-
         </LinearLayout>
 
     </LinearLayout>
