@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = null;
 
         if (id == R.id.nav_my_profile) {
-            intent = new Intent(this, MyProfile.class);
+//            intent = new Intent(this, MyProfile.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         } else if (id == R.id.nav_my_accounts) {

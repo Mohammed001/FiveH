@@ -40,11 +40,7 @@
             <!--</intent-filter>-->
         </activity>
         <activity android:name=".CreateNewAd">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".LoginActivity"
@@ -60,15 +56,15 @@
         </activity>
         <activity android:name=".MyProfile" />
 
-        <activity
-            android:name=".MyProfile2"
-            android:windowSoftInputMode="adjustResize">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
+        <!--<activity-->
+        <!--android:name=".MyProfile"-->
+        <!--android:windowSoftInputMode="adjustResize">-->
+        <!--&lt;!&ndash;<intent-filter>&ndash;&gt;-->
+        <!--&lt;!&ndash;<action android:name="android.intent.action.MAIN" />&ndash;&gt;-->
 
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        </activity>
+        <!--&lt;!&ndash;<category android:name="android.intent.category.LAUNCHER" />&ndash;&gt;-->
+        <!--&lt;!&ndash;</intent-filter>&ndash;&gt;-->
+        <!--</activity>-->
         <!-- android:theme="@style/AppTheme.NoActionBar" -->
         <activity
             android:name=".Intro"
@@ -98,6 +94,13 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MyAccounts">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>

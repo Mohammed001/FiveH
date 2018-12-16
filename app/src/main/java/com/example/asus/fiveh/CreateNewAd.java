@@ -38,8 +38,8 @@ public class CreateNewAd extends AppCompatActivity {
         if (savedInstanceState != null) {
             if (savedInstanceState.getBoolean(PIC)) {
                 imageView.setImageBitmap(bitmap);
-                findViewById(R.id.myImageViewText).setVisibility(View.GONE);
-                findViewById(R.id.newmyImageViewText).setVisibility(View.VISIBLE);
+//                findViewById(R.id.myImageViewText).setVisibility(View.GONE);
+//                findViewById(R.id.newmyImageViewText).setVisibility(View.VISIBLE);
             }
         }
     }
@@ -61,8 +61,8 @@ public class CreateNewAd extends AppCompatActivity {
                     bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
                     // use the bitmap
                     imageView.setImageBitmap(bitmap);
-                    findViewById(R.id.myImageViewText).setVisibility(View.GONE);
-                    findViewById(R.id.newmyImageViewText).setVisibility(View.VISIBLE);
+//                    findViewById(R.id.myImageViewText).setVisibility(View.GONE);
+//                    findViewById(R.id.newmyImageViewText).setVisibility(View.VISIBLE);
                     break;
                 default:
                     super.onActivityResult(requestCode, resultCode, data);
