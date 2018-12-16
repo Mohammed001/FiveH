@@ -165,11 +165,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_my_accounts) {
             // Handle the camera action
             if (USER_TYPE == ADVERTISER) {
-                intent = new Intent(this, MyActiveAds.class);
+                // todo
+//                intent = new Intent(this, MyActiveAds.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
             } else if (USER_TYPE == Utils.GREED) {
-                intent = new Intent(this, MyMoney.class);
+                // todo
+//                intent = new Intent(this, MyMoney.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
             }

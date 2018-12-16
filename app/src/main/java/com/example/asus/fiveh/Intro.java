@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
-import android.widget.ImageView;
 
 import static com.example.asus.fiveh.utils.Utils.LOGINUSERNAME_KEY;
 import static com.example.asus.fiveh.utils.Utils.NOTLOGGEDIN;
@@ -21,7 +20,7 @@ public class Intro extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_intro);
+        setContentView(R.layout.intro);
 
         if (!logedIn()) {
             btn_go_to_creat_account = findViewById(R.id.btn_go_to_creat_account);

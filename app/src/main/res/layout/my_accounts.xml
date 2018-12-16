@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="25dp" />
 
-        <include layout="@layout/image_user_bundle" />
+        <include layout="@layout/to_inflate_user_image" />
 
         <Space
             android:layout_width="match_parent"
@@ -51,7 +51,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/remove_view" />
+                android:src="@drawable/remove_view_icon" />
 
         </LinearLayout>
 

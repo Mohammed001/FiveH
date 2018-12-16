@@ -43,7 +43,7 @@ public class MyProfile2 extends AppCompatActivity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_profile2);
+        setContentView(R.layout.my_profile);
         Utils.displaybackarrow(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         layoutInflater = getLayoutInflater();

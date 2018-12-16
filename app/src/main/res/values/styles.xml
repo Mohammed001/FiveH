@@ -38,7 +38,7 @@
     <style name="navigation_header_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/nav_header_height</item>
-        <item name="android:background">@drawable/side_nav_bar</item>
+        <item name="android:background">@drawable/drawer_gradient</item>
         <item name="android:gravity">bottom</item>
         <item name="android:orientation">horizontal</item>
         <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
@@ -49,7 +49,7 @@
     </style>
 
     <style name="my_button_style" parent="android:Widget.Holo.Button.Borderless">
-        <item name="android:background">@drawable/btn_rounded_corner</item>
+        <item name="android:background">@drawable/boarder_rounded_corner</item>
         <item name="android:fontFamily">@font/din_next_arabic_light_p30doenload_com</item>
         <item name="android:gravity">center</item>
         <item name="android:paddingBottom">5dp</item>

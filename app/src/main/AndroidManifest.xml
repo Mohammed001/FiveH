@@ -58,14 +58,6 @@
 
 
         </activity>
-        <activity android:name=".MyActiveAds">
-
-        </activity>
-        <activity android:name=".MyMoney" />
-        <activity android:name=".Temp2" />
-        <activity android:name=".Temp">
-
-        </activity>
         <activity android:name=".MyProfile" />
 
         <activity

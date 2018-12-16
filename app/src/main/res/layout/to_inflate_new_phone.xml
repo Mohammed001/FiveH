@@ -22,6 +22,6 @@
         android:layout_gravity="center"
         android:layout_weight="0.5"
         android:contentDescription="@string/debugtext"
-        android:src="@drawable/remove_view" />
+        android:src="@drawable/remove_view_icon" />
 
 </LinearLayout>

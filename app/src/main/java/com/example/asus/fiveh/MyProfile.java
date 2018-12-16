@@ -26,7 +26,7 @@ public class MyProfile {
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_my_profile2);
+//        setContentView(R.layout.my_profile);
 //
 //        Utils.displaybackarrow(this);
 //        t3del1 = findViewById(R.id.t3del1);

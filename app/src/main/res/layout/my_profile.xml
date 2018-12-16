@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true"
+    android:scrollbars="none"
+    tools:context="com.example.asus.fiveh.MyProfile">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="25dp" />
+
+        <include layout="@layout/to_inflate_user_image" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
+        <!--address-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|start"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:text="@string/profile_address_label"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:id="@+id/profile_address_value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|end"
+                android:layout_weight="2.5"
+                android:autofillHints="what is autofillHints"
+                android:hint="@string/profile_address_label"
+                android:inputType="text"
+                tools:targetApi="o" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="@dimen/my_profile"
+            android:layout_height="@dimen/my_profile" />
+
+        <!--name-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|start"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:text="@string/profile_name_label"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:id="@+id/profile_name_value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|end"
+                android:layout_weight="2.5"
+                android:autofillHints="what is autofillHints"
+                android:hint="@string/debug_username"
+                android:inputType="text"
+                tools:targetApi="o" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/my_profile" />
+
+        <!--age-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|start"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:text="@string/profile_age_label"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:id="@+id/profile_age_value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|end"
+                android:layout_weight="2.5"
+                android:autofillHints="what is autofillHints"
+                android:hint="@string/profile_age_label"
+                android:inputType="number"
+                tools:targetApi="o" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="@dimen/my_profile"
+            android:layout_height="@dimen/my_profile" />
+
+        <!--emails-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <!--begin generator {VERTICALL}-->
+            <LinearLayout
+                android:id="@+id/email_generator"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:orientation="vertical">
+
+                <!--main sibling-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|start"
+                        android:layout_weight="1"
+                        android:gravity="start"
+                        android:text="@string/profile_emails_label"
+                        android:textColor="@android:color/black" />
+
+                    <EditText
+                        android:id="@+id/profile_email_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|end"
+                        android:layout_weight="2.5"
+                        android:autofillHints="what is autofillHints"
+                        android:hint="@string/profile_emails_label"
+                        android:inputType="textEmailAddress"
+                        tools:targetApi="o" />
+
+                    <ImageView
+                        android:id="@+id/plus_icon_add_new_email"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.5"
+                        android:contentDescription="@string/debugtext"
+                        android:src="@drawable/add_view" />
+
+                </LinearLayout>
+                <!--end sibling-->
+
+            </LinearLayout>
+            <!--end generator {VERTICALL}-->
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="@dimen/my_profile"
+            android:layout_height="@dimen/my_profile" />
+
+        <!--phone numbers-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|start"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:text="@string/profile_phones_label"
+                android:textColor="@android:color/black" />
+
+            <!--begin generator {VERTICALL}-->
+            <LinearLayout
+                android:id="@+id/phone_generator"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:orientation="vertical">
+
+                <!--main sibling-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/profile_phone_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|end"
+                        android:layout_weight="2.5"
+                        android:autofillHints="what is autofillHints"
+                        android:hint="@string/profile_phones_label"
+                        android:inputType="phone"
+                        tools:targetApi="o" />
+
+                    <ImageView
+                        android:id="@+id/doaddnewphone"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.5"
+                        android:contentDescription="@string/debugtext"
+                        android:src="@drawable/add_view" />
+
+                </LinearLayout>
+                <!--end sibling-->
+
+            </LinearLayout>
+            <!--end generator {VERTICALL}-->
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="@dimen/my_profile"
+            android:layout_height="@dimen/my_profile" />
+
+        <!-- Signup Button -->
+        <Button
+            android:id="@+id/save_changes_btn"
+            style="@style/my_button_style"
+            android:layout_width="175dp"
+            android:layout_height="35dp"
+            android:background="@drawable/boarder_rounded_corner2"
+            android:gravity="center"
+            android:text="@string/save" />
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

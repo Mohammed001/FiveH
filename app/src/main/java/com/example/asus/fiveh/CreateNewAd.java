@@ -3,14 +3,11 @@ package com.example.asus.fiveh;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -30,7 +27,7 @@ public class CreateNewAd extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_ad_template);
+        setContentView(R.layout.create_ad);
         Utils.displaybackarrow(this);
         imageView = findViewById(R.id.ad_image);
 //        imageView.setImageResource(R.drawable.image_ad);
@@ -114,10 +111,10 @@ public class CreateNewAd extends AppCompatActivity {
         AlertDialog dialog = b.create();
         ListView listView = dialog.getListView();
 //        listView.setDivider(new ColorDrawable(Color.GRAY));
-        listView.setDivider(getResources().getDrawable(R.drawable.line));
+        listView.setDivider(getResources().getDrawable(R.drawable.create_ad_dialog_line));
 
         listView.setDividerHeight(3);
-        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(R.drawable.dialog_bg);
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(R.drawable.create_ad_dialog_bg);
 //        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         // Finally, display the alert dialog
         dialog.show();
@@ -128,7 +125,7 @@ public class CreateNewAd extends AppCompatActivity {
     }
 
     public void vv(View v){
-        View view = getLayoutInflater().inflate(R.layout.sheet_dialog, null);
+        View view = getLayoutInflater().inflate(R.layout.temp_sheet_dialog, null);
         final BottomSheetDialog dialog = new BottomSheetDialog(this);
         dialog.setContentView(view);
         TextView camera_sel = view.findViewById(R.id.camera);

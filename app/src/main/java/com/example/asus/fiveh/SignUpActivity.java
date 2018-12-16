@@ -53,7 +53,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         twitterLogin = new TwitterLogin(this);
         twitterLogin.initTwitter();
-        setContentView(R.layout.activity_sign_up);
+        setContentView(R.layout.sign_up);
 
         setlistener();
         initviews();

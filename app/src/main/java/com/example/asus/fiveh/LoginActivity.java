@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         twitterLogin = new TwitterLogin(this);
         twitterLogin.initTwitter();
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.login);
 
         initViews();
         setListener();

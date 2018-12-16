@@ -1,16 +1,12 @@
 package com.example.asus.fiveh.my_ad_adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.asus.fiveh.LoginActivity;
-import com.example.asus.fiveh.MainActivity;
 import com.example.asus.fiveh.R;
 
 /**
@@ -30,7 +26,7 @@ public class MyAdAdapter extends RecyclerView.Adapter<MyAdViewHolder> {
     @NonNull
     @Override
     public MyAdViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.my_ads_row, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.rv_row_advertiser_ad, parent, false);
         return new MyAdViewHolder(view);
     }
 

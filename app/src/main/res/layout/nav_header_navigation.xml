@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout style="@style/navigation_header_style">
-    <!--make this view horizontal programmatically-->
-    <include layout="@layout/image_user_bundle" />
-</RelativeLayout>
