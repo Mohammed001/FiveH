@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/create_ad_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusableInTouchMode="true"
@@ -15,16 +16,19 @@
 
         <ImageView
             android:id="@+id/ad_image"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="#ffe6e6"
+            android:layout_width="200dp"
+            android:layout_height="137dp"
+            android:adjustViewBounds="true"
             android:contentDescription="@string/debugtext"
             android:onClick="uploadNewImage"
             android:scaleType="centerCrop"
-            tools:layout_height="275dp"
-            tools:src="@drawable/image_ad" />
+            android:src="@drawable/add_ad_image" />
 
+        <Space
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+
+        <!--نوع الاعلان-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -34,17 +38,133 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
                 android:text="@string/advertisment_type" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:onClick="vv"
+                android:maxLines="1"
+                android:onClick="launch_dialog"
                 android:text="@string/choose_advertisment_type" />
         </LinearLayout>
+
+        <Space
+            android:layout_width="@dimen/space_in_create_ad"
+            android:layout_height="@dimen/space_in_create_ad" />
+
+        <!--حزمة الاعلان-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/advertisement_bundle" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:onClick="launch_dialog2"
+                android:text="@string/choose_advertisement_bundle" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="@dimen/space_in_create_ad"
+            android:layout_height="@dimen/space_in_create_ad" />
+
+        <!--شرح حزمة الاعلان-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_in_create_ad"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="like: 5 points,  comment: 10 points, retweet: 25 points" />
+
+        </LinearLayout>
+
+        <!--نص الاعلان-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/advertisement_text" />
+
+            <EditText
+                android:id="@+id/ad_txt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:autofillHints="@string/advertisement_text"
+                android:hint="@string/advertisement_text"
+                android:inputType="text"
+                tools:targetApi="o" />
+
+        </LinearLayout>
+
+        <!--توضيح الاعلان-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/explain_more" />
+
+            <EditText
+                android:id="@+id/explain_more"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:autofillHints="@string/explain_more"
+                android:cursorVisible="false"
+                android:hint="@string/explain_more"
+                android:inputType="text"
+                tools:targetApi="o" />
+
+        </LinearLayout>
+
+
+        <Space
+            android:layout_width="@dimen/my_profile"
+            android:layout_height="@dimen/my_profile" />
+
+        <!-- Signup Button -->
+        <Button
+            android:id="@+id/create_ad_save_changes_btn"
+            style="@style/my_button_style"
+            android:layout_width="175dp"
+            android:layout_height="35dp"
+            android:background="@drawable/boarder_rounded_corner2"
+            android:gravity="center"
+            android:text="@string/save" />
+
 
     </LinearLayout>
 

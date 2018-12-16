@@ -1,5 +1,6 @@
 package com.example.asus.fiveh;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -7,7 +8,11 @@ import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,11 +23,13 @@ import com.example.asus.fiveh.utils.Utils;
 
 import java.util.Objects;
 
-public class CreateNewAd extends AppCompatActivity {
+public class CreateNewAd extends AppCompatActivity implements View.OnClickListener {
     private static final int PICK_IMAGE_ID = 234; // the number doesn't matter
     private static final String PIC = "pic";
     ImageView imageView;
     static Bitmap bitmap;
+    EditText advertisement_text;
+//    Drawable d;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +37,24 @@ public class CreateNewAd extends AppCompatActivity {
         setContentView(R.layout.create_ad);
         Utils.displaybackarrow(this);
         imageView = findViewById(R.id.ad_image);
+        advertisement_text = findViewById(R.id.ad_txt);
+        advertisement_text.setOnClickListener(this);
+//        d = advertisement_text.getBackground();
+        advertisement_text.setBackgroundResource(android.R.color.transparent);
+        advertisement_text.setCursorVisible(false);
+        findViewById(R.id.create_ad_root).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                advertisement_text.setCursorVisible(false);
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                }
+                return false;
+            }
+        });
+
 //        imageView.setImageResource(R.drawable.image_ad);
         /* todo: my solution to save the bitmap after rotating the screen
         is to  make the {bitmap} variable static, but the community suggest to pass it like {byteArray} data
@@ -44,12 +69,42 @@ public class CreateNewAd extends AppCompatActivity {
         }
     }
 
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (bitmap != null) {
             outState.putBoolean(PIC, true);
+        }
+    }
+
+    public void setupUI(View view) {
+
+        // Set up touch listener for non-text box views to hide keyboard.
+        if (!(view instanceof EditText)) {
+            view.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    hideSoftKeyboard(CreateNewAd.this);
+                    return false;
+                }
+            });
+        }
+
+        //If a layout container, iterate over children and seed recursion.
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                setupUI(innerView);
+            }
+        }
+    }
+
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        if (inputMethodManager != null) {
+            inputMethodManager.hideSoftInputFromWindow(
+                    Objects.requireNonNull(activity.getCurrentFocus()).getWindowToken(), 0);
         }
     }
 
@@ -121,10 +176,12 @@ public class CreateNewAd extends AppCompatActivity {
 //        dialog.getWindow().setLayout(1000, 1000); //Controlling width and height.
 
 
-
     }
 
-    public void vv(View v){
+    public void launch_dialog2(View view) {
+    }
+
+    public void vv(View v) {
         View view = getLayoutInflater().inflate(R.layout.temp_sheet_dialog, null);
         final BottomSheetDialog dialog = new BottomSheetDialog(this);
         dialog.setContentView(view);
@@ -147,4 +204,17 @@ public class CreateNewAd extends AppCompatActivity {
         dialog.show();
     }
 
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+        switch (id) {
+            case R.id.ad_txt:
+                advertisement_text.setCursorVisible(true);
+                break;
+            case R.id.explain_more:
+
+                break;
+
+        }
+    }
 }

@@ -76,5 +76,9 @@
     <string name="active_accounts_in_my_accounts">تمت اضافة هذه الحسابات مسبقاً</string>
     <string name="advertisment_type">نوع الاعلان</string>
     <string name="choose_advertisment_type">اختر نوع الاعلان</string>
+    <string name="advertisement_bundle">حزمة الاعلان</string>
+    <string name="choose_advertisement_bundle">اختر حزمة الاعلان</string>
+    <string name="advertisement_text">نص الاعلان</string>
+    <string name="explain_more">توضيح الاعلان</string>
 
 </resources>

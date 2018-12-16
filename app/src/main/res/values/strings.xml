@@ -105,5 +105,9 @@
     <string name="active_accounts_in_my_accounts">These accounts have been added previously</string>
     <string name="advertisment_type">Advertisment type</string>
     <string name="choose_advertisment_type">choose advertisment type</string>
+    <string name="advertisement_bundle">Advertisement bundle</string>
+    <string name="choose_advertisement_bundle">choose advertisement bundle</string>
+    <string name="advertisement_text">Advertisement text</string>
+    <string name="explain_more">Explain more</string>
 
 </resources>
