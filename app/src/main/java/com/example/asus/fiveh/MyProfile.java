@@ -20,7 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.asus.fiveh.utils.Utils;
+import com.example.asus.fiveh.utils.AplicationData;
 
 
 public class MyProfile extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
@@ -44,7 +44,7 @@ public class MyProfile extends AppCompatActivity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_profile);
-        Utils.displaybackarrow(this);
+        AplicationData.displaybackarrow(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         layoutInflater = getLayoutInflater();
 

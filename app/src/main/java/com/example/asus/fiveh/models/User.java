@@ -1,20 +1,30 @@
 package com.example.asus.fiveh.models;
 
 public class User {
+
+    // 14 data members
     private String user_insta_id;
     private String user_twitter_id;
+    private String user_linkedin_id;
     private String user_face_id;
     private String user_google_id;
     private String last_login_date;
     private String user_pass;
     private String user_first_name;
-
     private String user_last_name;
     private String user_email;
     private String user_id;
     private String user_picture;
     private String user_name;
     private String user_type;
+
+    public String getUser_linkedin_id() {
+        return user_linkedin_id;
+    }
+
+    public void setUser_linkedin_id(String user_linkedin_id) {
+        this.user_linkedin_id = user_linkedin_id;
+    }
 
     public String getUser_insta_id() {
         return user_insta_id;

@@ -3,6 +3,7 @@ package com.example.asus.fiveh;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -18,14 +19,14 @@ import com.example.asus.fiveh.loginproviders.InstagramLogin;
 import com.example.asus.fiveh.loginproviders.TwitterLogin;
 import com.example.asus.fiveh.models.Response;
 import com.example.asus.fiveh.models.User;
-import com.example.asus.fiveh.utils.Utils;
+import com.example.asus.fiveh.utils.AplicationData;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 
-import static com.example.asus.fiveh.utils.Utils.ADVERTISER;
-import static com.example.asus.fiveh.utils.Utils.GREED;
+import static com.example.asus.fiveh.utils.AplicationData.ADVERTISER;
+import static com.example.asus.fiveh.utils.AplicationData.GREED;
 
 /**
  * Created by ASUS on 11/11/2018.
@@ -34,22 +35,27 @@ import static com.example.asus.fiveh.utils.Utils.GREED;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, GoogleLogin.UPDATEui {
     private static final String TAG = LoginActivity.class.getSimpleName();
     public static final long DELAY = 10_000; // ms
-    private static final String USERTYPERESPONSE = "user";
+    private static final String USER_AS_STRING = "user";
     private static final String DEBUGEMAIL = "hazem@sadv.sa";
     private static final String DEBUGPASSWORD = "12345";
+    private static final int RC_SIGN_IN = 9001;
 
     EditText _emailText;
     EditText _passwordText;
     Button _loginButton;
     TextView _signupLink;
-    private static final int RC_SIGN_IN = 9001;
+    ProgressDialog progressDialog;
+
+    ImageView insta_login;
+
+    String email;
+    String password;
 
     GoogleLogin googleLogin;
     FacebookLogin facebookLogin;
     InstagramLogin instagramLogin;
     TwitterLogin twitterLogin;
 
-    ImageView insta_login;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,7 +65,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.login);
 
         initViews();
-        setListener();
+        setListeners();
 
         googleLogin = new GoogleLogin(this);
         facebookLogin = new FacebookLogin(this);
@@ -72,7 +78,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void setListener() {
+    private void setListeners() {
         _loginButton.setOnClickListener(this);
         _signupLink.setOnClickListener(this);
     }
@@ -92,15 +98,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
+    public void updateui(GoogleSignInAccount account) {
+        if (account != null) {
+            Toast.makeText(this, "hello " + account.getDisplayName(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         facebookLogin.facebookInOnActivityResult(requestCode, resultCode, data);
         googleLogin.googleOnActivityResult(requestCode, data, RC_SIGN_IN);
         twitterLogin.twitterOnActivityResult(requestCode, resultCode, data);
     }
-
-    String email;
-    String password;
 
     public void login() {
         Log.d(TAG, "Login");
@@ -112,7 +122,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         password = DEBUGPASSWORD;
 
         if (!validate()) {
-            onLoginFailed();
+            Toast.makeText(getBaseContext(), "Login failed ", Toast.LENGTH_LONG).show();
+            _loginButton.setEnabled(true);
             return;
         }
 
@@ -123,64 +134,68 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         progressDialog.setMessage(getResources().getString(R.string.authing_mag));
         progressDialog.show();
 
-
-        // TODO: Implement your own authentication logic here.
         connectToServer();
-//
-//        new android.os.Handler().postDelayed(
-//                new Runnable() {
-//                    public void run() {
-//                        // On complete call either connectToServer or onLoginFailed
-////                        onloginsuccess();
-//                        // onLoginFailed();
-//                    }
-//                }, DELAY);
     }
 
-    ProgressDialog progressDialog;
 
     public void connectToServer() {
         _loginButton.setEnabled(true);
-
         RetrofitAPI service = new RetrofitClient().getAuthClient().create(RetrofitAPI.class);
-        Call<Response> call = service.call_5H_signin(email, password);
-        call.enqueue(new Callback<Response>() {
+        Call<Response> call = service.call_5H_login(email, password);
+        call.enqueue(getResponseCallback());
+    }
+
+    @NonNull
+    private Callback<Response> getResponseCallback() {
+        return new Callback<Response>() {
             @Override
             public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
-                if (response.body() != null) {
-                    Log.i(TAG, "onResponse: " + (response.body().getMsg()));
-                    User user = response.body().getData();
-                    if (user != null) {
-//                        Log.i(TAG, "onResponse: " + user.getUser_name());
-                        String userType = user.getUser_type();
-                        Utils.USER_TYPE = userType.equals(USERTYPERESPONSE) ? GREED : ADVERTISER;
-                    }
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    finish();
-
-                } else {
-                    Log.i(TAG, "onResponse: no JSON!");
-                }
-
-                progressDialog.dismiss();
-
-            } // connection succeeded
+                handle_server_response(response);
+            }
 
             @Override
             public void onFailure(Call<Response> call, Throwable t) {
-                Toast.makeText(LoginActivity.this, "onFailure " + t.getMessage(), Toast.LENGTH_LONG).show();
-                progressDialog.dismiss();
-
+                handle_connection_problems(t);
             }
-        });
+        };
     }
 
-    public void onLoginFailed() {
-        Toast.makeText(getBaseContext(), "Login failed ", Toast.LENGTH_LONG).show();
-        _loginButton.setEnabled(true);
+    private void handle_connection_problems(Throwable t) {
+        Toast.makeText(LoginActivity.this, "onFailure " + t.getMessage(), Toast.LENGTH_LONG).show();
+        progressDialog.dismiss();
     }
+
+    private void handle_server_response(retrofit2.Response<Response> server_response) {
+        Response my_response = server_response.body();
+        // it should be not null, but to handle un expected mistakes i will interest in it
+        if (my_response != null) {
+            Toast.makeText(this, my_response.getMsg(), Toast.LENGTH_SHORT).show();
+            if (my_response.getResult().equals("ko")){
+                return;
+            }
+            // result ok..
+            User user = my_response.getData();
+            // it should be not null, but to handle un expected mistakes i will interest in it
+            if (user != null) {
+                String userType = user.getUser_type();
+                // todo
+                // write it in sharedpreferences.
+
+                AplicationData.USER_TYPE = userType.equals(USER_AS_STRING) ? GREED : ADVERTISER;
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+            } else {
+                Log.i(TAG, "onResponse: no DATA in json!");
+            }
+        } else {
+            Log.i(TAG, "onResponse: no JSON!");
+        }
+
+        progressDialog.dismiss();
+    }
+
 
     public boolean validate() {
         boolean valid = true;
@@ -219,12 +234,4 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    @Override
-    public void updateui(GoogleSignInAccount account) {
-        if (account == null) {
-            Toast.makeText(this, "null", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, account.getDisplayName(), Toast.LENGTH_SHORT).show();
-        }
-    }
 }

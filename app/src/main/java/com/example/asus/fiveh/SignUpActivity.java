@@ -16,12 +16,12 @@ import com.example.asus.fiveh.loginproviders.FacebookLogin;
 import com.example.asus.fiveh.loginproviders.GoogleLogin;
 import com.example.asus.fiveh.loginproviders.InstagramLogin;
 import com.example.asus.fiveh.loginproviders.TwitterLogin;
-import com.example.asus.fiveh.utils.Utils;
+import com.example.asus.fiveh.utils.AplicationData;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import static com.example.asus.fiveh.LoginActivity.DELAY;
-import static com.example.asus.fiveh.utils.Utils.ADVERTISER;
-import static com.example.asus.fiveh.utils.Utils.GREED;
+import static com.example.asus.fiveh.utils.AplicationData.ADVERTISER;
+import static com.example.asus.fiveh.utils.AplicationData.GREED;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener, GoogleLogin.UPDATEui {
 
@@ -55,8 +55,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         twitterLogin.initTwitter();
         setContentView(R.layout.sign_up);
 
-        setlistener();
         initviews();
+        setlistener();
 
         googleLogin = new GoogleLogin(this);
         facebookLogin = new FacebookLogin(this);
@@ -174,7 +174,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     public void onSignupSuccess() {
-        Utils.USER_TYPE = (temp_user_type == ADVERTISER & temp_user_type != -1) ? ADVERTISER : GREED;
+        AplicationData.USER_TYPE = (temp_user_type == ADVERTISER & temp_user_type != -1) ? ADVERTISER : GREED;
 //        invalidateOptionsMenu();
         btn_signup.setEnabled(true);
 //        setResult(RESULT_OK, null);

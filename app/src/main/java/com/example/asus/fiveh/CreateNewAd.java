@@ -19,7 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.asus.fiveh.utils.ImagePicker;
-import com.example.asus.fiveh.utils.Utils;
+import com.example.asus.fiveh.utils.AplicationData;
 
 import java.util.Objects;
 
@@ -35,7 +35,7 @@ public class CreateNewAd extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_ad);
-        Utils.displaybackarrow(this);
+        AplicationData.displaybackarrow(this);
         imageView = findViewById(R.id.ad_image);
         advertisement_text = findViewById(R.id.ad_txt);
         advertisement_text.setOnClickListener(this);

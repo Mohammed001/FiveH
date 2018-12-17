@@ -31,7 +31,7 @@ import android.widget.Toast;
 
 import com.example.asus.fiveh.main_ad_adapter.MainAdAdapter;
 import com.example.asus.fiveh.models.Ad;
-import com.example.asus.fiveh.utils.Utils;
+import com.example.asus.fiveh.utils.AplicationData;
 
 import java.util.List;
 
@@ -39,11 +39,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.example.asus.fiveh.utils.Utils.ADVERTISER;
-import static com.example.asus.fiveh.utils.Utils.LOGINUSERNAME_KEY;
-import static com.example.asus.fiveh.utils.Utils.NOTLOGGEDIN;
-import static com.example.asus.fiveh.utils.Utils.NOT_MEMBER;
-import static com.example.asus.fiveh.utils.Utils.USER_TYPE;
+import static com.example.asus.fiveh.utils.AplicationData.ADVERTISER;
+import static com.example.asus.fiveh.utils.AplicationData.LOGINUSERNAME_KEY;
+import static com.example.asus.fiveh.utils.AplicationData.NOTLOGGEDIN;
+import static com.example.asus.fiveh.utils.AplicationData.NOT_MEMBER;
+import static com.example.asus.fiveh.utils.AplicationData.USER_TYPE;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation);
-        Utils.USER_TYPE = ADVERTISER;
+        AplicationData.USER_TYPE = ADVERTISER;
         Toolbar toolbar = findViewById(R.id.toolbar);
         swiperefreshlayout = findViewById(R.id.swiperefreshlayout);
         swiperefreshlayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                intent = new Intent(this, MyActiveAds.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
-            } else if (USER_TYPE == Utils.GREED) {
+            } else if (USER_TYPE == AplicationData.GREED) {
                 // todo
 //                intent = new Intent(this, MyMoney.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);

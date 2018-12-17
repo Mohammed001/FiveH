@@ -8,8 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 
-import static com.example.asus.fiveh.utils.Utils.LOGINUSERNAME_KEY;
-import static com.example.asus.fiveh.utils.Utils.NOTLOGGEDIN;
+import static com.example.asus.fiveh.utils.AplicationData.LOGINUSERNAME_KEY;
+import static com.example.asus.fiveh.utils.AplicationData.NOTLOGGEDIN;
 
 public class Intro extends AppCompatActivity {
 

@@ -15,7 +15,7 @@ public interface RetrofitAPI {
 
     // hazem@sadv.sa
     @GET("connectToLinkedIn.php")
-    Call<Response> call_5H_signin(@Query("email") String user_name, @Query("pass") String password);
+    Call<Response> call_5H_login(@Query("email") String user_name, @Query("pass") String password);
 
     @GET("logout_icon.php")
     Call<Response> call_5H_logout();

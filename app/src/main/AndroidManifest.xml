@@ -48,7 +48,13 @@
         <activity android:name=".MyProfile" />
         <activity
             android:name=".Intro"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <meta-data
             android:name="com.instagram.instagramapi.InstagramAppClientId"
@@ -78,11 +84,7 @@
         </activity>
         <activity android:name=".MyAccounts" />
         <activity android:name=".MyPoints">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
