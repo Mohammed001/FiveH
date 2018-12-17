@@ -10,4 +10,5 @@
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="login_space">40dp</dimen>
     <dimen name="space_in_create_ad">20dp</dimen>
+    <dimen name="space_in_my_points">16dp</dimen>
 </resources>

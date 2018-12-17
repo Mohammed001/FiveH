@@ -58,4 +58,25 @@
         <item name="backgroundTint">#019B10</item>
     </style>
 
+    <style name="my_points_button_style" parent="android:Widget.Holo.Button.Borderless">
+        <item name="android:background">@drawable/boarder_rounded_corner</item>
+        <item name="android:fontFamily">@font/din_next_arabic_light_p30doenload_com</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="backgroundTint">#F5A623</item>
+    </style>
+
+    <style name="my_points_button_style_unfocused" parent="android:Widget.Holo.Button.Borderless">
+        <item name="android:background">@drawable/boarder_rounded_corner</item>
+        <item name="android:fontFamily">@font/din_next_arabic_light_p30doenload_com</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="backgroundTint">#C6C9CA</item>
+    </style>
+
+
 </resources>

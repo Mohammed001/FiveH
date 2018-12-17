@@ -81,4 +81,15 @@
     <string name="advertisement_text">نص الاعلان</string>
     <string name="explain_more">توضيح الاعلان</string>
 
+    <!--من صفحة نقاطي-->
+    <string name="your_points">عدد النقاط</string>
+    <string name="increase_your_balance_btn">ضاعف رصيدك</string>
+    <string name="explain_increase_your_points">
+        بحسب الباقة التي تختاره, تتيح لك هذه الخدمة مضاعفة رصيدك على كل اعلان تتفاعل معه. مع العلم أنه لا يمكنك الاستفادة من هذه الميزة حتى يبلغ عدد نقاطك 2500 نقطة
+    </string>
+    <string name="start_over_btn">تجديد</string>
+    <string name="participate_btn">اشتراك</string>
+    <string name="convert_your_points_to_money_label">تحويل النقاط إلى كاش</string>
+    <string name="donate_to_charities">التبرع لجهات خيرية</string>
+
 </resources>
