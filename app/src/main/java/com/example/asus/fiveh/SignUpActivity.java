@@ -16,12 +16,11 @@ import com.example.asus.fiveh.loginproviders.FacebookLogin;
 import com.example.asus.fiveh.loginproviders.GoogleLogin;
 import com.example.asus.fiveh.loginproviders.InstagramLogin;
 import com.example.asus.fiveh.loginproviders.TwitterLogin;
-import com.example.asus.fiveh.utils.AplicationData;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import static com.example.asus.fiveh.LoginActivity.DELAY;
-import static com.example.asus.fiveh.utils.AplicationData.ADVERTISER;
-import static com.example.asus.fiveh.utils.AplicationData.GREED;
+import static com.example.asus.fiveh.AplicationData.ADVERTISER_INT;
+import static com.example.asus.fiveh.AplicationData.GREED_INT;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener, GoogleLogin.UPDATEui {
 
@@ -174,7 +173,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     public void onSignupSuccess() {
-        AplicationData.USER_TYPE = (temp_user_type == ADVERTISER & temp_user_type != -1) ? ADVERTISER : GREED;
+        AplicationData.USER_TYPE_INT = (temp_user_type == ADVERTISER_INT & temp_user_type != -1) ? ADVERTISER_INT : GREED_INT;
 //        invalidateOptionsMenu();
         btn_signup.setEnabled(true);
 //        setResult(RESULT_OK, null);

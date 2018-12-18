@@ -19,14 +19,13 @@ import com.example.asus.fiveh.loginproviders.InstagramLogin;
 import com.example.asus.fiveh.loginproviders.TwitterLogin;
 import com.example.asus.fiveh.models.Response;
 import com.example.asus.fiveh.models.User;
-import com.example.asus.fiveh.utils.AplicationData;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 
-import static com.example.asus.fiveh.utils.AplicationData.ADVERTISER;
-import static com.example.asus.fiveh.utils.AplicationData.GREED;
+import static com.example.asus.fiveh.AplicationData.ADVERTISER_INT;
+import static com.example.asus.fiveh.AplicationData.GREED_INT;
 
 /**
  * Created by ASUS on 11/11/2018.
@@ -181,7 +180,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 // todo
                 // write it in sharedpreferences.
 
-                AplicationData.USER_TYPE = userType.equals(USER_AS_STRING) ? GREED : ADVERTISER;
+                AplicationData.USER_TYPE_INT = userType.equals(USER_AS_STRING) ? GREED_INT : ADVERTISER_INT;
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);

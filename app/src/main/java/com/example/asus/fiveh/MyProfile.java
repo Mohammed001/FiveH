@@ -20,8 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.asus.fiveh.utils.AplicationData;
-
 
 public class MyProfile extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 

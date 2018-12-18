@@ -8,8 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 
-import static com.example.asus.fiveh.utils.AplicationData.LOGINUSERNAME_KEY;
-import static com.example.asus.fiveh.utils.AplicationData.NOTLOGGEDIN;
+import static com.example.asus.fiveh.AplicationData.ADVERTISER;
+import static com.example.asus.fiveh.AplicationData.APP_PREFERENCES_FILE;
+import static com.example.asus.fiveh.AplicationData.GREED;
+import static com.example.asus.fiveh.AplicationData.USER_JSON;
+import static com.example.asus.fiveh.AplicationData.USER_TYPE;
 
 public class Intro extends AppCompatActivity {
 
@@ -21,6 +24,10 @@ public class Intro extends AppCompatActivity {
         setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.intro);
+        decide();
+    }
+
+    private void decide() {
 
         if (!logedIn()) {
             btn_go_to_creat_account = findViewById(R.id.btn_go_to_creat_account);
@@ -42,11 +49,21 @@ public class Intro extends AppCompatActivity {
     }
 
     private boolean logedIn() {
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        String loginusername = sharedPref.getString(LOGINUSERNAME_KEY, NOTLOGGEDIN);
-        if (!loginusername.equals(NOTLOGGEDIN)) {
-            // TODO: later we will pass parameters and if user loged out we will clear the preference.
-            startActivity(new Intent(this, MainActivity.class));
+        SharedPreferences sharedPref = getSharedPreferences(APP_PREFERENCES_FILE, Context.MODE_PRIVATE);
+        String loginusername = sharedPref.getString(USER_JSON, null);
+        if (loginusername != null) {
+            Intent intent = new Intent(this, MainActivity.class);
+            String usertype = sharedPref.getString(USER_TYPE, null);
+            assert usertype != null;
+            switch (usertype) {
+                case GREED:
+                    intent.putExtra(USER_TYPE, GREED);
+                    break;
+                case ADVERTISER:
+                    intent.putExtra(USER_TYPE, ADVERTISER);
+                    break;
+            }
+            startActivity(intent);
             finish();
             return true;
         }

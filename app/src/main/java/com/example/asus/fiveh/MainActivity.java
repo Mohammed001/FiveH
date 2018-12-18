@@ -3,12 +3,13 @@ package com.example.asus.fiveh;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
+
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -31,7 +32,6 @@ import android.widget.Toast;
 
 import com.example.asus.fiveh.main_ad_adapter.MainAdAdapter;
 import com.example.asus.fiveh.models.Ad;
-import com.example.asus.fiveh.utils.AplicationData;
 
 import java.util.List;
 
@@ -39,11 +39,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.example.asus.fiveh.utils.AplicationData.ADVERTISER;
-import static com.example.asus.fiveh.utils.AplicationData.LOGINUSERNAME_KEY;
-import static com.example.asus.fiveh.utils.AplicationData.NOTLOGGEDIN;
-import static com.example.asus.fiveh.utils.AplicationData.NOT_MEMBER;
-import static com.example.asus.fiveh.utils.AplicationData.USER_TYPE;
+import static com.example.asus.fiveh.AplicationData.ADVERTISER_INT;
+import static com.example.asus.fiveh.AplicationData.USER_TYPE_INT;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -54,32 +51,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     List<Ad> data = null;
     SwipeRefreshLayout swiperefreshlayout;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation);
-        AplicationData.USER_TYPE = ADVERTISER;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        swiperefreshlayout = findViewById(R.id.swiperefreshlayout);
-        swiperefreshlayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                swiperefreshlayout.setRefreshing(false);
-                if (isOnline()) {
-                    doHTTP();
-                }
-            }
-        });
-        setSupportActionBar(toolbar);
-        fab = findViewById(R.id.fab);
+//        AplicationData.USER_TYPE_INT = ADVERTISER_INT;
+        initViewsWithListeners();
+
         if (isOnline()) {
             doHTTP();
         }
-        createDrawer(toolbar);
     }
 
-    private void createDrawer(Toolbar toolbar) {
+    private void initViewsWithListeners() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        swiperefreshlayout = findViewById(R.id.swiperefreshlayout);
+        swiperefreshlayout.setOnRefreshListener(getOnRefreshListener());
+        fab = findViewById(R.id.fab);
+        onCreateDrawer(toolbar);
+    }
+
+    private void onCreateDrawer(Toolbar toolbar) {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -88,6 +81,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    @NonNull
+    private SwipeRefreshLayout.OnRefreshListener getOnRefreshListener() {
+        return new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swiperefreshlayout.setRefreshing(false);
+                if (isOnline()) {
+                    doHTTP();
+                }
+            }
+        };
+    }
+
+    protected boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        assert cm != null;
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
     private void createRecyclerview() {
@@ -110,25 +123,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void doHTTP() {
         RetrofitAPI service = new RetrofitClient().getMainClient().create(RetrofitAPI.class);
         Call<List<Ad>> call = service.listAds();
-        call.enqueue(new Callback<List<Ad>>() {
+        call.enqueue(getMainConnectionCallback());
+    }
+
+    @NonNull
+    private Callback<List<Ad>> getMainConnectionCallback() {
+        return new Callback<List<Ad>>() {
             @Override
             public void onResponse(Call<List<Ad>> call, Response<List<Ad>> response) {
-                if (response.isSuccessful()) {
-                    data = response.body();
-                    if (data != null) {
-                        Log.i(TAG, "onResponse: Number of Ads received: " + data.size());
-                        createRecyclerview();
-                    }
-                }
+                connection_succeed(response);
             }
 
             @Override
             public void onFailure(Call<List<Ad>> call, Throwable t) {
-                Log.i(TAG, "onFailure" + t.getMessage());
+                connection_failed(t);
+            }
+        };
+    }
+
+    private void connection_failed(Throwable t) {
+        Log.i(TAG, "onFailure" + t.getMessage());
+        createRecyclerview();
+    }
+
+    private void connection_succeed(Response<List<Ad>> response) {
+        if (response.isSuccessful()) {
+            data = response.body();
+            if (data != null) {
+                Log.i(TAG, "onResponse: Number of Ads received: " + data.size());
                 createRecyclerview();
             }
-        });
-
+        }
     }
 
     @Override
@@ -164,12 +189,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent);
         } else if (id == R.id.nav_my_accounts) {
             // Handle the camera action
-            if (USER_TYPE == ADVERTISER) {
+            if (USER_TYPE_INT == ADVERTISER_INT) {
                 // todo
 //                intent = new Intent(this, MyActiveAds.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
-            } else if (USER_TYPE == AplicationData.GREED) {
+            } else if (USER_TYPE_INT == AplicationData.GREED_INT) {
                 // todo
 //                intent = new Intent(this, MyMoney.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -184,6 +209,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_about) {
             build_about();
         } else if (id == R.id.logout) {
+            // clear the preferences file when connection sucess with server
+            // with the one line:
+            //////// getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit().clear().apply();
             RetrofitAPI service = new RetrofitClient().getAuthClient().create(RetrofitAPI.class);
             service.call_5H_logout().enqueue(new Callback<com.example.asus.fiveh.models.Response>() {
                 @Override
@@ -201,7 +229,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Toast.makeText(MainActivity.this, "onFailure: " + TAG, Toast.LENGTH_SHORT).show();
                 }
             });
+            intent = new Intent(this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             finish();
+            startActivity(intent);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -227,25 +258,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .show();
     }
 
-    protected void logout_actions() {
-        USER_TYPE = NOT_MEMBER;
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(LOGINUSERNAME_KEY, NOTLOGGEDIN);
-        editor.apply();
-        Intent intent;
-        intent = new Intent(this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        finish();
-        startActivity(intent);
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
         LinearLayout linearLayout = findViewById(R.id.image_user_bundle);
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-        if (USER_TYPE == ADVERTISER) {
+        if (USER_TYPE_INT == ADVERTISER_INT) {
             fab.setVisibility(View.VISIBLE);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -257,11 +275,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    protected boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        assert cm != null;
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        return netInfo != null && netInfo.isConnectedOrConnecting();
-    }
 }
 

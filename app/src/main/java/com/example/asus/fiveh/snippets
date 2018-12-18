@@ -1,3 +1,5 @@
+
+
 design
 https://sparkling-dream.animaapp.io/preview/1jTxh5R/home
 
@@ -233,3 +235,40 @@ https://github.com/afollestad/material-dialogs
 https://www.dev2qa.com/android-shape-selector-examples/
 https://www.dev2qa.com/android-layer-list-example/
 https://www.androidhive.info/2017/12/android-working-with-bottom-sheet/
+
+
+___________________________
+
+SHAREDPREFERENCES tutoriaL
+
+SharedPreferences sharedPreferences = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+SharedPreferences.Editor editor = sharedPreferences.edit();
+
+// 1 put two values.
+editor.putString("name", "Elena");
+editor.putInt("idName", 12);
+editor.apply();
+
+
+// 2 read the values and LOG them
+
+String s = sharedPreferences.getString("name", "no name");
+int i = sharedPreferences.getInt("idName", -1);
+
+Log.i(MY_PREFS_NAME, s + i);
+
+// 3 remove the second one and LOG
+editor.remove("idName");
+editor.apply();
+s = sharedPreferences.getString("name", "no name");
+i = sharedPreferences.getInt("idName", -1);
+Log.i(MY_PREFS_NAME, s + i);
+
+// 4 clear them all and log
+
+editor.clear().apply();
+
+s = sharedPreferences.getString("name", "no name");
+i = sharedPreferences.getInt("idName", -1);
+
+Log.i(MY_PREFS_NAME, s + i);

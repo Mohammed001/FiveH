@@ -19,7 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.asus.fiveh.utils.ImagePicker;
-import com.example.asus.fiveh.utils.AplicationData;
 
 import java.util.Objects;
 
