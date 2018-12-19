@@ -34,7 +34,7 @@ public class CreateNewAd extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_ad);
-        AplicationData.displaybackarrow(this);
+        ApplicationData.displaybackarrow(this);
         imageView = findViewById(R.id.ad_image);
         advertisement_text = findViewById(R.id.ad_txt);
         advertisement_text.setOnClickListener(this);

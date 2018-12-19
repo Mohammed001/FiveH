@@ -91,5 +91,7 @@
     <string name="participate_btn">اشتراك</string>
     <string name="convert_your_points_to_money_label">تحويل النقاط إلى كاش</string>
     <string name="donate_to_charities">التبرع لجهات خيرية</string>
+    <string name="about_msg">تطبيق FiveH</string>
+    <string name="my_archive">أرشيف اعلاناتي</string>
 
 </resources>

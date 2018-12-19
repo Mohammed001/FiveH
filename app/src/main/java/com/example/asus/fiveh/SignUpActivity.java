@@ -19,8 +19,6 @@ import com.example.asus.fiveh.loginproviders.TwitterLogin;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import static com.example.asus.fiveh.LoginActivity.DELAY;
-import static com.example.asus.fiveh.AplicationData.ADVERTISER_INT;
-import static com.example.asus.fiveh.AplicationData.GREED_INT;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener, GoogleLogin.UPDATEui {
 
@@ -33,8 +31,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     Button btn_signup;
     TextView link_login;
 
-
-    int temp_user_type = -1;
     private static final int RC_SIGN_IN = 9001;
 
     GoogleLogin googleLogin;
@@ -173,7 +169,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     public void onSignupSuccess() {
-        AplicationData.USER_TYPE_INT = (temp_user_type == ADVERTISER_INT & temp_user_type != -1) ? ADVERTISER_INT : GREED_INT;
 //        invalidateOptionsMenu();
         btn_signup.setEnabled(true);
 //        setResult(RESULT_OK, null);

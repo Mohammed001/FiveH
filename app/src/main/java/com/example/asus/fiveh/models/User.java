@@ -3,13 +3,7 @@ package com.example.asus.fiveh.models;
 public class User {
 
     // 14 data members
-
-    private String user_insta_id;
-    private String user_twitter_id;
-    private String user_linkedin_id;
-    private String user_face_id;
-    private String user_google_id;
-    private String last_login_date;
+    private String user_type;
 
     private String user_pass;
     private String user_first_name;
@@ -18,7 +12,14 @@ public class User {
     private String user_id;
     private String user_picture;
     private String user_name;
-    private String user_type;
+
+    private String user_insta_id;
+    private String user_twitter_id;
+    private String user_linkedin_id;
+    private String user_face_id;
+    private String user_google_id;
+
+    private String last_login_date;
 
     public String getUser_linkedin_id() {
         return user_linkedin_id;

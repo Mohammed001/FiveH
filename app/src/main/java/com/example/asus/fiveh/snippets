@@ -272,3 +272,25 @@ s = sharedPreferences.getString("name", "no name");
 i = sharedPreferences.getInt("idName", -1);
 
 Log.i(MY_PREFS_NAME, s + i);
+
+
+____________________
+write java object to sharedpreferences : from stackoverflow.
+
+compile 'com.google.code.gson:gson:2.8.5'
+Creating a shared preference:
+
+SharedPreferences  mPrefs = getPreferences(MODE_PRIVATE);
+To save:
+
+Editor prefsEditor = mPrefs.edit();
+Gson gson = new Gson();
+String json = gson.toJson(MyObject);
+prefsEditor.putString("MyObject", json);
+prefsEditor.commit();
+To retrieve:
+
+Gson gson = new Gson();
+String json = mPrefs.getString("MyObject", "");
+MyObject obj = gson.fromJson(json, MyObject.class);
+

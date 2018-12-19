@@ -8,11 +8,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 
-import static com.example.asus.fiveh.AplicationData.ADVERTISER;
-import static com.example.asus.fiveh.AplicationData.APP_PREFERENCES_FILE;
-import static com.example.asus.fiveh.AplicationData.GREED;
-import static com.example.asus.fiveh.AplicationData.USER_JSON;
-import static com.example.asus.fiveh.AplicationData.USER_TYPE;
+import com.example.asus.fiveh.models.User;
+import com.google.gson.Gson;
+
+import static com.example.asus.fiveh.ApplicationData.ADVERTISER;
+import static com.example.asus.fiveh.ApplicationData.APP_PREFERENCES_FILE;
+import static com.example.asus.fiveh.ApplicationData.GREED;
+import static com.example.asus.fiveh.ApplicationData.USER_DATA;
+import static com.example.asus.fiveh.ApplicationData.USER_TYPE;
 
 public class Intro extends AppCompatActivity {
 
@@ -50,20 +53,16 @@ public class Intro extends AppCompatActivity {
 
     private boolean logedIn() {
         SharedPreferences sharedPref = getSharedPreferences(APP_PREFERENCES_FILE, Context.MODE_PRIVATE);
-        String loginusername = sharedPref.getString(USER_JSON, null);
-        if (loginusername != null) {
+        String user_as_json = sharedPref.getString(USER_DATA, null);
+
+        if (user_as_json != null) {
+
+            Gson gson = new Gson();
+            ApplicationData.current_user = gson.fromJson(user_as_json, User.class);
+
             Intent intent = new Intent(this, MainActivity.class);
-            String usertype = sharedPref.getString(USER_TYPE, null);
-            assert usertype != null;
-            switch (usertype) {
-                case GREED:
-                    intent.putExtra(USER_TYPE, GREED);
-                    break;
-                case ADVERTISER:
-                    intent.putExtra(USER_TYPE, ADVERTISER);
-                    break;
-            }
             startActivity(intent);
+
             finish();
             return true;
         }

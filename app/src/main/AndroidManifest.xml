@@ -35,7 +35,7 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".CreateNewAd"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
@@ -49,11 +49,7 @@
         <activity
             android:name=".Intro"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <meta-data
@@ -83,8 +79,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".MyAccounts" />
-        <activity android:name=".MyPoints">
+        <activity android:name=".MyPoints"></activity>
+        <activity android:name=".MyArchive">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

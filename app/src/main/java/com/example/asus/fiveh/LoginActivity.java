@@ -1,7 +1,9 @@
 package com.example.asus.fiveh;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -20,12 +22,15 @@ import com.example.asus.fiveh.loginproviders.TwitterLogin;
 import com.example.asus.fiveh.models.Response;
 import com.example.asus.fiveh.models.User;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 
-import static com.example.asus.fiveh.AplicationData.ADVERTISER_INT;
-import static com.example.asus.fiveh.AplicationData.GREED_INT;
+import static com.example.asus.fiveh.ApplicationData.APP_PREFERENCES_FILE;
+import static com.example.asus.fiveh.ApplicationData.GREED;
+import static com.example.asus.fiveh.ApplicationData.USER_DATA;
+import static com.example.asus.fiveh.ApplicationData.USER_TYPE;
 
 /**
  * Created by ASUS on 11/11/2018.
@@ -168,21 +173,32 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // it should be not null, but to handle un expected mistakes i will interest in it
         if (my_response != null) {
             Toast.makeText(this, my_response.getMsg(), Toast.LENGTH_SHORT).show();
-            if (my_response.getResult().equals("ko")){
+            if (my_response.getResult().equals("ko")) {
                 return;
             }
             // result ok..
             User user = my_response.getData();
             // it should be not null, but to handle un expected mistakes i will interest in it
             if (user != null) {
-                String userType = user.getUser_type();
-                // todo
                 // write it in sharedpreferences.
-                AplicationData.USER_TYPE_INT = userType.equals(USER_AS_STRING) ? GREED_INT : ADVERTISER_INT;
+                ApplicationData.current_user = user;
+                SharedPreferences sharedPref = getSharedPreferences(APP_PREFERENCES_FILE, Context.MODE_PRIVATE);
+                SharedPreferences.Editor prefsEditor = sharedPref.edit();
+                Gson gson = new Gson();
+                String user_data = gson.toJson(user);
+                prefsEditor.putString(USER_DATA, user_data);
+                String user_type = user.getUser_type();
+                // todo: user type in response is null!! what a demo.
+                user_type = user_type == null || user_type.equals("") ? GREED : user_type;
+                prefsEditor.putString(USER_TYPE, user_type);
+                prefsEditor.apply();
+
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra(USER_TYPE, user_type);
                 startActivity(intent);
                 finish();
+
             } else {
                 Log.i(TAG, "onResponse: no DATA in json!");
             }

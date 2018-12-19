@@ -38,8 +38,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.example.asus.fiveh.AplicationData.ADVERTISER_INT;
-import static com.example.asus.fiveh.AplicationData.USER_TYPE_INT;
+import static com.example.asus.fiveh.ApplicationData.ADVERTISER;
+import static com.example.asus.fiveh.ApplicationData.GREED;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation);
-//        AplicationData.USER_TYPE_INT = ADVERTISER_INT;
+//        ApplicationData.USER_TYPE_INT = ADVERTISER_INT;
         initViewsWithListeners();
 
 //        https://kodejava.org/how-to-convert-json-string-to-java-object/
@@ -71,6 +71,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         swiperefreshlayout = findViewById(R.id.swiperefreshlayout);
         swiperefreshlayout.setOnRefreshListener(getOnRefreshListener());
         fab = findViewById(R.id.fab);
+
+        LinearLayout linearLayout = navigationView.getHeaderView(0).findViewById(R.id.image_user_bundle);
+        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+        if (ApplicationData.current_user.getUser_type().equals(ADVERTISER)) {
+            fab.setVisibility(View.VISIBLE);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getApplicationContext(), CreateNewAd.class);
+                    startActivity(intent);
+                }
+            });
+        }
+
         onCreateDrawer(toolbar);
     }
 
@@ -172,6 +187,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
+        if (ApplicationData.current_user.getUser_type().equals(ADVERTISER)) {
+            menu.findItem(R.id.nav_my_profile).setVisible(false);
+            menu.findItem(R.id.nav_my_accounts).setTitle(R.string.my_archive);
+        }
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(false);      // Disable the button
             getSupportActionBar().setDisplayHomeAsUpEnabled(false); // Remove the left caret
@@ -182,31 +203,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         Intent intent = null;
 
         if (id == R.id.nav_my_profile) {
-//            intent = new Intent(this, MyProfile.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            intent = new Intent(this, MyProfile.class);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         } else if (id == R.id.nav_my_accounts) {
-            // Handle the camera action
-            if (USER_TYPE_INT == ADVERTISER_INT) {
-                // todo
-//                intent = new Intent(this, MyActiveAds.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivity(intent);
-            } else if (USER_TYPE_INT == AplicationData.GREED_INT) {
-                // todo
-//                intent = new Intent(this, MyMoney.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivity(intent);
-            }
+            goToAccountsOrArchive();
         } else if (id == R.id.nav_my_points) {
-            Snackbar.make(findViewById(R.id.main_root), "Not Implemented yet", Snackbar
-                    .LENGTH_SHORT).show();
+            intent = new Intent(this, MyPoints.class);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
         } else if (id == R.id.nav_settings) {
             Snackbar.make(findViewById(R.id.main_root), "Not Implemented yet", Snackbar
                     .LENGTH_SHORT).show();
@@ -244,6 +255,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    private void goToAccountsOrArchive() {
+        Intent intent;
+        if (ApplicationData.current_user.getUser_type().equals(GREED)) {
+            intent = new Intent(this, MyAccounts.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        } else if (ApplicationData.current_user.getUser_type().equals(ADVERTISER)) {
+            intent = new Intent(this, MyArchive.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        }
+    }
+
     private void build_about() {
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -252,33 +276,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             builder = new AlertDialog.Builder(this);
         }
         builder.setTitle("حول")
-                .setMessage("تطبيق 5H للإعلان")
+                .setMessage(R.string.about_msg)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        // continue with delete
                     }
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // critical..  {getHeaderView}
-        LinearLayout linearLayout = navigationView.getHeaderView(0).findViewById(R.id.image_user_bundle);
-        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-        if (USER_TYPE_INT == ADVERTISER_INT) {
-            fab.setVisibility(View.VISIBLE);
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(getApplicationContext(), CreateNewAd.class);
-                    startActivity(intent);
-                }
-            });
-        }
-    }
 
 }
 

@@ -117,5 +117,7 @@
     <string name="participate_btn">participate</string>
     <string name="convert_your_points_to_money_label">convert your points to money</string>
     <string name="donate_to_charities">donate to charities</string>
+    <string name="about_msg">FiveH application</string>
+    <string name="my_archive">My Archive</string>
 
 </resources>
