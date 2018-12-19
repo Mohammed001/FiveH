@@ -6,6 +6,7 @@ import com.example.asus.fiveh.models.Response;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
@@ -14,7 +15,8 @@ public interface RetrofitAPI {
     Call<List<Ad>> listAds();
 
     // hazem@sadv.sa
-    @GET("connectToLinkedIn.php")
+
+    @GET("login.php")
     Call<Response> call_5H_login(@Query("email") String user_name, @Query("pass") String password);
 
     @GET("logout_icon.php")

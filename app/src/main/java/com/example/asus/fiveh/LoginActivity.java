@@ -136,7 +136,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         connectToServer();
     }
 
-
     public void connectToServer() {
         _loginButton.setEnabled(true);
         RetrofitAPI service = new RetrofitClient().getAuthClient().create(RetrofitAPI.class);
@@ -149,22 +148,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return new Callback<Response>() {
             @Override
             public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
-                handle_server_response(response);
+                connection_succeed(response);
             }
 
             @Override
             public void onFailure(Call<Response> call, Throwable t) {
-                handle_connection_problems(t);
+                connection_failed(t);
             }
         };
     }
 
-    private void handle_connection_problems(Throwable t) {
+    private void connection_failed(Throwable t) {
         Toast.makeText(LoginActivity.this, "onFailure " + t.getMessage(), Toast.LENGTH_LONG).show();
         progressDialog.dismiss();
     }
 
-    private void handle_server_response(retrofit2.Response<Response> server_response) {
+    private void connection_succeed(retrofit2.Response<Response> server_response) {
         Response my_response = server_response.body();
         // it should be not null, but to handle un expected mistakes i will interest in it
         if (my_response != null) {
@@ -179,7 +178,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 String userType = user.getUser_type();
                 // todo
                 // write it in sharedpreferences.
-
                 AplicationData.USER_TYPE_INT = userType.equals(USER_AS_STRING) ? GREED_INT : ADVERTISER_INT;
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -194,7 +192,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         progressDialog.dismiss();
     }
-
 
     public boolean validate() {
         boolean valid = true;

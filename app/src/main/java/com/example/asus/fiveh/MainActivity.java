@@ -3,7 +3,6 @@ package com.example.asus.fiveh;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -58,6 +57,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        AplicationData.USER_TYPE_INT = ADVERTISER_INT;
         initViewsWithListeners();
 
+//        https://kodejava.org/how-to-convert-json-string-to-java-object/
+//        https://stackoverflow.com/questions/10308452/how-to-convert-the-following-json-string-to-java-object
+
         if (isOnline()) {
             doHTTP();
         }
@@ -72,6 +74,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         onCreateDrawer(toolbar);
     }
 
+    NavigationView navigationView;
+
     private void onCreateDrawer(Toolbar toolbar) {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -79,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -261,7 +265,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
-        LinearLayout linearLayout = findViewById(R.id.image_user_bundle);
+        // critical..  {getHeaderView}
+        LinearLayout linearLayout = navigationView.getHeaderView(0).findViewById(R.id.image_user_bundle);
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);
         if (USER_TYPE_INT == ADVERTISER_INT) {
             fab.setVisibility(View.VISIBLE);
