@@ -16,40 +16,72 @@
             android:layout_width="@dimen/space_in_my_points"
             android:layout_height="@dimen/space_in_my_points" />
 
-        <RelativeLayout
-            android:id="@+id/parent"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#F5F5F5"
-            android:gravity="center_vertical">
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:padding="8dp"
-                android:text="@string/your_points" />
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/convert_from_points_to_cache"
+                android:gravity="bottom|center_horizontal"
+                android:paddingTop="20dp"
+                android:text="@string/convert_your_points_to_money_label" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/circular_gradient"
+                    android:gravity="center"
+                    android:text="@string/_2500_points"
+                    android:textStyle="bold" />
+
+                <Space
+                    android:layout_width="8dp"
+                    android:layout_height="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:text="@string/debug_participation_type_free" />
+
+            </LinearLayout>
+
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:padding="8dp"
-                android:text="@string/debug_2500_points"
-                android:textColor="#F5A623" />
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/charity"
+                android:gravity="bottom|center_horizontal"
+                android:paddingTop="20dp"
+                android:paddingBottom="12dp"
+                android:text="@string/donate_to_charities" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
         <Space
             android:layout_width="@dimen/space_in_my_points"
             android:layout_height="@dimen/space_in_my_points" />
 
         <!-- Signup Button -->
-        <Button
-            style="@style/my_points_button_style"
-            android:layout_width="200dp"
-            android:layout_height="35dp"
-            android:background="@drawable/boarder_rounded_corner2"
+        <TextView
+            style="@style/Base.TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/increase_your_balance_btn" />
 
@@ -63,62 +95,20 @@
             android:padding="8dp"
             android:text="@string/explain_increase_your_points" />
 
-        <Space
-            android:layout_width="@dimen/space_in_my_points"
-            android:layout_height="@dimen/space_in_my_points" />
-
-        <android.support.v7.widget.AppCompatSeekBar
-            android:id="@+id/my_points_seekbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:max="90" />
 
         <Space
             android:layout_width="@dimen/space_in_my_points"
             android:layout_height="@dimen/space_in_my_points" />
 
-        <!--two buttons-->
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <!-- Signup Button -->
+        <Button
+            style="@style/my_points_button_style"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="@dimen/space_in_my_points"
-                android:layout_weight="2" />
-
-            <!-- Signup Button -->
-            <Button
-                style="@style/my_points_button_style"
-                android:layout_width="80dp"
-                android:layout_height="35dp"
-                android:layout_weight="1"
-                android:background="@drawable/boarder_rounded_corner2"
-                android:gravity="center"
-                android:text="@string/start_over_btn" />
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="@dimen/space_in_my_points"
-                android:layout_weight="0.4" />
-
-            <!-- Signup Button -->
-            <Button
-                style="@style/my_points_button_style_unfocused"
-                android:layout_width="80dp"
-                android:layout_height="35dp"
-                android:layout_weight="1"
-                android:background="@drawable/boarder_rounded_corner2"
-                android:gravity="center"
-                android:text="@string/participate_btn" />
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="@dimen/space_in_my_points"
-                android:layout_weight="2" />
-        </LinearLayout>
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/boarder_rounded_corner2"
+            android:gravity="center"
+            android:text="@string/save" />
 
         <Space
             android:layout_width="@dimen/space_in_my_points"
@@ -129,7 +119,7 @@
             android:layout_height="wrap_content"
             android:background="#F5F5F5"
             android:padding="8dp"
-            android:text="@string/convert_your_points_to_money_label" />
+            android:text="@string/participation_type" />
 
         <Space
             android:layout_width="8dp"
@@ -140,7 +130,8 @@
             android:layout_height="wrap_content"
             android:background="#F5F5F5"
             android:padding="8dp"
-            android:text="@string/donate_to_charities" />
+            android:text="@string/choose_participation_type" />
 
     </LinearLayout>
+
 </android.support.v4.widget.NestedScrollView>

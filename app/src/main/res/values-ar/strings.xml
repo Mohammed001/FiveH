@@ -93,5 +93,8 @@
     <string name="donate_to_charities">التبرع لجهات خيرية</string>
     <string name="about_msg">تطبيق FiveH</string>
     <string name="my_archive">أرشيف اعلاناتي</string>
+    <string name="participation_type">نوع الاشتراك</string>
+    <string name="choose_participation_type">اختر نوع الاشتراك</string>
+    <string name="debug_participation_type_free">نوع الاشتراك   مجاني</string>
 
 </resources>

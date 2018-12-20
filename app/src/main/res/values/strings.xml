@@ -110,7 +110,7 @@
     <string name="advertisement_text">Advertisement text</string>
     <string name="explain_more">Explain more</string>
     <string name="your_points">your points</string>
-    <string name="debug_2500_points">2500 points</string>
+    <string name="debug_2500_points" translatable="false">2500 points</string>
     <string name="increase_your_balance_btn">increase your balance</string>
     <string name="explain_increase_your_points">according to your bundle, this service lets you increase your balance when you interact with each Ad you see. notice that you cann\'t take advantage of this feature until you got 2500 points in your behalf.</string>
     <string name="start_over_btn">start over</string>
@@ -119,5 +119,9 @@
     <string name="donate_to_charities">donate to charities</string>
     <string name="about_msg">FiveH application</string>
     <string name="my_archive">My Archive</string>
+    <string name="participation_type">participation type</string>
+    <string name="choose_participation_type">choose participation type</string>
+    <string name="_2500_points" translatable="false">2500\npoints</string>
+    <string name="debug_participation_type_free">participation type Free</string>
 
 </resources>
