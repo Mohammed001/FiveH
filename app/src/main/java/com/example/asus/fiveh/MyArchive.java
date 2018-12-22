@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.asus.fiveh.main_ad_adapter.ArchiveAdsAdapter;
+import com.example.asus.fiveh.adapters.ArchiveAdsAdapter;
 
 public class MyArchive extends AppCompatActivity {
 

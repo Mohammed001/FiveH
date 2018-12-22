@@ -1,4 +1,4 @@
-package com.example.asus.fiveh.main_ad_adapter;
+package com.example.asus.fiveh.adapters;
 
 
 import android.graphics.ColorMatrix;

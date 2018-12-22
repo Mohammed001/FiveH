@@ -11,14 +11,14 @@ import android.view.View;
 import com.example.asus.fiveh.models.User;
 import com.google.gson.Gson;
 
-import static com.example.asus.fiveh.ApplicationData.ADVERTISER;
 import static com.example.asus.fiveh.ApplicationData.APP_PREFERENCES_FILE;
-import static com.example.asus.fiveh.ApplicationData.GREED;
 import static com.example.asus.fiveh.ApplicationData.USER_DATA;
-import static com.example.asus.fiveh.ApplicationData.USER_TYPE;
 
 public class Intro extends AppCompatActivity {
 
+    static final String BEHAVE_KEY = "BAHAVE_KEY";
+    static final String BEHAVE_SIGNUP = "BAHAVE_SIGNUP";
+    static final String BEHAVE_LOGIN = "BEHAVE_LOGIN";
     AppCompatButton btn_go_to_creat_account;
     AppCompatButton btn_go_to_login;
 
@@ -33,11 +33,13 @@ public class Intro extends AppCompatActivity {
     private void decide() {
 
         if (!logedIn()) {
+            final Intent intent = new Intent(Intro.this, SignUpActivity.class);
             btn_go_to_creat_account = findViewById(R.id.btn_go_to_creat_account);
             btn_go_to_creat_account.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(Intro.this, SignUpActivity.class));
+                    intent.putExtra(BEHAVE_KEY, BEHAVE_SIGNUP);
+                    startActivity(intent);
                 }
             });
 
@@ -45,7 +47,8 @@ public class Intro extends AppCompatActivity {
             btn_go_to_login.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(Intro.this, LoginActivity.class));
+                    intent.putExtra(BEHAVE_KEY, BEHAVE_LOGIN);
+                    startActivity(intent);
                 }
             });
         }

@@ -31,6 +31,9 @@ import static com.example.asus.fiveh.ApplicationData.APP_PREFERENCES_FILE;
 import static com.example.asus.fiveh.ApplicationData.GREED;
 import static com.example.asus.fiveh.ApplicationData.USER_DATA;
 import static com.example.asus.fiveh.ApplicationData.USER_TYPE;
+import static com.example.asus.fiveh.SignUpActivity.DEBUGEMAIL;
+import static com.example.asus.fiveh.SignUpActivity.DEBUGPASSWORD;
+import static com.example.asus.fiveh.SignUpActivity.RC_SIGN_IN;
 
 /**
  * Created by ASUS on 11/11/2018.
@@ -38,11 +41,6 @@ import static com.example.asus.fiveh.ApplicationData.USER_TYPE;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, GoogleLogin.UPDATEui {
     private static final String TAG = LoginActivity.class.getSimpleName();
-    public static final long DELAY = 10_000; // ms
-    private static final String USER_AS_STRING = "user";
-    private static final String DEBUGEMAIL = "hazem@sadv.sa";
-    private static final String DEBUGPASSWORD = "12345";
-    private static final int RC_SIGN_IN = 9001;
 
     EditText _emailText;
     EditText _passwordText;
@@ -237,7 +235,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.email_sign_in_button:
                 login();
                 break;
-
             case R.id.link_signup:
                 // Start the Signup activity
                 Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);

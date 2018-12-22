@@ -29,7 +29,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.asus.fiveh.main_ad_adapter.MainAdAdapter;
+import com.example.asus.fiveh.adapters.MainAdAdapter;
 import com.example.asus.fiveh.models.Ad;
 
 import java.util.List;
