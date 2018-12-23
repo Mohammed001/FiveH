@@ -81,7 +81,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void displayWhatInDataBase() {
+        getSupportLoaderManager().initLoader(TASK_LOADER_ID, null, this);
+    }
 
+    /**
+     * This method is called after this activity has been paused or restarted.
+     * Often, this is after new data has been inserted through an AddTaskActivity,
+     * so this restarts the loader to re-query the underlying data for any changes.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // re-queries for all tasks
+        // todo
+        getSupportLoaderManager().restartLoader(TASK_LOADER_ID, null, this);
     }
 
     private void doHTTP_ads() {
@@ -91,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ///////////////////////////
         call.enqueue(adConnectionCallback());
     }
+
     @NonNull
     private Callback<List<Ad>> adConnectionCallback() {
         return new Callback<List<Ad>>() {
@@ -105,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         };
     }
+
     private void ad_connection_succeed(Response<List<Ad>> response) {
         if (response.isSuccessful()) {
             ad_data = response.body();
@@ -114,6 +129,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
     }
+
     private void ad_connection_failed(Throwable t) {
         Log.i(TAG, "onFailure" + t.getMessage());
         displayWhatInDataBase();
@@ -124,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Call<List<Flower>> call = service.listFlowers();
         call.enqueue(flowerConnectionCallback());
     }
+
     @NonNull
     private Callback<List<Flower>> flowerConnectionCallback() {
         return new Callback<List<Flower>>() {
@@ -138,6 +155,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         };
     }
+
     private void flower_connection_succeed(Response<List<Flower>> response) {
         if (response.isSuccessful()) {
             flower_data = response.body();
@@ -147,6 +165,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
     }
+
     private void flower_connection_failed(Throwable t) {
         Log.i(TAG, "onFailure" + t.getMessage());
         // todo
@@ -155,7 +174,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     ///// ______________________________ loader issue ______________________________ /////
-
 
     @NonNull
     @Override
