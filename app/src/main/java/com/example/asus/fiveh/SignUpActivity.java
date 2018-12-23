@@ -23,7 +23,7 @@ import com.example.asus.fiveh.loginproviders.FacebookLogin;
 import com.example.asus.fiveh.loginproviders.GoogleLogin;
 import com.example.asus.fiveh.loginproviders.InstagramLogin;
 import com.example.asus.fiveh.loginproviders.TwitterLogin;
-import com.example.asus.fiveh.models.Response;
+import com.example.asus.fiveh.models.FiveHResponse;
 import com.example.asus.fiveh.models.User;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.gson.Gson;
@@ -53,7 +53,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     String email;
     String password;
     String password2;
-
+    TextInputLayout retype_pass_layout;
     TextInputEditText retype_pass;
     TextInputEditText input_password;
     TextInputEditText input_email;
@@ -96,18 +96,96 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         behaviour = intent.getStringExtra(BEHAVE_KEY);
         if (behaviour != null && behaviour.equals(BEHAVE_LOGIN)) {
             link_login.setText(getString(R.string.no_account_yet_create_one_tv));
-            retype_pass.setVisibility(View.GONE);
+            retype_pass_layout.setVisibility(View.GONE);
             radio_group.setVisibility(View.GONE);
             btn_signup.setText(getString(R.string.login_btn));
         }
     }
 
+    public void connectToServer() {
+        btn_signup.setEnabled(true);
+        RetrofitAPI service = new RetrofitClient().getAuthClient().create(RetrofitAPI.class);
+        Call<FiveHResponse> call = null;
+        if (behaviour.equals(BEHAVE_LOGIN)) {
+            call = service.call_5H_login(email, password);
+        } else if (behaviour.equals(BEHAVE_SIGNUP)) {
+            call = service.call_5H_signup(email, password);
+        }
+        if (call != null) {
+            call.enqueue(getResponseCallback());
+        }
+    }
+
+    @NonNull
+    private Callback<FiveHResponse> getResponseCallback() {
+        return new Callback<FiveHResponse>() {
+            @Override
+            public void onResponse(Call<FiveHResponse> call, retrofit2.Response<FiveHResponse> response) {
+                connection_succeed(response);
+            }
+
+            @Override
+            public void onFailure(Call<FiveHResponse> call, Throwable t) {
+                connection_failed(t);
+            }
+        };
+    }
+
+    private void connection_failed(Throwable t) {
+        Toast.makeText(SignUpActivity.this, "onFailure " + t.getMessage(), Toast.LENGTH_LONG).show();
+        progressDialog.dismiss();
+    }
+
+    private void connection_succeed(retrofit2.Response<FiveHResponse> server_response) {
+        FiveHResponse my_FiveH_response = server_response.body();
+        // it should be not null, but to handle un expected mistakes i will interest in it
+        if (my_FiveH_response != null) {
+            Toast.makeText(this, my_FiveH_response.getMsg(), Toast.LENGTH_SHORT).show();
+            if (my_FiveH_response.getResult().equals("ko")) {
+                return;
+            }
+            // result ok..
+            User user = my_FiveH_response.getData();
+            // it should be not null, but to handle un expected mistakes i will interest in it
+            if (user != null) {
+                // write it in sharedpreferences.
+                ApplicationData.current_user = user;
+                SharedPreferences sharedPref = getSharedPreferences(APP_PREFERENCES_FILE, Context.MODE_PRIVATE);
+                SharedPreferences.Editor prefsEditor = sharedPref.edit();
+                Gson gson = new Gson();
+                String user_data = gson.toJson(user);
+                prefsEditor.putString(USER_DATA, user_data);
+                String user_type = user.getUser_type();
+                // todo: user type in response is null!! what a demo.
+                user_type = user_type == null || user_type.equals("") ? GREED : user_type;
+                prefsEditor.putString(USER_TYPE, user_type);
+                prefsEditor.apply();
+                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra(USER_TYPE, user_type);
+                startActivity(intent);
+                finish();
+
+            } else {
+                Log.i(TAG, "onResponse: no DATA in json!");
+            }
+        } else {
+            Log.i(TAG, "onResponse: no JSON!");
+        }
+
+        progressDialog.dismiss();
+    }
+
+
+    // _________________________________ views issue _________________________________ //
+
+
     private void initviews() {
 
         radio_group = findViewById(R.id.radio_group);
-        retype_pass = findViewById(R.id.retype_pass);
-        twitterbtn = findViewById(R.id.twitter_login);
         retype_pass = findViewById(R.id.retype_pass2);
+        twitterbtn = findViewById(R.id.twitter_login);
+        retype_pass_layout = findViewById(R.id.retype_pass_layout);
         input_email = findViewById(R.id.input_email);
         input_password = findViewById(R.id.input_password);
         btn_signup = findViewById(R.id.btn_signup);
@@ -171,80 +249,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         connectToServer();
     }
 
-    public void connectToServer() {
-        btn_signup.setEnabled(true);
-        RetrofitAPI service = new RetrofitClient().getAuthClient().create(RetrofitAPI.class);
-        Call<Response> call = null;
-        if (behaviour.equals(BEHAVE_LOGIN)) {
-            call = service.call_5H_login(email, password);
-        } else if (behaviour.equals(BEHAVE_SIGNUP)) {
-            call = service.call_5H_signup(email, password);
-        }
-        if (call != null) {
-            call.enqueue(getResponseCallback());
-        }
-    }
-
-    @NonNull
-    private Callback<Response> getResponseCallback() {
-        return new Callback<Response>() {
-            @Override
-            public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
-                connection_succeed(response);
-            }
-
-            @Override
-            public void onFailure(Call<Response> call, Throwable t) {
-                connection_failed(t);
-            }
-        };
-    }
-
-    private void connection_failed(Throwable t) {
-        Toast.makeText(SignUpActivity.this, "onFailure " + t.getMessage(), Toast.LENGTH_LONG).show();
-        progressDialog.dismiss();
-    }
-
-    private void connection_succeed(retrofit2.Response<Response> server_response) {
-        Response my_response = server_response.body();
-        // it should be not null, but to handle un expected mistakes i will interest in it
-        if (my_response != null) {
-            Toast.makeText(this, my_response.getMsg(), Toast.LENGTH_SHORT).show();
-            if (my_response.getResult().equals("ko")) {
-                return;
-            }
-            // result ok..
-            User user = my_response.getData();
-            // it should be not null, but to handle un expected mistakes i will interest in it
-            if (user != null) {
-                // write it in sharedpreferences.
-                ApplicationData.current_user = user;
-                SharedPreferences sharedPref = getSharedPreferences(APP_PREFERENCES_FILE, Context.MODE_PRIVATE);
-                SharedPreferences.Editor prefsEditor = sharedPref.edit();
-                Gson gson = new Gson();
-                String user_data = gson.toJson(user);
-                prefsEditor.putString(USER_DATA, user_data);
-                String user_type = user.getUser_type();
-                // todo: user type in response is null!! what a demo.
-                user_type = user_type == null || user_type.equals("") ? GREED : user_type;
-                prefsEditor.putString(USER_TYPE, user_type);
-                prefsEditor.apply();
-                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra(USER_TYPE, user_type);
-                startActivity(intent);
-                finish();
-
-            } else {
-                Log.i(TAG, "onResponse: no DATA in json!");
-            }
-        } else {
-            Log.i(TAG, "onResponse: no JSON!");
-        }
-
-        progressDialog.dismiss();
-    }
-
     public boolean validate() {
 
         boolean valid = true;
@@ -285,9 +289,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
                     Animation animation = getfadeInAnimation();
 
-                    retype_pass.startAnimation(animation); // BRING RETYPE PASSWORD
+                    retype_pass_layout.startAnimation(animation); // BRING RETYPE PASSWORD
 //                    retype_pass.clearAnimation();
-                    retype_pass.setVisibility(View.VISIBLE);
+                    retype_pass_layout.setVisibility(View.VISIBLE);
 
                     radio_group.startAnimation(animation);
                     radio_group.setVisibility(View.VISIBLE);
@@ -303,8 +307,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     radio_group.startAnimation(animation);
                     radio_group.setVisibility(View.GONE);
 
-                    retype_pass.startAnimation(animation);
-                    retype_pass.setVisibility(View.GONE);
+                    retype_pass_layout.startAnimation(animation);
+                    retype_pass_layout.setVisibility(View.GONE);
 
                     behaviour = BEHAVE_LOGIN;
                 }

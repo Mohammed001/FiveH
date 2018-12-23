@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
-import static com.example.asus.fiveh.my_database.TaskContract.AdEntry.TABLE_NAME;
+import static com.example.asus.fiveh.my_database.TaskContract.AdTable.TABLE_NAME;
 
 
 // COMPLETED: Verify that TaskContentProvider extends from ContentProvider and implements required methods
@@ -34,7 +34,6 @@ public class TaskContentProvider extends ContentProvider {
 
         // Initialize a UriMatcher with no matches by passing in NO_MATCH to the constructor
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-
         /*
           All paths added to the UriMatcher have a corresponding int.
           For each kind of uri you may want to access, add the corresponding match with addURI.
@@ -49,7 +48,6 @@ public class TaskContentProvider extends ContentProvider {
 
     // Member variable for a TaskDbHelper that's initialized in the onCreate() method
     private TaskDbHelper mTaskDbHelper;
-
 
     /* onCreate() is where you should initialize anything you’ll need to setup
     your underlying data source.
@@ -87,7 +85,7 @@ public class TaskContentProvider extends ContentProvider {
                 // Inserting values into tasks table
                 long id = db.insert(TABLE_NAME, null, values);
                 if ( id > 0 ) {
-                    returnUri = ContentUris.withAppendedId(TaskContract.AdEntry.CONTENT_URI, id);
+                    returnUri = ContentUris.withAppendedId(TaskContract.AdTable.CONTENT_URI, id);
                 } else {
                     throw new android.database.SQLException("Failed to insert row into " + uri);
                 }
@@ -183,7 +181,6 @@ public class TaskContentProvider extends ContentProvider {
         return tasksDeleted;
     }
 
-
     // Update won't be used in the final ToDoList app but is implemented here for completeness
     // This updates a single item (by it's ID) in the tasks directory
     @Override
@@ -218,7 +215,6 @@ public class TaskContentProvider extends ContentProvider {
         // return number of tasks updated
         return tasksUpdated;
     }
-
 
     @Override
     public String getType(@NonNull Uri uri) {

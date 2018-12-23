@@ -1,9 +1,20 @@
 package com.example.asus.fiveh.models;
 
-public class Response {
+public class FiveHResponse {
+
     private String result;
     private String msg;
+    private String code;
     private User data;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
 
     public String getResult() {
         return result;

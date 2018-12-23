@@ -19,7 +19,7 @@ import com.example.asus.fiveh.loginproviders.FacebookLogin;
 import com.example.asus.fiveh.loginproviders.GoogleLogin;
 import com.example.asus.fiveh.loginproviders.InstagramLogin;
 import com.example.asus.fiveh.loginproviders.TwitterLogin;
-import com.example.asus.fiveh.models.Response;
+import com.example.asus.fiveh.models.FiveHResponse;
 import com.example.asus.fiveh.models.User;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.gson.Gson;
@@ -142,20 +142,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void connectToServer() {
         _loginButton.setEnabled(true);
         RetrofitAPI service = new RetrofitClient().getAuthClient().create(RetrofitAPI.class);
-        Call<Response> call = service.call_5H_login(email, password);
+        Call<FiveHResponse> call = service.call_5H_login(email, password);
         call.enqueue(getResponseCallback());
     }
 
     @NonNull
-    private Callback<Response> getResponseCallback() {
-        return new Callback<Response>() {
+    private Callback<FiveHResponse> getResponseCallback() {
+        return new Callback<FiveHResponse>() {
             @Override
-            public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+            public void onResponse(Call<FiveHResponse> call, retrofit2.Response<FiveHResponse> response) {
                 connection_succeed(response);
             }
 
             @Override
-            public void onFailure(Call<Response> call, Throwable t) {
+            public void onFailure(Call<FiveHResponse> call, Throwable t) {
                 connection_failed(t);
             }
         };
@@ -166,16 +166,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         progressDialog.dismiss();
     }
 
-    private void connection_succeed(retrofit2.Response<Response> server_response) {
-        Response my_response = server_response.body();
+    private void connection_succeed(retrofit2.Response<FiveHResponse> server_response) {
+        FiveHResponse my_FiveH_response = server_response.body();
         // it should be not null, but to handle un expected mistakes i will interest in it
-        if (my_response != null) {
-            Toast.makeText(this, my_response.getMsg(), Toast.LENGTH_SHORT).show();
-            if (my_response.getResult().equals("ko")) {
+        if (my_FiveH_response != null) {
+            Toast.makeText(this, my_FiveH_response.getMsg(), Toast.LENGTH_SHORT).show();
+            if (my_FiveH_response.getResult().equals("ko")) {
                 return;
             }
             // result ok..
-            User user = my_response.getData();
+            User user = my_FiveH_response.getData();
             // it should be not null, but to handle un expected mistakes i will interest in it
             if (user != null) {
                 // write it in sharedpreferences.

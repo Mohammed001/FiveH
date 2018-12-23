@@ -29,8 +29,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.asus.fiveh.adapters.MainAdAdapter;
+import com.example.asus.fiveh.adapters.AdsAdapter;
+import com.example.asus.fiveh.adapters.FlowersAdapter;
 import com.example.asus.fiveh.models.Ad;
+import com.example.asus.fiveh.models.FiveHResponse;
+import com.example.asus.fiveh.models.Flower;
 
 import java.util.List;
 
@@ -46,9 +49,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final String TAG = MainActivity.class.getSimpleName();
     FloatingActionButton fab;
     RecyclerView main_rv;
-    MainAdAdapter adAdapter;
-    List<Ad> data = null;
+    FlowersAdapter flowersAdapter;
+    AdsAdapter adsAdapter;
+    List<Flower> flower_data = null;
+    List<Ad> ad_data = null;
     SwipeRefreshLayout swiperefreshlayout;
+    NavigationView navigationView;
+    private static final int TASK_LOADER_ID = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,145 +68,90 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        https://stackoverflow.com/questions/10308452/how-to-convert-the-following-json-string-to-java-object
 
         if (isOnline()) {
-            doHTTP();
-        }
-    }
-
-    private void initViewsWithListeners() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        swiperefreshlayout = findViewById(R.id.swiperefreshlayout);
-        swiperefreshlayout.setOnRefreshListener(getOnRefreshListener());
-        fab = findViewById(R.id.fab);
-
-        LinearLayout linearLayout = navigationView.getHeaderView(0).findViewById(R.id.image_user_bundle);
-        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-
-        if (ApplicationData.current_user.getUser_type().equals(ADVERTISER)) {
-            fab.setVisibility(View.VISIBLE);
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(getApplicationContext(), CreateNewAd.class);
-                    startActivity(intent);
-                }
-            });
-        }
-
-        onCreateDrawer(toolbar);
-    }
-
-    NavigationView navigationView;
-
-    private void onCreateDrawer(Toolbar toolbar) {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-    }
-
-    @NonNull
-    private SwipeRefreshLayout.OnRefreshListener getOnRefreshListener() {
-        return new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                swiperefreshlayout.setRefreshing(false);
-                if (isOnline()) {
-                    doHTTP();
-                }
-            }
-        };
-    }
-
-    protected boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        assert cm != null;
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        return netInfo != null && netInfo.isConnectedOrConnecting();
-    }
-
-    private void createRecyclerview() {
-        main_rv = findViewById(R.id.main_rv);
-        adAdapter = new MainAdAdapter(this, data);
-
-        GridLayoutManager layoutManager;
-        if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            layoutManager = new GridLayoutManager(this, 1);
+//            doHTTP_flowers();
+            doHTTP_ads();
         } else {
-            layoutManager = new GridLayoutManager(this, 2);
+            displayWhatInDataBase();
         }
-        main_rv.setLayoutManager(layoutManager);
-
-        DividerItemDecoration itemDecoration = new DividerItemDecoration(main_rv.getContext(), layoutManager.getOrientation());
-        main_rv.addItemDecoration(itemDecoration);
-        main_rv.setAdapter(adAdapter);
     }
 
-    private void doHTTP() {
-        RetrofitAPI service = new RetrofitClient().getMainClient().create(RetrofitAPI.class);
-        Call<List<Ad>> call = service.listAds();
-        call.enqueue(getMainConnectionCallback());
+    private void displayWhatInDataBase() {
+
     }
 
+    private void doHTTP_ads() {
+        RetrofitAPI service = new RetrofitClient().getAdsRetrofitClient().create(RetrofitAPI.class);
+        // todo page id!!!!
+        Call<List<Ad>> call = service.listAds(0);
+        ///////////////////////////
+        call.enqueue(adConnectionCallback());
+    }
     @NonNull
-    private Callback<List<Ad>> getMainConnectionCallback() {
+    private Callback<List<Ad>> adConnectionCallback() {
         return new Callback<List<Ad>>() {
             @Override
-            public void onResponse(Call<List<Ad>> call, Response<List<Ad>> response) {
-                connection_succeed(response);
+            public void onResponse(@NonNull Call<List<Ad>> call, @NonNull Response<List<Ad>> response) {
+                ad_connection_succeed(response);
             }
 
             @Override
-            public void onFailure(Call<List<Ad>> call, Throwable t) {
-                connection_failed(t);
+            public void onFailure(@NonNull Call<List<Ad>> call, @NonNull Throwable t) {
+                ad_connection_failed(t);
             }
         };
     }
-
-    private void connection_failed(Throwable t) {
-        Log.i(TAG, "onFailure" + t.getMessage());
-        createRecyclerview();
-    }
-
-    private void connection_succeed(Response<List<Ad>> response) {
+    private void ad_connection_succeed(Response<List<Ad>> response) {
         if (response.isSuccessful()) {
-            data = response.body();
-            if (data != null) {
-                Log.i(TAG, "onResponse: Number of Ads received: " + data.size());
-                createRecyclerview();
+            ad_data = response.body();
+            if (ad_data != null) {
+                Log.i(TAG, "onResponse: Number of Ads received: " + ad_data.size());
+                createAdsRecyclerview();
             }
         }
     }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+    private void ad_connection_failed(Throwable t) {
+        Log.i(TAG, "onFailure" + t.getMessage());
+        displayWhatInDataBase();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        if (ApplicationData.current_user.getUser_type().equals(ADVERTISER)) {
-            menu.findItem(R.id.nav_my_profile).setVisible(false);
-            menu.findItem(R.id.nav_my_accounts).setTitle(R.string.my_archive);
-        }
-
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setHomeButtonEnabled(false);      // Disable the button
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false); // Remove the left caret
-            getSupportActionBar().setDisplayShowHomeEnabled(false); // Remove the icon
-        }
-        return true;
+    private void doHTTP_flowers() {
+        RetrofitAPI service = new RetrofitClient().getFlowersRetrofitClient().create(RetrofitAPI.class);
+        Call<List<Flower>> call = service.listFlowers();
+        call.enqueue(flowerConnectionCallback());
     }
+    @NonNull
+    private Callback<List<Flower>> flowerConnectionCallback() {
+        return new Callback<List<Flower>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Flower>> call, @NonNull Response<List<Flower>> response) {
+                flower_connection_succeed(response);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<Flower>> call, @NonNull Throwable t) {
+                flower_connection_failed(t);
+            }
+        };
+    }
+    private void flower_connection_succeed(Response<List<Flower>> response) {
+        if (response.isSuccessful()) {
+            flower_data = response.body();
+            if (flower_data != null) {
+                Log.i(TAG, "onResponse: Number of Flowers received: " + flower_data.size());
+                createFlowersRecyclerview();
+            }
+        }
+    }
+    private void flower_connection_failed(Throwable t) {
+        Log.i(TAG, "onFailure" + t.getMessage());
+        // todo
+        createFlowersRecyclerview();
+    }
+
+
+
+    ///// ______________________________ view issue ______________________________ /////
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -228,9 +180,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             // with the one line:
             //////// getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit().clear().apply();
             RetrofitAPI service = new RetrofitClient().getAuthClient().create(RetrofitAPI.class);
-            service.call_5H_logout().enqueue(new Callback<com.example.asus.fiveh.models.Response>() {
+            service.call_5H_logout().enqueue(new Callback<FiveHResponse>() {
                 @Override
-                public void onResponse(Call<com.example.asus.fiveh.models.Response> call, Response<com.example.asus.fiveh.models.Response> response) {
+                public void onResponse(@NonNull Call<FiveHResponse> call, @NonNull Response<FiveHResponse> response) {
                     if (response.body() != null) {
                         Log.i(TAG, "onResponse: " + (response.body().getResult()));
                         Log.i(TAG, "onResponse: " + response.body().getMsg());
@@ -240,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
 
                 @Override
-                public void onFailure(Call<com.example.asus.fiveh.models.Response> call, Throwable t) {
+                public void onFailure(@NonNull Call<FiveHResponse> call, @NonNull Throwable t) {
                     Toast.makeText(MainActivity.this, "onFailure: " + TAG, Toast.LENGTH_SHORT).show();
                 }
             });
@@ -285,6 +237,120 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .show();
     }
 
+    @NonNull
+    private SwipeRefreshLayout.OnRefreshListener getOnRefreshListener() {
+        return new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swiperefreshlayout.setRefreshing(false);
+                if (isOnline()) {
+                    doHTTP_flowers();
+                }
+            }
+        };
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        if (ApplicationData.current_user.getUser_type().equals(ADVERTISER)) {
+            menu.findItem(R.id.nav_my_profile).setVisible(false);
+            menu.findItem(R.id.nav_my_accounts).setTitle(R.string.my_archive);
+        }
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(false);      // Disable the button
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false); // Remove the left caret
+            getSupportActionBar().setDisplayShowHomeEnabled(false); // Remove the icon
+        }
+        return true;
+    }
+
+    private void initViewsWithListeners() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        swiperefreshlayout = findViewById(R.id.swiperefreshlayout);
+        swiperefreshlayout.setOnRefreshListener(getOnRefreshListener());
+        fab = findViewById(R.id.fab);
+
+        LinearLayout linearLayout = navigationView.getHeaderView(0).findViewById(R.id.image_user_bundle);
+        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+        if (ApplicationData.current_user.getUser_type().equals(ADVERTISER)) {
+            fab.setVisibility(View.VISIBLE);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getApplicationContext(), CreateNewAd.class);
+                    startActivity(intent);
+                }
+            });
+        }
+
+        onCreateDrawer(toolbar);
+    }
+
+    private void onCreateDrawer(Toolbar toolbar) {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    protected boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        assert cm != null;
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
+    private void createFlowersRecyclerview() {
+        main_rv = findViewById(R.id.main_rv);
+        flowersAdapter = new FlowersAdapter(this, flower_data);
+
+        GridLayoutManager layoutManager;
+        if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            layoutManager = new GridLayoutManager(this, 1);
+        } else {
+            layoutManager = new GridLayoutManager(this, 2);
+        }
+        main_rv.setLayoutManager(layoutManager);
+
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(main_rv.getContext(), layoutManager.getOrientation());
+        main_rv.addItemDecoration(itemDecoration);
+        main_rv.setAdapter(flowersAdapter);
+    }
+
+    private void createAdsRecyclerview() {
+        main_rv = findViewById(R.id.main_rv);
+        adsAdapter = new AdsAdapter(this, ad_data);
+
+        GridLayoutManager layoutManager;
+        if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            layoutManager = new GridLayoutManager(this, 1);
+        } else {
+            layoutManager = new GridLayoutManager(this, 2);
+        }
+        main_rv.setLayoutManager(layoutManager);
+
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(main_rv.getContext(), layoutManager.getOrientation());
+        main_rv.addItemDecoration(itemDecoration);
+        main_rv.setAdapter(adsAdapter);
+    }
 
 }
 

@@ -118,7 +118,7 @@
 
             <!--  Name Label -->
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/retype_pass"
+                android:id="@+id/retype_pass_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/re_enter_password_et"

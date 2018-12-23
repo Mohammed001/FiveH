@@ -18,7 +18,7 @@ public class Temp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.temp);
 
-        testTextSwitcher = findViewById(R.id.testTextSwitcher);
+        testTextSwitcher = findViewById(R.id.testTextSwitcher_in_temp);
         testTextSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
             @Override
             public View makeView() {

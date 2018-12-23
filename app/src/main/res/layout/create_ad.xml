@@ -15,7 +15,7 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/ad_image"
+            android:id="@+id/ad_image_in_create_ad"
             android:layout_width="200dp"
             android:layout_height="137dp"
             android:adjustViewBounds="true"

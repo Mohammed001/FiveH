@@ -8,7 +8,7 @@ public class User {
     private String user_pass;
     private String user_first_name;
     private String user_last_name;
-    private String user_email;
+    private String primary_email;
     private String user_id;
     private String user_picture;
     private String user_name;
@@ -93,12 +93,12 @@ public class User {
         this.user_last_name = user_last_name;
     }
 
-    public String getUser_email() {
-        return user_email;
+    public String getPrimary_email() {
+        return primary_email;
     }
 
-    public void setUser_email(String user_email) {
-        this.user_email = user_email;
+    public void setPrimary_email(String primary_email) {
+        this.primary_email = primary_email;
     }
 
     public String getUser_id() {

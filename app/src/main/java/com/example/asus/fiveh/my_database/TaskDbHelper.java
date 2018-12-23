@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.asus.fiveh.my_database.TaskContract.AdEntry;
+import com.example.asus.fiveh.my_database.TaskContract.AdTable;
 
 public class TaskDbHelper extends SQLiteOpenHelper {
 
@@ -28,10 +28,14 @@ public class TaskDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         // Create tasks table (careful to follow SQL formatting rules)
-        final String CREATE_TABLE = "CREATE TABLE "  + TaskContract.AdEntry.TABLE_NAME + " (" +
-                        TaskContract.AdEntry._ID                + " INTEGER PRIMARY KEY, " +
-                        AdEntry.COLUMN_AD_TYPE + " TEXT NOT NULL, " +
-                        TaskContract.AdEntry.COLUMN_FILE_PATH + " INTEGER NOT NULL);";
+        final String CREATE_TABLE = "CREATE TABLE " + AdTable.TABLE_NAME + " (" +
+                AdTable._ID + " INTEGER PRIMARY KEY, " +
+                AdTable.COLUMN_AD_TYPE + " TEXT NOT NULL, " +
+                AdTable.COLUMN_AD_TEXT + " TEXT NOT NULL, " +
+                AdTable.COLUMN_FILE_PATH + " INTEGER NOT NULL, " +
+                AdTable.COLUMN_AD_ID + " INTEGER NOT NULL, " +
+                AdTable.COLUMN_AD_PAGE + " INTEGER NOT NULL" +
+                ");";
 
         db.execSQL(CREATE_TABLE);
     }
@@ -43,7 +47,7 @@ public class TaskDbHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + AdEntry.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + AdTable.TABLE_NAME);
         onCreate(db);
     }
 }

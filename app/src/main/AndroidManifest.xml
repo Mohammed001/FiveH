@@ -46,9 +46,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
         <activity android:name=".MyProfile" />
@@ -104,6 +104,13 @@
             <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
+
+
+        <provider
+            android:name="com.example.asus.fiveh.my_database.TaskContentProvider"
+            android:authorities="com.example.asus.fiveh"
+            android:exported="false" />
+
     </application>
 
 </manifest>

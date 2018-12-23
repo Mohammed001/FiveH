@@ -35,7 +35,7 @@ public class CreateNewAd extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_ad);
         ApplicationData.displaybackarrow(this);
-        imageView = findViewById(R.id.ad_image);
+        imageView = findViewById(R.id.ad_image_in_rv_row_user_ad);
         advertisement_text = findViewById(R.id.ad_txt);
         advertisement_text.setOnClickListener(this);
 //        d = advertisement_text.getBackground();
@@ -56,7 +56,7 @@ public class CreateNewAd extends AppCompatActivity implements View.OnClickListen
 
 //        imageView.setImageResource(R.drawable.image_ad);
         /* todo: my solution to save the bitmap after rotating the screen
-        is to  make the {bitmap} variable static, but the community suggest to pass it like {byteArray} data
+        is to  make the {bitmap} variable static, but the community suggest to pass it like {byteArray} flower_data
         in bundle
         */
         if (savedInstanceState != null) {

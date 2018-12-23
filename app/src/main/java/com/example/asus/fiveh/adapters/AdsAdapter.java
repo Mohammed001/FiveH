@@ -28,12 +28,12 @@ import java.util.List;
  * Created by ASUS on 11/12/2018.
  */
 
-public class MainAdAdapter extends RecyclerView.Adapter<MainAdAdapter.MainAdViewHolder> {
+public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.MainAdViewHolder> {
 
     private Context context;
     private List<Ad> data;
 
-    public MainAdAdapter(Context context, List<Ad> data) {
+    public AdsAdapter(Context context, List<Ad> data) {
         this.data = data;
         this.context = context;
     }
@@ -49,22 +49,24 @@ public class MainAdAdapter extends RecyclerView.Adapter<MainAdAdapter.MainAdView
     public void onBindViewHolder(@NonNull final MainAdViewHolder holder, int position) {
 //        String text = mData.get(position);
         if (data != null) {
-            final Ad ad = data.get(position);
-            final String imageUrl = RetrofitClient.BASE_ADS_PHOTOS_URL + ad.getPhoto();
-            Glide.with(context).load(imageUrl)
-                    .apply(new RequestOptions()
-                            .placeholder(R.drawable.image_ad))
-                    .into(holder.mImageView);
-
-            holder.mImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setData(Uri.parse(imageUrl));
-                    context.startActivity(i);
-                }
-            });
-            holder.mTextSwitcher.setCurrentText(ad.getName());
+            final Ad Ad = data.get(position);
+//            final String imageUrl = RetrofitClient.BASE_ADS_PHOTOS_URL + Ad.getFile_path();
+//            Glide.with(context).load(imageUrl)
+//                    .apply(new RequestOptions()
+//                            .placeholder(R.drawable.image_ad))
+//                    .into(holder.mImageView);
+//
+//            holder.mImageView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent i = new Intent(Intent.ACTION_VIEW);
+//                    i.setData(Uri.parse(imageUrl));
+//                    context.startActivity(i);
+//                }
+//            });
+            // temp images
+            holder.mImageView.setImageResource(R.drawable.image_ad);
+            holder.mTextSwitcher.setCurrentText(Ad.getAdv_text());
             holder.mTextSwitcher.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -72,7 +74,7 @@ public class MainAdAdapter extends RecyclerView.Adapter<MainAdAdapter.MainAdView
                         holder.mTextSwitcher.setText(context.getString(R.string.very_long_text));
                         holder.mTextSwitcher.setTag("1");
                     } else if (holder.mTextSwitcher.getTag().equals("1")) {
-                        holder.mTextSwitcher.setText(ad.getName());
+                        holder.mTextSwitcher.setText(Ad.getAdv_text());
                         holder.mTextSwitcher.setTag("0");
                     }
                 }
@@ -97,8 +99,8 @@ public class MainAdAdapter extends RecyclerView.Adapter<MainAdAdapter.MainAdView
 
         MainAdViewHolder(View itemView) {
             super(itemView);
-            mTextSwitcher = itemView.findViewById(R.id.testTextSwitcher);
-            mImageView = itemView.findViewById(R.id.ad_image);
+            mTextSwitcher = itemView.findViewById(R.id.testTextSwitcher_in_rv_row_user_ad);
+            mImageView = itemView.findViewById(R.id.ad_image_in_rv_row_user_ad);
             mTextSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
                 @Override
                 public View makeView() {
