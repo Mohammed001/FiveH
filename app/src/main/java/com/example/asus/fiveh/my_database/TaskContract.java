@@ -4,7 +4,7 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 
 
-class TaskContract {
+public class TaskContract {
 
     // The authority, which is how your code knows which Content Provider to access
     static final String AUTHORITY = "com.example.asus.fiveh";
@@ -17,10 +17,10 @@ class TaskContract {
     static final String PATH_TASKS = "tasks";
 
     /* AdTable is an inner class that defines the contents of the task table */
-    static final class AdTable implements BaseColumns {
+    public static final class AdTable implements BaseColumns {
 
         // AdTable content URI = base content URI + path
-        static final Uri CONTENT_URI =
+        public static final Uri CONTENT_URI =
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_TASKS).build();
 
         // Task table and column names
@@ -28,10 +28,10 @@ class TaskContract {
 
         // Since AdTable implements the interface "BaseColumns", it has an automatically produced
         // "_ID" column in addition to the two below
-        static final String COLUMN_AD_TYPE = "adv_type";
-        static final String COLUMN_FILE_PATH = "file_path";
-        static final String COLUMN_AD_TEXT = "adv_text";
-        static final String COLUMN_AD_ID = "adv_id";
-        static final String COLUMN_AD_PAGE = "adv_page";
+        public static final String COLUMN_AD_TYPE = "adv_type";
+        public static final String COLUMN_FILE_PATH = "file_path";
+        public static final String COLUMN_AD_TEXT = "adv_text";
+        public static final String COLUMN_AD_ID = "adv_id";
+        public static final String COLUMN_AD_PAGE = "adv_page";
     }
 }

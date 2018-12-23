@@ -13,7 +13,7 @@ public class RetrofitClient {
 
     private static final String BASE_ADS_URL = "http://5h.sa/api/";
     // todo
-    public static final String BASE_ADS_PHOTOS_URL = "http://services.hanselandpetal.com/photos/";
+    public static final String BASE_ADS_PHOTOS_URL = "http://5h.sa/images/ads/";
 
     private static final String BASE_FIVEH_AUTH_URL = "http://5h.sa/api/";
 

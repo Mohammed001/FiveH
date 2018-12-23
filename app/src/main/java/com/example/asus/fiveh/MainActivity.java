@@ -4,14 +4,18 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -43,8 +47,9 @@ import retrofit2.Response;
 
 import static com.example.asus.fiveh.ApplicationData.ADVERTISER;
 import static com.example.asus.fiveh.ApplicationData.GREED;
+import static com.example.asus.fiveh.MainActivityUtils.getLoader;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     FloatingActionButton fab;
@@ -148,6 +153,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         createFlowersRecyclerview();
     }
 
+
+    ///// ______________________________ loader issue ______________________________ /////
+
+
+    @NonNull
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
+        return getLoader(this);
+    }
+
+    @Override
+    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
+        // Update the data that the adapter uses to create ViewHolders
+        adsAdapter.swapCursor(data);
+//        mAdapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
+        adsAdapter.swapCursor(null);
+//        mAdapter.swapCursor(null);
+    }
 
 
     ///// ______________________________ view issue ______________________________ /////
