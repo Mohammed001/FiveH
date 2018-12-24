@@ -49,7 +49,7 @@ import static com.example.asus.fiveh.ApplicationData.ADVERTISER;
 import static com.example.asus.fiveh.ApplicationData.GREED;
 import static com.example.asus.fiveh.MainActivityUtils.getLoader;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LoaderManager.LoaderCallbacks<Cursor> {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LoaderManager.LoaderCallbacks<Cursor>, AdsAdapter.intface {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     FloatingActionButton fab;
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     List<Ad> ad_data = null;
     SwipeRefreshLayout swiperefreshlayout;
     NavigationView navigationView;
-    private static final int TASK_LOADER_ID = 0;
+    public static final int TASK_LOADER_ID = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -392,5 +392,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         main_rv.setAdapter(adsAdapter);
     }
 
+    @Override
+    public void doit() {
+        getSupportLoaderManager().restartLoader(TASK_LOADER_ID, null, this);
+    }
 }
 

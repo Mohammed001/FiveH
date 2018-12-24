@@ -19,6 +19,7 @@ import android.widget.ViewSwitcher;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.asus.fiveh.MainActivity;
 import com.example.asus.fiveh.R;
 import com.example.asus.fiveh.RetrofitClient;
 import com.example.asus.fiveh.models.Ad;
@@ -86,8 +87,23 @@ public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.MainAdViewHolder
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(imageUrl));
                 context.startActivity(i);
+                removeFromDatabase(id);
             }
         });
+    }
+
+    private void removeFromDatabase(int id) {
+
+        // Build appropriate uri with String row id appended
+        String stringId = Integer.toString(id);
+        Uri uri = AdTable.CONTENT_URI;
+        uri = uri.buildUpon().appendPath(stringId).build();
+
+        // Delete via a ContentResolver
+        context.getContentResolver().delete(uri, null, null);
+
+        // COMPLETED: Restart the loader to re-query for all tasks after a deletion
+        ((MainActivity) context).doit();
     }
 
     private void onBind1_using_List(@NonNull final MainAdViewHolder holder, int position) {
@@ -195,6 +211,10 @@ public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.MainAdViewHolder
             mTextSwitcher.setOutAnimation(out);
         }
 
+    }
+
+    public interface intface {
+        void doit();
     }
 
 }
