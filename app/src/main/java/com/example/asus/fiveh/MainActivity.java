@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 //        https://kodejava.org/how-to-convert-json-string-to-java-object/
 //        https://stackoverflow.com/questions/10308452/how-to-convert-the-following-json-string-to-java-object
-
+        createAdsRecyclerview();
         if (isOnline()) {
 //            doHTTP_flowers();
             doHTTP_ads();
@@ -84,11 +84,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportLoaderManager().initLoader(TASK_LOADER_ID, null, this);
     }
 
-    /**
-     * This method is called after this activity has been paused or restarted.
-     * Often, this is after new data has been inserted through an AddTaskActivity,
-     * so this restarts the loader to re-query the underlying data for any changes.
-     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -328,6 +323,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         swiperefreshlayout.setOnRefreshListener(getOnRefreshListener());
         fab = findViewById(R.id.fab);
 
+        onCreateDrawer(toolbar);
+
         LinearLayout linearLayout = navigationView.getHeaderView(0).findViewById(R.id.image_user_bundle);
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);
 
@@ -341,8 +338,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             });
         }
-
-        onCreateDrawer(toolbar);
     }
 
     private void onCreateDrawer(Toolbar toolbar) {

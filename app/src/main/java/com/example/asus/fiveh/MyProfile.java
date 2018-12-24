@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -93,6 +94,17 @@ public class MyProfile extends AppCompatActivity implements View.OnClickListener
 // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -182,4 +194,5 @@ public class MyProfile extends AppCompatActivity implements View.OnClickListener
     public void onNothingSelected(AdapterView<?> adapterView) {
         Toast.makeText(this, "Nothing Selected", Toast.LENGTH_SHORT).show();
     }
+
 }

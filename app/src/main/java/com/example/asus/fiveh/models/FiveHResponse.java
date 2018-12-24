@@ -4,6 +4,7 @@ public class FiveHResponse {
 
     private String result;
     private String msg;
+    private String sssmsg;
     private String code;
     private User data;
 

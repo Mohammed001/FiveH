@@ -27,6 +27,12 @@
         <item>موقعنا</item>
     </string-array>
 
+    <string-array name="options_when_choose_participation_type">
+        <item>فضي</item>
+        <item>ذهبي</item>
+        <item>ماسي</item>
+    </string-array>
+
     <string-array name="options_when_signup">
         <item>عادي</item>
         <item>فضي</item>

@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -135,10 +136,33 @@ public class CreateNewAd extends AppCompatActivity implements View.OnClickListen
     }
 
     public void launch_dialog(View view) {
+
         AlertDialog.Builder b = new AlertDialog.Builder(this);
         b.setTitle(getString(R.string.choose_advertisment_type));
+
         String[] types = getResources().getStringArray(R.array.options_when_create_ad);
-        b.setItems(types, new DialogInterface.OnClickListener() {
+        b.setItems(types, getDialogListener());
+
+        AlertDialog dialog = b.create();
+
+        ListView listView = dialog.getListView();
+//        listView.setDivider(new ColorDrawable(Color.GRAY));
+        listView.setDivider(getResources().getDrawable(R.drawable.create_ad_dialog_line));
+        listView.setDividerHeight(1);
+        listView.setFooterDividersEnabled(false);
+
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(R.drawable.create_ad_dialog_bg);
+//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        // Finally, display the alert dialog
+        dialog.show();
+//        dialog.getWindow().setLayout(1000, 1000); //Controlling width and height.
+
+
+    }
+
+    @NonNull
+    private DialogInterface.OnClickListener getDialogListener() {
+        return new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -160,21 +184,7 @@ public class CreateNewAd extends AppCompatActivity implements View.OnClickListen
                         break;
                 }
             }
-        });
-
-        AlertDialog dialog = b.create();
-        ListView listView = dialog.getListView();
-//        listView.setDivider(new ColorDrawable(Color.GRAY));
-        listView.setDivider(getResources().getDrawable(R.drawable.create_ad_dialog_line));
-
-        listView.setDividerHeight(3);
-        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(R.drawable.create_ad_dialog_bg);
-//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        // Finally, display the alert dialog
-        dialog.show();
-//        dialog.getWindow().setLayout(1000, 1000); //Controlling width and height.
-
-
+        };
     }
 
     public void launch_dialog2(View view) {

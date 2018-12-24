@@ -23,6 +23,5 @@ class ApplicationData {
         if (context.getSupportActionBar() != null) {
             context.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
     }
 }

@@ -4,7 +4,7 @@ public class User {
 
     // 14 data members
     private String user_type;
-
+    private String account_type;
     private String user_pass;
     private String user_first_name;
     private String user_last_name;
@@ -12,14 +12,20 @@ public class User {
     private String user_id;
     private String user_picture;
     private String user_name;
-
+    private String user_face_id;
+    private String user_google_id;
     private String user_insta_id;
     private String user_twitter_id;
     private String user_linkedin_id;
-    private String user_face_id;
-    private String user_google_id;
-
     private String last_login_date;
+
+    public String getAccount_type() {
+        return account_type;
+    }
+
+    public void setAccount_type(String account_type) {
+        this.account_type = account_type;
+    }
 
     public String getUser_linkedin_id() {
         return user_linkedin_id;

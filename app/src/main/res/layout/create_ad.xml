@@ -16,8 +16,8 @@
 
         <ImageView
             android:id="@+id/ad_image_in_create_ad"
-            android:layout_width="200dp"
-            android:layout_height="137dp"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
             android:adjustViewBounds="true"
             android:contentDescription="@string/debugtext"
             android:onClick="uploadNewImage"

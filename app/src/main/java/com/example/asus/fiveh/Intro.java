@@ -32,7 +32,8 @@ public class Intro extends AppCompatActivity {
 
     private void decide() {
 
-        if (!logedIn()) {
+//        if (!logedIn()) {
+        if (true) {
             final Intent intent = new Intent(Intro.this, SignUpActivity.class);
             btn_go_to_creat_account = findViewById(R.id.btn_go_to_creat_account);
             btn_go_to_creat_account.setOnClickListener(new View.OnClickListener() {

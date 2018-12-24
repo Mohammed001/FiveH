@@ -120,12 +120,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private Callback<FiveHResponse> getResponseCallback() {
         return new Callback<FiveHResponse>() {
             @Override
-            public void onResponse(Call<FiveHResponse> call, retrofit2.Response<FiveHResponse> response) {
+            public void onResponse(@NonNull Call<FiveHResponse> call, @NonNull retrofit2.Response<FiveHResponse> response) {
                 connection_succeed(response);
             }
 
             @Override
-            public void onFailure(Call<FiveHResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<FiveHResponse> call, @NonNull Throwable t) {
                 connection_failed(t);
             }
         };

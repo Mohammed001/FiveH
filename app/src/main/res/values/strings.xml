@@ -42,6 +42,14 @@
         <item>Our website</item>
     </string-array>
 
+
+    <string-array name="options_when_choose_participation_type">
+        <item>Silver</item>
+        <item>Golden</item>
+        <item>Diamond</item>
+    </string-array>
+
+
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in_short">Sign in</string>
@@ -123,5 +131,7 @@
     <string name="choose_participation_type">choose participation type</string>
     <string name="_2500_points" translatable="false">2500\npoints</string>
     <string name="debug_participation_type_free">participation type Free</string>
+    <string name="debug_explain_bundle" translatable="false">Your balance will double twice for each click on an AD.</string>
+    <string name="debug_explain_bundle_2" translatable="false">bundle cost = 500 points</string>
 
 </resources>
