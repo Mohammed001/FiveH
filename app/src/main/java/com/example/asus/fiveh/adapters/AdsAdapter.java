@@ -103,7 +103,7 @@ public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.MainAdViewHolder
         context.getContentResolver().delete(uri, null, null);
 
         // COMPLETED: Restart the loader to re-query for all tasks after a deletion
-        ((MainActivity) context).doit();
+        ((MainActivity) context).doit_ads();
     }
 
     private void onBind1_using_List(@NonNull final MainAdViewHolder holder, int position) {
@@ -214,7 +214,7 @@ public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.MainAdViewHolder
     }
 
     public interface intface {
-        void doit();
+        void doit_ads();
     }
 
 }

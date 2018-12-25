@@ -1,5 +1,6 @@
 package com.example.asus.fiveh;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -38,6 +39,7 @@ import com.example.asus.fiveh.adapters.FlowersAdapter;
 import com.example.asus.fiveh.models.Ad;
 import com.example.asus.fiveh.models.FiveHResponse;
 import com.example.asus.fiveh.models.Flower;
+import com.example.asus.fiveh.my_database.TaskContract;
 
 import java.util.List;
 
@@ -47,9 +49,9 @@ import retrofit2.Response;
 
 import static com.example.asus.fiveh.ApplicationData.ADVERTISER;
 import static com.example.asus.fiveh.ApplicationData.GREED;
-import static com.example.asus.fiveh.MainActivityUtils.getLoader;
+import static com.example.asus.fiveh.MainActivityUtils.getFlowersLoader;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LoaderManager.LoaderCallbacks<Cursor>, AdsAdapter.intface {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LoaderManager.LoaderCallbacks<Cursor>, AdsAdapter.intface, FlowersAdapter.intface {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     FloatingActionButton fab;
@@ -60,7 +62,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     List<Ad> ad_data = null;
     SwipeRefreshLayout swiperefreshlayout;
     NavigationView navigationView;
-    public static final int TASK_LOADER_ID = 0;
+    public static final int ADS_LOADER_ID = 0;
+    public static final int FLOWERS_LOADER_ID = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,27 +72,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        ApplicationData.USER_TYPE_INT = ADVERTISER_INT;
         initViewsWithListeners();
 
-//        https://kodejava.org/how-to-convert-json-string-to-java-object/
-//        https://stackoverflow.com/questions/10308452/how-to-convert-the-following-json-string-to-java-object
-        createAdsRecyclerview();
-        if (isOnline()) {
-//            doHTTP_flowers();
-            doHTTP_ads();
-        } else {
-            displayWhatInDataBase();
-        }
-    }
+        // todo: 1
+//        createAdsRecyclerview();
+        createFlowersRecyclerview();
 
-    private void displayWhatInDataBase() {
-        getSupportLoaderManager().initLoader(TASK_LOADER_ID, null, this);
+        // todo: 1
+        // getSupportLoaderManager().initLoader(ADS_LOADER_ID, null, this);
+        if (!is_empty_databases()) {
+            getSupportLoaderManager().initLoader(FLOWERS_LOADER_ID, null, this);
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         // re-queries for all tasks
-        // todo
-        getSupportLoaderManager().restartLoader(TASK_LOADER_ID, null, this);
+        // todo: 1
+//        getSupportLoaderManager().restartLoader(ADS_LOADER_ID, null, this);
+        getSupportLoaderManager().restartLoader(FLOWERS_LOADER_ID, null, this);
     }
 
     private void doHTTP_ads() {
@@ -120,14 +120,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             ad_data = response.body();
             if (ad_data != null) {
                 Log.i(TAG, "onResponse: Number of Ads received: " + ad_data.size());
-                createAdsRecyclerview();
+//                createAdsRecyclerview();
+                createFlowersRecyclerview();
             }
         }
     }
 
     private void ad_connection_failed(Throwable t) {
         Log.i(TAG, "onFailure" + t.getMessage());
-        displayWhatInDataBase();
     }
 
     private void doHTTP_flowers() {
@@ -155,9 +155,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (response.isSuccessful()) {
             flower_data = response.body();
             if (flower_data != null) {
-                Log.i(TAG, "onResponse: Number of Flowers received: " + flower_data.size());
-                createFlowersRecyclerview();
+                flowersAdapter.swapList(flower_data);
+                refresh_flower_database();
             }
+        }
+    }
+
+    private void refresh_flower_database() {
+        getContentResolver().delete(TaskContract.FlowerTable.CONTENT_URI, null, null);
+        Log.i(TAG, "onResponse: Number of Flowers received: " + flower_data.size());
+        ContentValues[] flavorValuesArr = new ContentValues[flower_data.size()];
+        // Loop through static array of Flavors, add each to an instance of ContentValues
+        // in the array of ContentValues
+        for (int i = 0; i < flower_data.size(); i++) {
+            flavorValuesArr[i] = new ContentValues();
+            if (flower_data.get(i).getProductId() > 0
+                    && flower_data.get(i).getInstructions() != null
+                    && flower_data.get(i).getPhoto() != null) {
+                flavorValuesArr[i].put(TaskContract.FlowerTable.COLUMN_PRODUCT_ID, flower_data.get(i).getProductId());
+                flavorValuesArr[i].put(TaskContract.FlowerTable.COLUMN_TEXT, flower_data.get(i).getInstructions());
+                flavorValuesArr[i].put(TaskContract.FlowerTable.COLUMN_PHOTO_PATH, flower_data.get(i).getPhoto());
+            }
+        }
+        // bulkInsert our ContentValues array
+        if (flavorValuesArr.length > 0) {
+            getContentResolver().bulkInsert(TaskContract.FlowerTable.CONTENT_URI,
+                    flavorValuesArr);
         }
     }
 
@@ -173,20 +196,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
-        return getLoader(this);
+        // todo: 1
+//        return getAdsLoader(this);
+        return getFlowersLoader(this);
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
         // Update the data that the adapter uses to create ViewHolders
-        adsAdapter.swapCursor(data);
-//        mAdapter.swapCursor(data);
+        // todo: 1
+//        adsAdapter.swapCursor(data);
+        flowersAdapter.swapCursor(data);
     }
 
     @Override
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
-        adsAdapter.swapCursor(null);
-//        mAdapter.swapCursor(null);
+        // todo: 1
+//        adsAdapter.swapCursor(null);
+        flowersAdapter.swapCursor(null);
     }
 
 
@@ -284,6 +311,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onRefresh() {
                 swiperefreshlayout.setRefreshing(false);
                 if (isOnline()) {
+                    // todo 1
+//                    doHTTP_ads();
                     doHTTP_flowers();
                 }
             }
@@ -358,9 +387,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
+    private boolean is_empty_databases() {
+        Cursor csr = getContentResolver().query(TaskContract.FlowerTable.CONTENT_URI, null, null,
+                null, null);
+        if (csr != null && csr.moveToFirst()) {
+            csr.close();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     private void createFlowersRecyclerview() {
         main_rv = findViewById(R.id.main_rv);
-        flowersAdapter = new FlowersAdapter(this, flower_data);
+        flowersAdapter = new FlowersAdapter(this);
 
         GridLayoutManager layoutManager;
         if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -393,8 +433,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public void doit() {
-        getSupportLoaderManager().restartLoader(TASK_LOADER_ID, null, this);
+    public void doit_ads() {
+        getSupportLoaderManager().restartLoader(ADS_LOADER_ID, null, MainActivity.this);
+    }
+
+    @Override
+    public void doit_flowers() {
+        getSupportLoaderManager().restartLoader(FLOWERS_LOADER_ID, null, MainActivity.this);
     }
 }
 
