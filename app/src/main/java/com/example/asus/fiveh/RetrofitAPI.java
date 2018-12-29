@@ -27,7 +27,7 @@ public interface RetrofitAPI {
     @GET("signup.php")
     Call<FiveHResponse> call_5H_signup(@Query("user_email") String email, @Query("pass") String password);
 
-    @GET("logout_icon.php")
+    @GET("logout.php")
     Call<FiveHResponse> call_5H_logout();
 
     @GET("ads.php")

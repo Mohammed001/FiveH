@@ -19,6 +19,7 @@ import android.widget.ViewSwitcher;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.asus.fiveh.R;
+import com.example.asus.fiveh.Repository;
 import com.example.asus.fiveh.RetrofitClient;
 import com.example.asus.fiveh.models.Flower;
 
@@ -32,6 +33,7 @@ public class FlowersAdapter extends RecyclerView.Adapter<FlowersAdapter.MainAdVi
 
     private Context context;
     private List<Flower> mFlowers;
+
 
     public FlowersAdapter(Context context) {
         this.context = context;
@@ -61,6 +63,9 @@ public class FlowersAdapter extends RecyclerView.Adapter<FlowersAdapter.MainAdVi
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(imageUrl));
                 context.startActivity(i);
+                if (Repository.getInstance() != null) {
+                    Repository.getInstance().deleteFlower(flower);
+                }
             }
         });
 
@@ -85,24 +90,8 @@ public class FlowersAdapter extends RecyclerView.Adapter<FlowersAdapter.MainAdVi
             mTextSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
                 @Override
                 public View makeView() {
-                    // Create a new TextView
                     TextView t = new TextView(context);
-                    t.setGravity(Gravity.CENTER);
-                    //                    t.setMaxLines(1);
-//                    t.setTag("0");
-//                    t.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            if (view.getTag().equals("0")) {
-//                                view.setTag("1");
-//                                ((TextView) view).setMaxLines(100);
-//                            } else if (view.getTag().equals("1")) {
-//                                view.setTag("0");
-//                                ((TextView) view).setMaxLines(1);
-//                            }
-//                        }
-//                    });
-//                t.setTextAppearance(Temp.this, android.R.style.TextAppearance_Large);
+                    t.setGravity(Gravity.START);
                     return t;
                 }
             });
@@ -121,7 +110,7 @@ public class FlowersAdapter extends RecyclerView.Adapter<FlowersAdapter.MainAdVi
 
     }
 
-     // _____________________ (( helper functions )) _____________________
+    // _____________________ (( helper functions )) _____________________
 
     public void setFlowers(List<Flower> mFlowers) {
         this.mFlowers = mFlowers;

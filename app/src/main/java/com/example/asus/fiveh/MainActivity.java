@@ -2,10 +2,8 @@ package com.example.asus.fiveh;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,7 +14,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
@@ -42,6 +39,7 @@ import retrofit2.Response;
 
 import static com.example.asus.fiveh.ApplicationData.ADVERTISER;
 import static com.example.asus.fiveh.ApplicationData.GREED;
+import static com.example.asus.fiveh.Intro.BEHAVE_KEY;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -98,13 +96,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Snackbar.make(findViewById(R.id.main_root), "Not Implemented yet", Snackbar
                     .LENGTH_SHORT).show();
         } else if (id == R.id.nav_about) {
-            build_about();
+            intent = new Intent(this, About.class);
+            startActivity(intent);
         } else if (id == R.id.logout) {
             RetrofitAPI service = new RetrofitClient().getAuthClient().create(RetrofitAPI.class);
             service.call_5H_logout().enqueue(new Callback<FiveHResponse>() {
                 @Override
                 public void onResponse(@NonNull Call<FiveHResponse> call, @NonNull Response<FiveHResponse> response) {
                     if (response.body() != null) {
+                        Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+                        intent.putExtra(BEHAVE_KEY, ApplicationData.current_user.getUser_type());
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        finish();
+                        startActivity(intent);
                         Log.i(TAG, "onResponse: " + (response.body().getResult()));
                         Log.i(TAG, "onResponse: " + response.body().getMsg());
                     } else {
@@ -118,10 +122,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Toast.makeText(null, "onFailure: " + TAG, Toast.LENGTH_SHORT).show();
                 }
             });
-            intent = new Intent(this, LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            finish();
-            startActivity(intent);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -138,23 +138,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             intent = new Intent(this, MyArchive.class);
             startActivity(intent);
         }
-    }
-
-    private void build_about() {
-        AlertDialog.Builder builder;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
-        } else {
-            builder = new AlertDialog.Builder(this);
-        }
-        builder.setTitle("حول")
-                .setMessage(R.string.about_msg)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                })
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
     }
 
     @NonNull

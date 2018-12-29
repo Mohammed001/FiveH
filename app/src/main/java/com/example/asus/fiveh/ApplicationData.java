@@ -1,7 +1,9 @@
 package com.example.asus.fiveh;
 
+import android.content.Context;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import com.example.asus.fiveh.models.User;
 
@@ -32,5 +34,4 @@ public class ApplicationData {
     public static final String AUTHORITY = "com.example.asus.fiveh";
 
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
-
 }

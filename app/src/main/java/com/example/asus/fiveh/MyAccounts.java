@@ -13,7 +13,6 @@ public class MyAccounts extends AppCompatActivity {
         ApplicationData.displaybackarrow(this);
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

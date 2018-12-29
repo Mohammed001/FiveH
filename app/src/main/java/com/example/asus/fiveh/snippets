@@ -1,4 +1,47 @@
 
+                    //                    t.setMaxLines(1);
+//                    t.setTag("0");
+//                    t.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            if (view.getTag().equals("0")) {
+//                                view.setTag("1");
+//                                ((TextView) view).setMaxLines(100);
+//                            } else if (view.getTag().equals("1")) {
+//                                view.setTag("0");
+//                                ((TextView) view).setMaxLines(1);
+//                            }
+//                        }
+//                    });
+//                t.setTextAppearance(Temp.this, android.R.style.TextAppearance_Large);
+
+
+//    private void fadeSplashOut() {
+//        // Set the content view to 0% opacity but visible, so that it is visible
+//        // (but fully transparent) during the animation.
+//        splash.setAlpha(0f);
+//        // Animate the content view to 100% opacity, and clear any animation
+//        // listener set on the view.
+//        splash.animate()
+//                .alpha(1f)
+//                .setDuration(SPLASH_DISPLAY_LENGTH)
+//                .setListener(null);
+//
+//        // Animate the loading view to 0% opacity. After the animation ends,
+//        // set its visibility to GONE as an optimization step (it won't
+//        // participate in layout passes, etc.)
+//        splash.animate()
+//                .alpha(0f)
+//                .setDuration(SPLASH_DISPLAY_LENGTH)
+//                .setListener(new AnimatorListenerAdapter() {
+//                    @Override
+//                    public void onAnimationEnd(Animator animation) {
+//                        splash.setVisibility(View.GONE);
+//                    }
+//                });
+//    }
+
+
             // clear the preferences file when connection sucess with server
             // with the one line:
             //////// getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit().clear().apply();

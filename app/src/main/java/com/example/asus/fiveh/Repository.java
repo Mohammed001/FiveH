@@ -15,15 +15,24 @@ import java.util.List;
 public class Repository {
 
     private FlowerDao mFlowerDao;
-    private FlowerNetwork weatherNetworkDataSource;
+    private AppNetwork weatherNetworkDataSource;
     private LiveData<List<Flower>> mAllFlowers;
+    private static Repository mInstance;
 
     public Repository(Application application) {
         AppDatabase db = AppDatabase.getInstance(application);
-        weatherNetworkDataSource = new FlowerNetwork(application, this);
+        weatherNetworkDataSource = new AppNetwork(application, this);
         mFlowerDao = db.flowerDao();
         mAllFlowers = mFlowerDao.getAllFlowers();
+        mInstance = this;
     }
+
+    public static Repository getInstance() {
+        if (mInstance != null)
+            return mInstance;
+        else return null;
+    }
+
 
     public LiveData<List<Flower>> getAllFlowers() {
         return mAllFlowers;
@@ -55,5 +64,16 @@ public class Repository {
                 return null;
             }
         }.execute(list);
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    public void deleteFlower(final Flower flower) {
+        new AsyncTask<Flower, Void, Void>() {
+            @Override
+            protected Void doInBackground(Flower... flowers) {
+                mFlowerDao.deleteFlower(flowers[0]);
+                return null;
+            }
+        }.execute(flower);
     }
 }

@@ -20,16 +20,16 @@ import retrofit2.Response;
 
 import static com.example.asus.fiveh.ApplicationData.TAG;
 
-class FlowerNetwork {
-    Application mApplication;
-    Repository mRepository;
+class AppNetwork {
+    private Application mApplication;
+    private Repository mRepository;
 
-    public FlowerNetwork(Application application, Repository repository) {
+    AppNetwork(Application application, Repository repository) {
         mApplication = application;
         mRepository = repository;
     }
 
-    boolean isOnline() {
+    private boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) mApplication.getSystemService(Context.CONNECTIVITY_SERVICE);
         assert cm != null;
         NetworkInfo netInfo = cm.getActiveNetworkInfo();

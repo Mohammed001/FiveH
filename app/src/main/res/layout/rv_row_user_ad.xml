@@ -11,26 +11,19 @@
         android:id="@+id/ad_image_in_rv_row_user_ad"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5"
+        android:layout_weight="1"
         android:adjustViewBounds="true"
         android:background="#ffe6e6"
         android:contentDescription="@string/ad_iamge"
         android:scaleType="centerCrop"
         android:src="@drawable/image_ad" />
 
-    <!--<TextView-->
-    <!--android:id="@+id/ad_title"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:background="@android:color/white"-->
-    <!--android:text="@string/ad_tesxt_placeholder" />-->
-
     <TextSwitcher
         android:id="@+id/testTextSwitcher_in_rv_row_user_ad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
+        android:padding="8dp"
         android:tag="0" />
-
 
 </LinearLayout>

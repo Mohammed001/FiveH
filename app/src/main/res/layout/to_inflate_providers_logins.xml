@@ -83,16 +83,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@mipmap/google_icon"
-                android:gravity="center"
-                android:visibility="visible" />
+                android:gravity="center" />
 
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/sign_in_button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:foregroundGravity="center"
                 android:gravity="center_vertical"
-                android:visibility="invisible" />
+                android:visibility="gone" />
 
         </FrameLayout>
 

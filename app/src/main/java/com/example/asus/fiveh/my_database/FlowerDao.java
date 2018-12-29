@@ -25,7 +25,7 @@ public interface FlowerDao {
     void insertAll(List<Flower> users);
 
     @Delete
-    void delete(Flower user);
+    void deleteFlower(Flower user);
 
     @Query("SELECT COUNT(*) from Flower")
     int countFlowers();

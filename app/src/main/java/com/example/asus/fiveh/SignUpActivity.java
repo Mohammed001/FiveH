@@ -33,6 +33,7 @@ import retrofit2.Callback;
 
 import static com.example.asus.fiveh.ApplicationData.APP_PREFERENCES_FILE;
 import static com.example.asus.fiveh.ApplicationData.GREED;
+import static com.example.asus.fiveh.ApplicationData.TAG;
 import static com.example.asus.fiveh.ApplicationData.USER_DATA;
 import static com.example.asus.fiveh.ApplicationData.USER_TYPE;
 import static com.example.asus.fiveh.Intro.BEHAVE_KEY;
@@ -41,9 +42,6 @@ import static com.example.asus.fiveh.Intro.BEHAVE_SIGNUP;
 
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener, GoogleLogin.UPDATEui {
-
-    private static final String TAG = SignUpActivity.class.getSimpleName();
-
     static final String DEBUGEMAIL = "hazem@sadv.sa";
     static final String DEBUGPASSWORD = "12345";
     static final int RC_SIGN_IN = 9001;
@@ -71,7 +69,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     ImageView facebookLoginButton;
     ImageView googleloginButton;
     ImageView twitterbtn;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +139,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         if (my_FiveH_response != null) {
             Toast.makeText(this, my_FiveH_response.getMsg(), Toast.LENGTH_SHORT).show();
             if (my_FiveH_response.getResult().equals("ko")) {
+                progressDialog.dismiss();
                 return;
             }
             // result ok..
@@ -158,6 +156,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 String user_type = user.getUser_type();
                 // todo: user type in response is null!! what a demo.
                 user_type = user_type == null || user_type.equals("") ? GREED : user_type;
+                progressDialog.dismiss();
                 prefsEditor.putString(USER_TYPE, user_type);
                 prefsEditor.apply();
                 Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
@@ -172,8 +171,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         } else {
             Log.i(TAG, "onResponse: no JSON!");
         }
-
-        progressDialog.dismiss();
     }
 
 
@@ -282,8 +279,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.link_login:
                 if (behaviour.equals(BEHAVE_LOGIN)) {
-                    // convert to BEHAVE_LOGOUT
-
                     link_login.setText(getString(R.string.already_a_member_login_tv));
                     btn_signup.setText(getString(R.string.create_account_btn));
 

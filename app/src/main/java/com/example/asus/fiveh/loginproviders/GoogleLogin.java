@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.asus.fiveh.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -26,18 +27,17 @@ public class GoogleLogin {
     }
 
     public void googleSignIn(int RC_SIGN_IN) {
+        context.findViewById(R.id.sign_in_button).callOnClick();
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         context.startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-
     public void googleOnCreate() {
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("631557339763-2o6k85slbs4oqcm9ne8i2dti4jjgjhvu.apps.googleusercontent.com")
+//                .requestIdToken("631557339763-2o6k85slbs4oqcm9ne8i2dti4jjgjhvu.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
-
         mGoogleSignInClient = GoogleSignIn.getClient(context, gso);
 //    private SignInButton signInButton;
 //        signInButton = context.findViewById(R.id.sign_in_button);
@@ -62,7 +62,7 @@ public class GoogleLogin {
         }
     }
 
-    public void handleSignInResult(Intent data) {
+    private void handleSignInResult(Intent data) {
         try {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             GoogleSignInAccount account = task.getResult(ApiException.class);

@@ -190,29 +190,6 @@ public class CreateNewAd extends AppCompatActivity implements View.OnClickListen
     public void launch_dialog2(View view) {
     }
 
-    public void vv(View v) {
-        View view = getLayoutInflater().inflate(R.layout.temp_sheet_dialog, null);
-        final BottomSheetDialog dialog = new BottomSheetDialog(this);
-        dialog.setContentView(view);
-        TextView camera_sel = view.findViewById(R.id.camera);
-        TextView gallery_sel = view.findViewById(R.id.gallery);
-        camera_sel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(CreateNewAd.this, "Camera", Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
-            }
-        });
-        gallery_sel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(CreateNewAd.this, "Gallery", Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-    }
-
     @Override
     public void onClick(View view) {
         int id = view.getId();

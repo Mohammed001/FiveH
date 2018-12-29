@@ -32,6 +32,7 @@
             android:layout_height="match_parent"
             android:background="#ffe6e6"
             android:layoutAnimation="@anim/layout_animation"
+            android:paddingTop="?attr/actionBarSize"
             android:scrollbars="none"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
