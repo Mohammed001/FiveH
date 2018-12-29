@@ -1,13 +1,41 @@
 package com.example.asus.fiveh.models;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 import android.graphics.Bitmap;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@Entity
 public class Ad {
-    private int adv_id;
-    private String adv_text;
-    private String file_path; // photo path
-    private String adv_type;
-    private Bitmap bitmap;
+
+    @PrimaryKey(autoGenerate = true)
+    @Expose
+    private int id;  // transient from {gson}
+
+    @SerializedName("adv_id")
+    @Expose
+    private int adId;
+
+    @SerializedName("adv_text")
+    @Expose
+    private String adText;
+
+    @SerializedName("file_path")
+    @Expose
+    private String photo_path;
+
+    @SerializedName("adv_type")
+    @Expose
+    private String adType;
+
+    // _________________ (()) _________________
+    @Ignore // Ignore from {ROOM}
+    private Bitmap bitmap; // transient from {gson}
+
+    // _________________ ((constructors)) _________________
 
     public Bitmap getBitmap() {
         return bitmap;
@@ -18,35 +46,43 @@ public class Ad {
     }
 
 
-    public int getAdv_id() {
-        return adv_id;
+    public int getAdId() {
+        return adId;
     }
 
-    public void setAdv_id(int adv_id) {
-        this.adv_id = adv_id;
+    public void setAdId(int adId) {
+        this.adId = adId;
     }
 
-    public String getAdv_text() {
-        return adv_text;
+    public String getAdText() {
+        return adText;
     }
 
-    public void setAdv_text(String adv_text) {
-        this.adv_text = adv_text;
+    public void setAdText(String adText) {
+        this.adText = adText;
     }
 
-    public String getFile_path() {
-        return file_path;
+    public String getPhoto_path() {
+        return photo_path;
     }
 
-    public void setFile_path(String file_path) {
-        this.file_path = file_path;
+    public void setPhoto_path(String photo_path) {
+        this.photo_path = photo_path;
     }
 
-    public String getAdv_type() {
-        return adv_type;
+    public String getAdType() {
+        return adType;
     }
 
-    public void setAdv_type(String adv_type) {
-        this.adv_type = adv_type;
+    public void setAdType(String adType) {
+        this.adType = adType;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

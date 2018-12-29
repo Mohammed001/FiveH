@@ -15,9 +15,6 @@ import java.util.List;
 @Dao
 public interface FlowerDao {
 
-    @Query("SELECT * FROM Flower where page_id = :page_id_arg")
-    List<Flower> getFlower(long page_id_arg);
-
     @Query("SELECT * FROM Flower")
     LiveData<List<Flower>> getAllFlowers();
 
@@ -36,6 +33,9 @@ public interface FlowerDao {
 
     // _________________________ (( examples )) _____________________________
 
+
+//    @Query("SELECT * FROM Flower where page_id = :page_id_arg")
+//    List<Flower> getFlower(long page_id_arg);
 
 //    @Query("SELECT * FROM Flower WHERE id IN (:userIds)")
 //    List<Flower> loadAllByIds(int[] userIds);

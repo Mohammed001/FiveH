@@ -75,60 +75,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         };
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-        Intent intent;
-
-        if (id == R.id.nav_my_profile) {
-            intent = new Intent(this, MyProfile.class);
-//            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intent);
-        } else if (id == R.id.nav_my_accounts) {
-            goToAccountsOrArchive();
-        } else if (id == R.id.nav_my_points) {
-            intent = new Intent(this, MyPoints.class);
-//            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intent);
-        } else if (id == R.id.nav_settings) {
-            Snackbar.make(findViewById(R.id.main_root), "Not Implemented yet", Snackbar
-                    .LENGTH_SHORT).show();
-        } else if (id == R.id.nav_about) {
-            intent = new Intent(this, About.class);
-            startActivity(intent);
-        } else if (id == R.id.logout) {
-            RetrofitAPI service = new RetrofitClient().getAuthClient().create(RetrofitAPI.class);
-            service.call_5H_logout().enqueue(new Callback<FiveHResponse>() {
-                @Override
-                public void onResponse(@NonNull Call<FiveHResponse> call, @NonNull Response<FiveHResponse> response) {
-                    if (response.body() != null) {
-                        Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
-                        intent.putExtra(BEHAVE_KEY, ApplicationData.current_user.getUser_type());
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        finish();
-                        startActivity(intent);
-                        Log.i(TAG, "onResponse: " + (response.body().getResult()));
-                        Log.i(TAG, "onResponse: " + response.body().getMsg());
-                    } else {
-                        Log.i(TAG, "onResponse: no JSON!");
-                    }
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<FiveHResponse> call, @NonNull Throwable t) {
-                    // todo
-                    Toast.makeText(null, "onFailure: " + TAG, Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
     private void goToAccountsOrArchive() {
         Intent intent;
         if (ApplicationData.current_user.getUser_type().equals(GREED)) {
@@ -165,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onCreateOptionsMenu(Menu menu) {
 
         if (ApplicationData.current_user.getUser_type().equals(ADVERTISER)) {
-            menu.findItem(R.id.nav_my_profile).setVisible(false);
+            menu.findItem(R.id.nav_my_points).setVisible(false);
             menu.findItem(R.id.nav_my_accounts).setTitle(R.string.my_archive);
         }
 
@@ -228,6 +174,61 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         main_rv.addItemDecoration(itemDecoration);
         main_rv.setAdapter(flowersAdapter);
     }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+        Intent intent;
+
+        if (id == R.id.nav_my_profile) {
+            intent = new Intent(this, MyProfile.class);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        } else if (id == R.id.nav_my_accounts) {
+            goToAccountsOrArchive();
+        } else if (id == R.id.nav_my_points) {
+            intent = new Intent(this, MyPoints.class);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        } else if (id == R.id.nav_settings) {
+            Snackbar.make(findViewById(R.id.main_root), "Not Implemented yet", Snackbar
+                    .LENGTH_SHORT).show();
+        } else if (id == R.id.nav_about) {
+            intent = new Intent(this, About.class);
+            startActivity(intent);
+        } else if (id == R.id.logout) {
+            RetrofitAPI service = new RetrofitClient().getAuthClient().create(RetrofitAPI.class);
+            service.call_5H_logout().enqueue(new Callback<FiveHResponse>() {
+                @Override
+                public void onResponse(@NonNull Call<FiveHResponse> call, @NonNull Response<FiveHResponse> response) {
+                    if (response.body() != null) {
+                        Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+                        intent.putExtra(BEHAVE_KEY, ApplicationData.current_user.getUser_type());
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        finish();
+                        startActivity(intent);
+                        Log.i(TAG, "onResponse: " + (response.body().getResult()));
+                        Log.i(TAG, "onResponse: " + response.body().getMsg());
+                    } else {
+                        Log.i(TAG, "onResponse: no JSON!");
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<FiveHResponse> call, @NonNull Throwable t) {
+                    // todo
+                    Toast.makeText(null, "onFailure: " + TAG, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
 
 }
 

@@ -5,18 +5,24 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.graphics.Bitmap;
 
+import com.google.gson.annotations.SerializedName;
+
 @Entity
 public class Flower {
 
     @PrimaryKey(autoGenerate = true)
     public int id;
-    private int page_id;
+
+    @SerializedName("instructions")
     private String instructions;
+
+    @SerializedName("photo")
     private String photo;
 
-    public Flower(int id, int page_id, String instructions, String photo) {
+    // ___________________ (( constructor )) ___________________
+
+    public Flower(int id, String instructions, String photo) {
         this.id = id;
-        this.page_id = page_id;
         this.instructions = instructions;
         this.photo = photo;
     }
@@ -24,8 +30,7 @@ public class Flower {
     // ___________________ (( to ignore )) ___________________
 
     @Ignore
-    public Flower(int page_id, String instructions, String photo) {
-        this.page_id = page_id;
+    public Flower(String instructions, String photo) {
         this.instructions = instructions;
         this.photo = photo;
     }
@@ -57,14 +62,6 @@ public class Flower {
 
     public void setBitmap(Bitmap bitmap) {
         this.bitmap = bitmap;
-    }
-
-    public int getPage_id() {
-        return page_id;
-    }
-
-    public void setPage_id(int page_id) {
-        this.page_id = page_id;
     }
 
 }

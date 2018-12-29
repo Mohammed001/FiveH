@@ -2,22 +2,23 @@ package com.example.asus.fiveh.loginproviders;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Toast;
+import android.view.View;
 
 import com.example.asus.fiveh.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 public class GoogleLogin {
     private static final String TAG = GoogleLogin.class.getSimpleName();
+    public static final int RC_SIGN_IN = 9001;
+    private SignInButton WOWsignInButton;
 
     private AppCompatActivity context;
     private GoogleSignInClient mGoogleSignInClient;
@@ -26,10 +27,9 @@ public class GoogleLogin {
         this.context = (AppCompatActivity) context;
     }
 
-    public void googleSignIn(int RC_SIGN_IN) {
-        context.findViewById(R.id.sign_in_button).callOnClick();
+    public void googleSignIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        context.startActivityForResult(signInIntent, RC_SIGN_IN);
+        context.startActivityForResult(signInIntent, GoogleLogin.RC_SIGN_IN);
     }
 
     public void googleOnCreate() {
@@ -39,21 +39,6 @@ public class GoogleLogin {
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(context, gso);
-//    private SignInButton signInButton;
-//        signInButton = context.findViewById(R.id.sign_in_button);
-//        signInButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                googleSignIn();
-//            }
-//        });
-    }
-
-    public void googleOnStart() {
-        // Check for existing Google Sign In account, if the user is already signed in
-        // the GoogleSignInAccount will be non-null.
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(context);
-        ((UPDATEui) context).updateui(account);
     }
 
     public void googleOnActivityResult(int requestCode, Intent data, int RC_SIGN_IN) {
@@ -71,26 +56,6 @@ public class GoogleLogin {
             Log.w(TAG, "Google sign in failed " + e.getStatusCode());
             ((UPDATEui) context).updateui(null);
         }
-    }
-
-    public void revokeAccess() {
-        mGoogleSignInClient.revokeAccess()
-                .addOnCompleteListener(context, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        ((UPDATEui) context).updateui(null);
-                    }
-                });
-    }
-
-    public void googleSignout() {
-        mGoogleSignInClient.signOut()
-                .addOnCompleteListener(context, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(context, "googleSignout", Toast.LENGTH_SHORT).show();
-                    }
-                });
     }
 
     public interface UPDATEui {

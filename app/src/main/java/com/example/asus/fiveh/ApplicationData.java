@@ -16,7 +16,7 @@ public class ApplicationData {
     static User current_user;
 
     static final String APP_PREFERENCES_FILE = "app_preferences";
-    static final String USER_DATA = "user_data";
+    static final String USER_DATA_KEY = "user_data";
     static final String USER_TYPE = "user_type";
 
     static final String ADVERTISER = "advertiser";

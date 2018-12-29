@@ -26,6 +26,7 @@ import com.example.asus.fiveh.loginproviders.TwitterLogin;
 import com.example.asus.fiveh.models.FiveHResponse;
 import com.example.asus.fiveh.models.User;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.common.SignInButton;
 import com.google.gson.Gson;
 
 import retrofit2.Call;
@@ -34,19 +35,20 @@ import retrofit2.Callback;
 import static com.example.asus.fiveh.ApplicationData.APP_PREFERENCES_FILE;
 import static com.example.asus.fiveh.ApplicationData.GREED;
 import static com.example.asus.fiveh.ApplicationData.TAG;
-import static com.example.asus.fiveh.ApplicationData.USER_DATA;
+import static com.example.asus.fiveh.ApplicationData.USER_DATA_KEY;
 import static com.example.asus.fiveh.ApplicationData.USER_TYPE;
 import static com.example.asus.fiveh.Intro.BEHAVE_KEY;
 import static com.example.asus.fiveh.Intro.BEHAVE_LOGIN;
 import static com.example.asus.fiveh.Intro.BEHAVE_SIGNUP;
+import static com.example.asus.fiveh.loginproviders.GoogleLogin.RC_SIGN_IN;
 
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener, GoogleLogin.UPDATEui {
     static final String DEBUGEMAIL = "hazem@sadv.sa";
     static final String DEBUGPASSWORD = "12345";
-    static final int RC_SIGN_IN = 9001;
 
-    static String behaviour;
+
+    private static String behaviour;
 
     String email;
     String password;
@@ -70,12 +72,17 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     ImageView googleloginButton;
     ImageView twitterbtn;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         twitterLogin = new TwitterLogin(this);
         twitterLogin.initTwitter();
         setContentView(R.layout.sign_up);
+
+        email = DEBUGEMAIL;
+        password = DEBUGPASSWORD;
+        password2 = password;
 
         initviews();
         setlistener();
@@ -152,7 +159,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 SharedPreferences.Editor prefsEditor = sharedPref.edit();
                 Gson gson = new Gson();
                 String user_data = gson.toJson(user);
-                prefsEditor.putString(USER_DATA, user_data);
+                prefsEditor.putString(USER_DATA_KEY, user_data);
                 String user_type = user.getUser_type();
                 // todo: user type in response is null!! what a demo.
                 user_type = user_type == null || user_type.equals("") ? GREED : user_type;
@@ -176,6 +183,13 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     // _________________________________ views issue _________________________________ //
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        input_email.setText(DEBUGEMAIL);
+        input_password.setText(DEBUGPASSWORD);
+        retype_pass.setText(DEBUGPASSWORD);
+    }
 
     private void initviews() {
 
@@ -190,7 +204,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         findViewById(R.id.radio_pirates).setOnClickListener(this);
         findViewById(R.id.radio_ninjas).setOnClickListener(this);
         insta_login = findViewById(R.id.insta_login);
-        googleloginButton = findViewById(R.id.google_login);
+        googleloginButton = findViewById(R.id.google_login_imgview);
         facebookLoginButton = findViewById(R.id.connectWithFbButton);
     }
 
@@ -201,13 +215,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         googleloginButton.setOnClickListener(this);
         twitterbtn.setOnClickListener(this);
         facebookLoginButton.setOnClickListener(this);
-    }
-
-    // this method is needed to accomplish {GoogleSignIn} process
-    @Override
-    public void onStart() {
-        super.onStart();
-        googleLogin.googleOnStart();
     }
 
     @Override
@@ -222,9 +229,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         //        email = _emailText.getText().toString();
 //        password = _passwordText.getText().toString();
 
-        email = DEBUGEMAIL;
-        password = DEBUGPASSWORD;
-        password2 = password;
 
 //        email = input_email.getText().toString();
 //        password = input_password.getText().toString();
@@ -266,6 +270,29 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         return valid;
     }
+
+    @NonNull
+    private Animation getfadeInAnimation() {
+        Animation animation = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
+        animation.setFillAfter(true);
+        return animation;
+    }
+
+    @NonNull
+    private Animation getfadeoutAnimation() {
+        Animation animation = AnimationUtils.loadAnimation(this, android.R.anim.fade_out);
+        animation.setFillAfter(true);
+        animation.setDuration(100);
+        return animation;
+    }
+
+    @Override
+    public void updateui(GoogleSignInAccount account) {
+        if (account != null) {
+            Toast.makeText(this, account.getDisplayName(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -311,8 +338,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.connectWithFbButton:
                 facebookLogin.doFacebookLogin();
                 break;
-            case R.id.google_login:
-                googleLogin.googleSignIn(RC_SIGN_IN);
+            case R.id.google_login_imgview:
+                googleLogin.googleSignIn();
                 break;
             case R.id.twitter_login:
                 twitterLogin.doTwitterLogin();
@@ -320,25 +347,5 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    @NonNull
-    private Animation getfadeInAnimation() {
-        Animation animation = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
-        animation.setFillAfter(true);
-        return animation;
-    }
 
-    @NonNull
-    private Animation getfadeoutAnimation() {
-        Animation animation = AnimationUtils.loadAnimation(this, android.R.anim.fade_out);
-        animation.setFillAfter(true);
-        animation.setDuration(100);
-        return animation;
-    }
-
-    @Override
-    public void updateui(GoogleSignInAccount account) {
-        if (account != null) {
-            Toast.makeText(this, account.getDisplayName(), Toast.LENGTH_SHORT).show();
-        }
-    }
 }

@@ -12,7 +12,7 @@ import com.example.asus.fiveh.models.User;
 import com.google.gson.Gson;
 
 import static com.example.asus.fiveh.ApplicationData.APP_PREFERENCES_FILE;
-import static com.example.asus.fiveh.ApplicationData.USER_DATA;
+import static com.example.asus.fiveh.ApplicationData.USER_DATA_KEY;
 
 public class Intro extends AppCompatActivity {
 
@@ -56,13 +56,15 @@ public class Intro extends AppCompatActivity {
     }
 
     private boolean logedIn() {
-        SharedPreferences sharedPref = getSharedPreferences(APP_PREFERENCES_FILE, Context.MODE_PRIVATE);
-        String user_as_json = sharedPref.getString(USER_DATA, null);
 
-        if (user_as_json != null) {
+        SharedPreferences sharedPref = getSharedPreferences(APP_PREFERENCES_FILE, Context.MODE_PRIVATE);
+        String user_as_json_string = sharedPref.getString(USER_DATA_KEY, null);
+
+        if (user_as_json_string != null) {
 
             Gson gson = new Gson();
-            ApplicationData.current_user = gson.fromJson(user_as_json, User.class);
+            // this will long to the whole app lifetime..
+            ApplicationData.current_user = gson.fromJson(user_as_json_string, User.class);
 
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);

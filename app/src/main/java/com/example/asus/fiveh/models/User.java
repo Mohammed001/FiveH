@@ -1,23 +1,83 @@
 package com.example.asus.fiveh.models;
 
+
+import com.google.gson.annotations.SerializedName;
+
 public class User {
 
     // 14 data members
-    private String user_type;
-    private String account_type;
-    private String user_pass;
-    private String user_first_name;
-    private String user_last_name;
+
+    @SerializedName("primary_email")
     private String primary_email;
-    private String user_id;
-    private String user_picture;
+
+    // todo: this is not found in the api docs!
+    @SerializedName("account_type")
+    private String account_type;
+
+    // _________________
+
+
+    @SerializedName("user_name")
     private String user_name;
+
+    @SerializedName("user_type")
+    private String user_type;
+
+
+    @SerializedName("user_pass")
+    private String user_pass;
+
+    @SerializedName("user_first_name")
+    private String user_first_name;
+
+    @SerializedName("user_last_name")
+    private String user_last_name;
+
+    @SerializedName("user_id")
+    private String user_id;
+
+    @SerializedName("user_picture")
+    private String user_picture;
+
+    @SerializedName("user_face_id")
     private String user_face_id;
+
+    @SerializedName("user_google_id")
     private String user_google_id;
+
+    @SerializedName("user_insta_id")
     private String user_insta_id;
+
+    @SerializedName("user_twitter_id")
     private String user_twitter_id;
+
+    @SerializedName("user_linkedin_id")
     private String user_linkedin_id;
+
+    @SerializedName("last_login_date")
     private String last_login_date;
+
+    // _______________ (( constructors )) ___________________
+
+    public User(String user_type, String account_type, String user_pass, String user_first_name, String user_last_name, String primary_email, String user_id, String user_picture, String user_name, String user_face_id, String user_google_id, String user_insta_id, String user_twitter_id, String user_linkedin_id, String last_login_date) {
+        this.user_type = user_type;
+        this.account_type = account_type;
+        this.user_pass = user_pass;
+        this.user_first_name = user_first_name;
+        this.user_last_name = user_last_name;
+        this.primary_email = primary_email;
+        this.user_id = user_id;
+        this.user_picture = user_picture;
+        this.user_name = user_name;
+        this.user_face_id = user_face_id;
+        this.user_google_id = user_google_id;
+        this.user_insta_id = user_insta_id;
+        this.user_twitter_id = user_twitter_id;
+        this.user_linkedin_id = user_linkedin_id;
+        this.last_login_date = last_login_date;
+    }
+
+    // ________ (( setters )) ________________
 
     public String getAccount_type() {
         return account_type;
@@ -138,6 +198,5 @@ public class User {
     public void setUser_type(String user_type) {
         this.user_type = user_type;
     }
-
 
 }

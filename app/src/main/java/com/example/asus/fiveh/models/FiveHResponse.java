@@ -1,12 +1,23 @@
 package com.example.asus.fiveh.models;
 
+import com.google.gson.annotations.SerializedName;
+
 public class FiveHResponse {
 
+    @SerializedName("result")
     private String result;
+
+    @SerializedName("msg")
     private String msg;
-    private String sssmsg;
-    private String code;
+
+    @SerializedName("code")
+    private String code; // todo: not sure if always
+
+    @SerializedName("data")
     private User data;
+
+
+    // _______________ (( setters & getters )) _______________
 
     public String getCode() {
         return code;

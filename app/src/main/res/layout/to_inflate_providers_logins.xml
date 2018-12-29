@@ -74,25 +74,14 @@
             android:layout_height="1dp" />
 
         <!--google login-->
-        <FrameLayout
+
+        <ImageView
+            android:id="@+id/google_login_imgview"
             android:layout_width="25dp"
-            android:layout_height="25dp">
-
-            <ImageView
-                android:id="@+id/google_login"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@mipmap/google_icon"
-                android:gravity="center" />
-
-            <com.google.android.gms.common.SignInButton
-                android:id="@+id/sign_in_button"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:visibility="gone" />
-
-        </FrameLayout>
+            android:layout_height="25dp"
+            android:background="@mipmap/google_icon"
+            android:contentDescription="@string/debugtext"
+            android:gravity="center" />
 
         <Space
             android:layout_width="@dimen/login_space"
