@@ -1,4 +1,7 @@
 
+            // clear the preferences file when connection sucess with server
+            // with the one line:
+            //////// getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit().clear().apply();
 
 design
 https://sparkling-dream.animaapp.io/preview/1jTxh5R/home

@@ -1,9 +1,12 @@
 package com.example.asus.fiveh;
 
+import android.arch.lifecycle.LiveData;
+
 import com.example.asus.fiveh.models.Ad;
 import com.example.asus.fiveh.models.Flower;
 import com.example.asus.fiveh.models.FiveHResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -13,7 +16,7 @@ import retrofit2.http.Query;
 public interface RetrofitAPI {
 
     @GET("feeds/flowers.json")
-    Call<List<Flower>> listFlowers();
+    Call<ArrayList<Flower>> listFlowers();
 
     // _____________________ ((( start it )))) _____________________
 

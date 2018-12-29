@@ -24,6 +24,7 @@ android {
 
 
 dependencies {
+
     implementation project(':linkedin-sdk')
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     //noinspection GradleCompatible
@@ -44,4 +45,13 @@ dependencies {
 //    implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.8'
 //    implementation 'com.fasterxml.jackson.core:jackson-core:2.9.8'
 //    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.9.8'
+
+    def arc_version = "1.1.1"
+
+    implementation "android.arch.persistence.room:runtime:$arc_version"
+    annotationProcessor "android.arch.persistence.room:compiler:$arc_version" // use kapt for Kotlin
+
+    // Lifecycle components
+    implementation "android.arch.lifecycle:extensions:$arc_version"
+    annotationProcessor "android.arch.lifecycle:compiler:$arc_version"
 }

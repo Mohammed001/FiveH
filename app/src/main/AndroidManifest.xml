@@ -118,11 +118,6 @@
         </activity>
 
 
-        <provider
-            android:name="com.example.asus.fiveh.my_database.TaskContentProvider"
-            android:authorities="com.example.asus.fiveh"
-            android:exported="false" />
-
     </application>
 
 </manifest>

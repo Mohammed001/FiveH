@@ -1,5 +1,6 @@
 package com.example.asus.fiveh;
 
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.asus.fiveh.models.User;
@@ -8,7 +9,7 @@ import com.example.asus.fiveh.models.User;
  * Created by ASUS on 11/19/2018.
  */
 
-class ApplicationData {
+public class ApplicationData {
 
     static User current_user;
 
@@ -19,9 +20,17 @@ class ApplicationData {
     static final String ADVERTISER = "advertiser";
     static final String GREED = "user";
 
+    public static final String TAG = ApplicationData.class.getSimpleName();
+
     static void displaybackarrow(AppCompatActivity context) {
         if (context.getSupportActionBar() != null) {
             context.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
+
+
+    public static final String AUTHORITY = "com.example.asus.fiveh";
+
+    public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
+
 }
