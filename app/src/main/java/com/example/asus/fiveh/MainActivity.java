@@ -37,8 +37,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.example.asus.fiveh.ApplicationData.ADVERTISER;
-import static com.example.asus.fiveh.ApplicationData.GREED;
+import static com.example.asus.fiveh.ApplicationData.ADVERTISER_WORD;
+import static com.example.asus.fiveh.ApplicationData.USER_WORD;
 import static com.example.asus.fiveh.Intro.BEHAVE_KEY;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -77,10 +77,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void goToAccountsOrArchive() {
         Intent intent;
-        if (ApplicationData.current_user.getUser_type().equals(GREED)) {
+        if (ApplicationData.current_user.getUser_type().equals(USER_WORD)) {
             intent = new Intent(this, MyAccounts.class);
             startActivity(intent);
-        } else if (ApplicationData.current_user.getUser_type().equals(ADVERTISER)) {
+        } else if (ApplicationData.current_user.getUser_type().equals(ADVERTISER_WORD)) {
             intent = new Intent(this, MyArchive.class);
             startActivity(intent);
         }
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        if (ApplicationData.current_user.getUser_type().equals(ADVERTISER)) {
+        if (ApplicationData.current_user.getUser_type().equals(ADVERTISER_WORD)) {
             menu.findItem(R.id.nav_my_points).setVisible(false);
             menu.findItem(R.id.nav_my_accounts).setTitle(R.string.my_archive);
         }
@@ -135,8 +135,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         LinearLayout linearLayout = navigationView.getHeaderView(0).findViewById(R.id.image_user_bundle);
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);
 
-        if (ApplicationData.current_user.getUser_type().equals(ADVERTISER)) {
-            fab.setVisibility(View.VISIBLE);
+        if (ApplicationData.current_user.getUser_type().equals(ADVERTISER_WORD)) {
+            // todo: new method or what?
+            fab.show();
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

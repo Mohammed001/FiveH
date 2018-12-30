@@ -57,6 +57,7 @@ public class FlowersAdapter extends RecyclerView.Adapter<FlowersAdapter.MainAdVi
                 .into(holder.mImageView);
 
         holder.mTextSwitcher.setCurrentText(flower.getInstructions());
+
         holder.mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,13 +88,12 @@ public class FlowersAdapter extends RecyclerView.Adapter<FlowersAdapter.MainAdVi
             mImageView = itemView.findViewById(R.id.ad_image_in_rv_row_user_ad);
 
             mTextSwitcher = itemView.findViewById(R.id.testTextSwitcher_in_rv_row_user_ad);
-            mTextSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
-                @Override
-                public View makeView() {
-                    TextView t = new TextView(context);
-                    t.setGravity(Gravity.START);
-                    return t;
-                }
+            // be4 lambda
+//            mTextSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
+            mTextSwitcher.setFactory(() -> {
+                TextView t = new TextView(context);
+                t.setGravity(Gravity.START);
+                return t;
             });
 
             Animation in = AnimationUtils.loadAnimation(context,

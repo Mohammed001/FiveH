@@ -30,6 +30,7 @@
             android:id="@+id/main_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="1dp"
             android:background="#ffe6e6"
             android:layoutAnimation="@anim/layout_animation"
             android:paddingTop="?attr/actionBarSize"
@@ -45,6 +46,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:tooltipText="Create AD"
+        android:visibility="gone"
         app:backgroundTint="@color/colorPrimary"
         app:srcCompat="@drawable/add_ad_fb_icon"
         tools:targetApi="o" />

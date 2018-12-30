@@ -4,13 +4,16 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -26,17 +29,16 @@ import com.example.asus.fiveh.loginproviders.TwitterLogin;
 import com.example.asus.fiveh.models.FiveHResponse;
 import com.example.asus.fiveh.models.User;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.common.SignInButton;
 import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 
 import static com.example.asus.fiveh.ApplicationData.APP_PREFERENCES_FILE;
-import static com.example.asus.fiveh.ApplicationData.GREED;
 import static com.example.asus.fiveh.ApplicationData.TAG;
 import static com.example.asus.fiveh.ApplicationData.USER_DATA_KEY;
-import static com.example.asus.fiveh.ApplicationData.USER_TYPE;
+import static com.example.asus.fiveh.ApplicationData.USER_TYPE_KEY;
+import static com.example.asus.fiveh.ApplicationData.USER_WORD;
 import static com.example.asus.fiveh.Intro.BEHAVE_KEY;
 import static com.example.asus.fiveh.Intro.BEHAVE_LOGIN;
 import static com.example.asus.fiveh.Intro.BEHAVE_SIGNUP;
@@ -54,9 +56,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     String password;
     String password2;
     TextInputLayout retype_pass_layout;
-    TextInputEditText retype_pass;
-    TextInputEditText input_password;
     TextInputEditText input_email;
+    TextInputEditText input_password;
+    TextInputEditText retype_pass;
 
     ProgressDialog progressDialog;
     Button btn_signup;
@@ -71,7 +73,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     ImageView facebookLoginButton;
     ImageView googleloginButton;
     ImageView twitterbtn;
-
+    Drawable et_drawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +81,24 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         twitterLogin = new TwitterLogin(this);
         twitterLogin.initTwitter();
         setContentView(R.layout.sign_up);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+
+        input_email = findViewById(R.id.input_email);
+        input_email.setOnClickListener(this);
+        input_email.setCursorVisible(false);
+        input_email.setBackgroundResource(android.R.color.transparent);
+        et_drawable = input_email.getBackground();
+
+        input_password = findViewById(R.id.input_password);
+        input_password.setOnClickListener(this);
+        input_password.setCursorVisible(false);
+        input_password.setBackgroundResource(android.R.color.transparent);
+
+        retype_pass = findViewById(R.id.retype_pass2);
+        retype_pass.setOnClickListener(this);
+        retype_pass.setCursorVisible(false);
+        retype_pass.setBackgroundResource(android.R.color.transparent);
 
         email = DEBUGEMAIL;
         password = DEBUGPASSWORD;
@@ -162,13 +182,13 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 prefsEditor.putString(USER_DATA_KEY, user_data);
                 String user_type = user.getUser_type();
                 // todo: user type in response is null!! what a demo.
-                user_type = user_type == null || user_type.equals("") ? GREED : user_type;
+                user_type = user_type == null || user_type.equals("") ? USER_WORD : user_type;
                 progressDialog.dismiss();
-                prefsEditor.putString(USER_TYPE, user_type);
+                prefsEditor.putString(USER_TYPE_KEY, user_type);
                 prefsEditor.apply();
                 Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra(USER_TYPE, user_type);
+                intent.putExtra(USER_TYPE_KEY, user_type);
                 startActivity(intent);
                 finish();
 
@@ -295,6 +315,13 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
 
     @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        ApplicationData.hideKeyBoardWhenTouchOutSideEditText(this, event, R.id.input_email, R.id.input_password, R.id.retype_pass2);
+        return super.dispatchTouchEvent(event);
+    }
+
+
+    @Override
     public void onClick(View v) {
 // Check which radio button was clicked
         switch (v.getId()) {
@@ -343,6 +370,23 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.twitter_login:
                 twitterLogin.doTwitterLogin();
+                break;
+
+            // ______________ (( cursors issue )) _________________
+
+            case R.id.input_email:
+                input_email.setCursorVisible(true);
+                input_email.setBackground(et_drawable);
+                break;
+
+            case R.id.input_password:
+                input_password.setCursorVisible(true);
+                input_password.setBackground(et_drawable);
+                break;
+
+            case R.id.retype_pass2:
+                retype_pass.setCursorVisible(true);
+                retype_pass.setBackground(et_drawable);
                 break;
         }
     }

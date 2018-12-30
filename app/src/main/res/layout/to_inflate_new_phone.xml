@@ -17,6 +17,7 @@
         tools:targetApi="o" />
 
     <ImageView
+        android:id="@+id/minus_icon_remove_phone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

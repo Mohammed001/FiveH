@@ -1,4 +1,27 @@
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        ApplicationData.hideKeyBoardWhenTouchOutSideEditText(this, event, R.id.profile_name_value, R.id.profile_age_value, R.id.profile_address_value);
+        return super.dispatchTouchEvent(event);
+    }
+
+//                switch (v.getId()) {
+//                    case R.id.profile_name_value:
+//                        profile_name_value.setCursorVisible(false);
+//                        profile_name_value.setBackgroundResource(android.R.color.transparent);
+//                        break;
+//                    case R.id.profile_age_value:
+//                        profile_age_value.setCursorVisible(false);
+//                        profile_age_value.setBackgroundResource(android.R.color.transparent);
+//                        break;
+//                    case R.id.profile_address_value:
+//                        profile_address_value.setCursorVisible(false);
+//                        profile_address_value.setBackgroundResource(android.R.color.transparent);
+//                        break;
+//                }
+
+
+
                     //                    t.setMaxLines(1);
 //                    t.setTag("0");
 //                    t.setOnClickListener(new View.OnClickListener() {
