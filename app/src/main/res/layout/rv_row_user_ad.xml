@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp"
     android:background="@drawable/boarder_rounded_corner"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingBottom="8dp">
 
     <ImageView
         android:id="@+id/ad_image_in_rv_row_user_ad"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="300dp"
         android:adjustViewBounds="true"
         android:background="#ffe6e6"
         android:contentDescription="@string/ad_iamge"
         android:scaleType="centerCrop"
         android:src="@drawable/image_ad" />
 
-    <TextSwitcher
-        android:id="@+id/testTextSwitcher_in_rv_row_user_ad"
+    <TextView
+        android:id="@+id/testReadMoreText_in_rv_row_user_ad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
         android:padding="8dp"
-        android:tag="0" />
+        tools:text="@string/very_long_text" />
 
 </LinearLayout>

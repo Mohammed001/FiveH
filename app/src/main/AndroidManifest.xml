@@ -18,14 +18,14 @@
         android:roundIcon="@mipmap/my_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+            android:label="@string/app_name" />
+
         <activity
-            android:name=".CreateNewAd"
-            android:windowSoftInputMode="stateHidden">
+            android:name=".CreateNewAd">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->

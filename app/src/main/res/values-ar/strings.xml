@@ -102,7 +102,9 @@
     <string name="participation_type">نوع الاشتراك</string>
     <string name="choose_participation_type">اختر نوع الاشتراك</string>
     <string name="debug_participation_type_free">نوع الاشتراك   مجاني</string>
-    <string name="_2018_2019_fiveh_app">2018-2019 FiveH App</string>
-    <string name="fiveh_for_ads">FiveH for Ads</string>
+    <string name="_2018_2019_fiveh_app">تطبيق FiveH 2018–2019</string>
+    <string name="fiveh_for_ads">FiveH للإعلان</string>
+    <string name="read_more_label">قراءة المزيد</string>
+    <string name="read_less_label">  قراءة أقل</string>
 
 </resources>

@@ -14,7 +14,7 @@ public class FlowerViewModel extends AndroidViewModel{
     private LiveData<List<Flower>> mAllFlowers;
     private Repository mRepository;
 
-    FlowerViewModel(Application application) {
+    public FlowerViewModel(Application application) {
         super(application);
         mRepository = new Repository(application);
         mAllFlowers = mRepository.getAllFlowers();

@@ -135,5 +135,7 @@
     <string name="debug_explain_bundle_2" translatable="false">bundle cost = 500 points</string>
     <string name="_2018_2019_fiveh_app">2018-2019 FiveH App\nAll rights reserved</string>
     <string name="fiveh_for_ads">FiveH for Ads</string>
+    <string name="read_more_label">&#160;read more</string>
+    <string name="read_less_label">&#160;&#160;read less</string>
 
 </resources>

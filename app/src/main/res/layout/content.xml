@@ -5,6 +5,7 @@
     android:id="@+id/main_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context="com.example.asus.fiveh.MainActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -13,7 +14,7 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbar2"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -23,19 +24,17 @@
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swiperefreshlayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <!--android:paddingTop="?attr/actionBarSize"-->
         <android.support.v7.widget.RecyclerView
             android:id="@+id/main_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="1dp"
-            android:background="#ffe6e6"
             android:layoutAnimation="@anim/layout_animation"
-            android:paddingTop="?attr/actionBarSize"
-            android:scrollbars="none"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            android:scrollbars="none" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

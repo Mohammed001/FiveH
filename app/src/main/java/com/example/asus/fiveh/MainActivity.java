@@ -3,10 +3,8 @@ package com.example.asus.fiveh;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -16,7 +14,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -44,34 +42,90 @@ import static com.example.asus.fiveh.Intro.BEHAVE_KEY;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+
     FloatingActionButton fab;
     RecyclerView main_rv;
-    FlowersAdapter flowersAdapter;
     SwipeRefreshLayout swiperefreshlayout;
     NavigationView navigationView;
+    DrawerLayout drawer;
+    Toolbar toolbar;
+
+    FlowersAdapter flowersAdapter;
     private FlowerViewModel mFlowerViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.navigation);
-        initViewsWithListeners();
-
+        setContentView(R.layout.main);
+        toolbar = findViewById(R.id.toolbar2);
+        setSupportActionBar(toolbar);
+        findviews();
+        justFab();
+        justDrawer();
+        justRecyclerView();
+        swiperefreshlayout.setOnRefreshListener(getOnRefreshListener());
         mFlowerViewModel = ViewModelProviders.of(this).get(FlowerViewModel.class);
-
         mFlowerViewModel.getAllFlowers().observe(this, getObserver());
+    }
 
-        createFlowersRecyclerview();
+    private void justRecyclerView() {
+        flowersAdapter = new FlowersAdapter(this);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+//
+        main_rv.setLayoutManager(layoutManager);
+
+        main_rv.setAdapter(flowersAdapter);
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(main_rv.getContext(), layoutManager.getOrientation());
+        main_rv.addItemDecoration(itemDecoration);
+    }
+
+    private void justFab() {
+        if (ApplicationData.current_user.getUser_type().equals(ADVERTISER_WORD)) {
+            // todo: new method or what?
+            fab.show();
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getApplicationContext(), CreateNewAd.class);
+                    startActivity(intent);
+                }
+            });
+        }
+    }
+
+    private void justDrawer() {
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
+
+        LinearLayout linearLayout = navigationView.getHeaderView(0).findViewById(R.id.image_user_bundle);
+        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+    }
+
+    private void findviews() {
+        main_rv = findViewById(R.id.main_rv);
+        fab = findViewById(R.id.fab);
+        navigationView = findViewById(R.id.nav_view);
+        drawer = findViewById(R.id.drawer_layout);
+        swiperefreshlayout = findViewById(R.id.swiperefreshlayout);
     }
 
     @NonNull
     private Observer<List<Flower>> getObserver() {
-        return new Observer<List<Flower>>() {
-            @Override
-            public void onChanged(@Nullable final List<Flower> flowers) {
-                // Update the cached copy of the words in the adapter.
-                flowersAdapter.setFlowers(flowers);
-            }
+//        return new Observer<List<Flower>>() {
+//            @Override
+//            public void onChanged(@Nullable final List<Flower> flowers) {
+//                // Update the cached copy of the words in the adapter.
+//                flowersAdapter.setFlowers(flowers);
+//            }
+//        };
+        return flowers -> {
+            // Update the cached copy of the words in the adapter.
+            flowersAdapter.setFlowers(flowers);
         };
     }
 
@@ -99,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -121,59 +175,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportActionBar().setDisplayShowHomeEnabled(false); // Remove the icon
         }
         return true;
-    }
-
-    private void initViewsWithListeners() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        swiperefreshlayout = findViewById(R.id.swiperefreshlayout);
-        swiperefreshlayout.setOnRefreshListener(getOnRefreshListener());
-
-        fab = findViewById(R.id.fab);
-        onCreateDrawer(toolbar);
-
-        LinearLayout linearLayout = navigationView.getHeaderView(0).findViewById(R.id.image_user_bundle);
-        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-
-        if (ApplicationData.current_user.getUser_type().equals(ADVERTISER_WORD)) {
-            // todo: new method or what?
-            fab.show();
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(getApplicationContext(), CreateNewAd.class);
-                    startActivity(intent);
-                }
-            });
-        }
-    }
-
-    private void onCreateDrawer(Toolbar toolbar) {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-    }
-
-    private void createFlowersRecyclerview() {
-        main_rv = findViewById(R.id.main_rv);
-        flowersAdapter = new FlowersAdapter(this);
-
-        GridLayoutManager layoutManager;
-        if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            layoutManager = new GridLayoutManager(this, 1);
-        } else {
-            layoutManager = new GridLayoutManager(this, 2);
-        }
-        main_rv.setLayoutManager(layoutManager);
-
-        DividerItemDecoration itemDecoration = new DividerItemDecoration(main_rv.getContext(), layoutManager.getOrientation());
-        main_rv.addItemDecoration(itemDecoration);
-        main_rv.setAdapter(flowersAdapter);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -225,11 +226,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             });
         }
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 
 }
 
