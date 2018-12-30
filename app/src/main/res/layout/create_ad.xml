@@ -4,8 +4,7 @@
     android:id="@+id/create_ad_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusableInTouchMode="true"
-    android:padding="20dp"
+    android:padding="16dp"
     tools:context="com.example.asus.fiveh.CreateNewAd">
 
     <LinearLayout
@@ -25,8 +24,16 @@
             android:src="@drawable/add_ad_image" />
 
         <Space
-            android:layout_width="50dp"
-            android:layout_height="50dp" />
+            android:layout_width="@dimen/in_create_ad"
+            android:layout_height="@dimen/in_create_ad" />
+
+        <Space
+            android:layout_width="@dimen/in_create_ad"
+            android:layout_height="@dimen/in_create_ad" />
+
+        <Space
+            android:layout_width="@dimen/in_create_ad"
+            android:layout_height="@dimen/in_create_ad" />
 
         <!--نوع الاعلان-->
         <LinearLayout
@@ -50,8 +57,8 @@
         </LinearLayout>
 
         <Space
-            android:layout_width="@dimen/space_in_create_ad"
-            android:layout_height="@dimen/space_in_create_ad" />
+            android:layout_width="@dimen/in_create_ad"
+            android:layout_height="@dimen/in_create_ad" />
 
         <!--حزمة الاعلان-->
         <LinearLayout
@@ -70,20 +77,26 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLines="1"
-                android:onClick="launch_dialog2"
+                android:onClick="launch_dialog"
                 android:text="@string/choose_advertisement_bundle" />
 
         </LinearLayout>
 
         <Space
-            android:layout_width="@dimen/space_in_create_ad"
-            android:layout_height="@dimen/space_in_create_ad" />
+            android:layout_width="@dimen/in_create_ad"
+            android:layout_height="@dimen/in_create_ad" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.7dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@android:color/darker_gray" />
 
         <!--شرح حزمة الاعلان-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/space_in_create_ad"
+            android:layout_marginBottom="@dimen/in_create_ad"
             android:orientation="horizontal"
             android:visibility="gone">
 

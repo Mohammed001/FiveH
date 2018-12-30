@@ -12,17 +12,18 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:paddingStart="@dimen/my_profile"
+        android:paddingEnd="@dimen/my_profile">
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="25dp" />
+            android:layout_height="@dimen/my_profile" />
 
         <include layout="@layout/to_inflate_user_image" />
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="40dp" />
+            android:layout_height="@dimen/my_profile" />
 
         <!--address-->
         <LinearLayout
@@ -95,7 +96,7 @@
         </LinearLayout>
 
         <Space
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/my_profile"
             android:layout_height="@dimen/my_profile" />
 
         <!--age-->

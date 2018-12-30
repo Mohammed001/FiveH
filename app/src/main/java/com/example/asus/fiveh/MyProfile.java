@@ -1,5 +1,7 @@
 package com.example.asus.fiveh;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +14,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.example.asus.fiveh.utils.ImagePicker;
+
 public class MyProfile extends AppCompatActivity implements View.OnClickListener {
+
+    private static final int PICK_IMAGE_ID = 234; // the number doesn't matter
+    private static final String PIC = "pic";
+    ImageView imageView;
+    static Bitmap bitmap;
 
     EditText profile_name_value;
     Drawable et_drawable;
@@ -134,5 +143,31 @@ public class MyProfile extends AppCompatActivity implements View.OnClickListener
         // Add the text view to the parent layout
         phone_generator.addView(new_horizontal_phone);
     }
+
+    public void uploadNewImage(View view) {
+        Intent chooseImageIntent = ImagePicker.getPickImageIntent(this);
+        startActivityForResult(chooseImageIntent, PICK_IMAGE_ID);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case PICK_IMAGE_ID:
+                    bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
+                    // use the bitmap
+                    imageView.setImageBitmap(bitmap);
+//                    findViewById(R.id.myImageViewText).setVisibility(View.GONE);
+//                    findViewById(R.id.newmyImageViewText).setVisibility(View.VISIBLE);
+                    break;
+                default:
+                    super.onActivityResult(requestCode, resultCode, data);
+                    break;
+            }
+        }
+    }
+
+
 
 }

@@ -1,9 +1,7 @@
 package com.example.asus.fiveh;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,28 +27,23 @@ import com.example.asus.fiveh.loginproviders.TwitterLogin;
 import com.example.asus.fiveh.models.FiveHResponse;
 import com.example.asus.fiveh.models.User;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 
-import static com.example.asus.fiveh.ApplicationData.APP_PREFERENCES_FILE;
+import static com.example.asus.fiveh.ApplicationData.ADVERTISER_WORD;
+import static com.example.asus.fiveh.ApplicationData.SIGNUP_ACTIVITY_BEHAVE_LOGIN;
+import static com.example.asus.fiveh.ApplicationData.SIGNUP_ACTIVITY_BEHAVE_SIGNUP;
 import static com.example.asus.fiveh.ApplicationData.TAG;
-import static com.example.asus.fiveh.ApplicationData.USER_DATA_KEY;
-import static com.example.asus.fiveh.ApplicationData.USER_TYPE_KEY;
 import static com.example.asus.fiveh.ApplicationData.USER_WORD;
-import static com.example.asus.fiveh.Intro.BEHAVE_KEY;
-import static com.example.asus.fiveh.Intro.BEHAVE_LOGIN;
-import static com.example.asus.fiveh.Intro.BEHAVE_SIGNUP;
+import static com.example.asus.fiveh.ApplicationData.signup_activity_behaviour;
+import static com.example.asus.fiveh.ApplicationData.writeUserIntoSharedPreferences;
 import static com.example.asus.fiveh.loginproviders.GoogleLogin.RC_SIGN_IN;
 
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener, GoogleLogin.UPDATEui {
     static final String DEBUGEMAIL = "hazem@sadv.sa";
     static final String DEBUGPASSWORD = "12345";
-
-
-    private static String behaviour;
 
     String email;
     String password;
@@ -116,9 +109,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         googleLogin.googleOnCreate();
         twitterLogin.twitterOnCreate();
 
-        Intent intent = getIntent();
-        behaviour = intent.getStringExtra(BEHAVE_KEY);
-        if (behaviour != null && behaviour.equals(BEHAVE_LOGIN)) {
+        if (signup_activity_behaviour != null && signup_activity_behaviour.equals(SIGNUP_ACTIVITY_BEHAVE_LOGIN)) {
             link_login.setText(getString(R.string.no_account_yet_create_one_tv));
             retype_pass_layout.setVisibility(View.GONE);
             radio_group.setVisibility(View.GONE);
@@ -130,9 +121,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         btn_signup.setEnabled(true);
         RetrofitAPI service = new RetrofitClient().getAuthClient().create(RetrofitAPI.class);
         Call<FiveHResponse> call = null;
-        if (behaviour.equals(BEHAVE_LOGIN)) {
+        if (signup_activity_behaviour.equals(SIGNUP_ACTIVITY_BEHAVE_LOGIN)) {
             call = service.call_5H_login(email, password);
-        } else if (behaviour.equals(BEHAVE_SIGNUP)) {
+        } else if (signup_activity_behaviour.equals(SIGNUP_ACTIVITY_BEHAVE_SIGNUP)) {
             call = service.call_5H_signup(email, password);
         }
         if (call != null) {
@@ -160,6 +151,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         progressDialog.dismiss();
     }
 
+    // 1. if successful connection and user is allowed to go to main activity, then in the shared preferences there is just a user info json.
+
     private void connection_succeed(retrofit2.Response<FiveHResponse> server_response) {
         FiveHResponse my_FiveH_response = server_response.body();
         // it should be not null, but to handle un expected mistakes i will interest in it
@@ -172,29 +165,22 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             // result ok..
             User user = my_FiveH_response.getData();
             // it should be not null, but to handle un expected mistakes i will interest in it
-            if (user != null) {
-                // write it in sharedpreferences.
-                ApplicationData.current_user = user;
-                SharedPreferences sharedPref = getSharedPreferences(APP_PREFERENCES_FILE, Context.MODE_PRIVATE);
-                SharedPreferences.Editor prefsEditor = sharedPref.edit();
-                Gson gson = new Gson();
-                String user_data = gson.toJson(user);
-                prefsEditor.putString(USER_DATA_KEY, user_data);
-                String user_type = user.getUser_type();
-                // todo: user type in response is null!! what a demo.
-                user_type = user_type == null || user_type.equals("") ? USER_WORD : user_type;
-                progressDialog.dismiss();
-                prefsEditor.putString(USER_TYPE_KEY, user_type);
-                prefsEditor.apply();
-                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra(USER_TYPE_KEY, user_type);
-                startActivity(intent);
-                finish();
-
-            } else {
+            if (user == null
+                    || !user.getUser_type().equals(ADVERTISER_WORD)
+                    || !user.getUser_type().equals(USER_WORD)) {
                 Log.i(TAG, "onResponse: no DATA in json!");
+                return;
             }
+
+            // after this method: you will go to mainactivity with static {current_user} != null.
+            writeUserIntoSharedPreferences(this, user);
+
+            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+            progressDialog.dismiss();
+            startActivity(intent);
+            finish();
         } else {
             Log.i(TAG, "onResponse: no JSON!");
         }
@@ -332,7 +318,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 instagramLogin.doinstalogin();
                 break;
             case R.id.link_login:
-                if (behaviour.equals(BEHAVE_LOGIN)) {
+                if (signup_activity_behaviour.equals(SIGNUP_ACTIVITY_BEHAVE_LOGIN)) {
                     link_login.setText(getString(R.string.already_a_member_login_tv));
                     btn_signup.setText(getString(R.string.create_account_btn));
 
@@ -345,8 +331,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     radio_group.startAnimation(animation);
                     radio_group.setVisibility(View.VISIBLE);
 
-                    behaviour = BEHAVE_SIGNUP;
-                } else if (behaviour.equals(BEHAVE_SIGNUP)) {
+                    signup_activity_behaviour = SIGNUP_ACTIVITY_BEHAVE_SIGNUP;
+                } else if (signup_activity_behaviour.equals(SIGNUP_ACTIVITY_BEHAVE_SIGNUP)) {
 
                     link_login.setText(getString(R.string.no_account_yet_create_one_tv));
                     btn_signup.setText(getString(R.string.login_btn));
@@ -359,7 +345,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     retype_pass_layout.startAnimation(animation);
                     retype_pass_layout.setVisibility(View.GONE);
 
-                    behaviour = BEHAVE_LOGIN;
+                    signup_activity_behaviour = SIGNUP_ACTIVITY_BEHAVE_LOGIN;
                 }
                 break;
             case R.id.connectWithFbButton:

@@ -1,22 +1,19 @@
 package com.example.asus.fiveh;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.asus.fiveh.utils.ImagePicker;
@@ -29,36 +26,25 @@ public class CreateNewAd extends AppCompatActivity implements View.OnClickListen
     ImageView imageView;
     static Bitmap bitmap;
     EditText advertisement_text;
-//    Drawable d;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_ad);
         ApplicationData.displaybackarrow(this);
+
         imageView = findViewById(R.id.ad_image_in_rv_row_user_ad);
         advertisement_text = findViewById(R.id.ad_txt);
+
         advertisement_text.setOnClickListener(this);
 //        d = advertisement_text.getBackground();
         advertisement_text.setBackgroundResource(android.R.color.transparent);
         advertisement_text.setCursorVisible(false);
-        findViewById(R.id.create_ad_root).setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                advertisement_text.setCursorVisible(false);
-
-                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                if (imm != null) {
-                    imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-                }
-                return false;
-            }
-        });
 
 //        imageView.setImageResource(R.drawable.image_ad);
         /* todo: my solution to save the bitmap after rotating the screen
-        is to  make the {bitmap} variable static, but the community suggest to pass it like {byteArray} flower_data
-        in bundle
+        is to  make the {bitmap} variable static, but the community suggest to
+        pass it like {byteArray} flower_data in bundle
         */
         if (savedInstanceState != null) {
             if (savedInstanceState.getBoolean(PIC)) {
@@ -77,36 +63,6 @@ public class CreateNewAd extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-    public void setupUI(View view) {
-
-        // Set up touch listener for non-text box views to hide keyboard.
-        if (!(view instanceof EditText)) {
-            view.setOnTouchListener(new View.OnTouchListener() {
-                public boolean onTouch(View v, MotionEvent event) {
-                    hideSoftKeyboard(CreateNewAd.this);
-                    return false;
-                }
-            });
-        }
-
-        //If a layout container, iterate over children and seed recursion.
-        if (view instanceof ViewGroup) {
-            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
-                View innerView = ((ViewGroup) view).getChildAt(i);
-                setupUI(innerView);
-            }
-        }
-    }
-
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        if (inputMethodManager != null) {
-            inputMethodManager.hideSoftInputFromWindow(
-                    Objects.requireNonNull(activity.getCurrentFocus()).getWindowToken(), 0);
-        }
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -187,7 +143,15 @@ public class CreateNewAd extends AppCompatActivity implements View.OnClickListen
         };
     }
 
-    public void launch_dialog2(View view) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -198,7 +162,6 @@ public class CreateNewAd extends AppCompatActivity implements View.OnClickListen
                 advertisement_text.setCursorVisible(true);
                 break;
             case R.id.explain_more:
-
                 break;
 
         }

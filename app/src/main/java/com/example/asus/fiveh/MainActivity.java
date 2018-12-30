@@ -37,7 +37,7 @@ import retrofit2.Response;
 
 import static com.example.asus.fiveh.ApplicationData.ADVERTISER_WORD;
 import static com.example.asus.fiveh.ApplicationData.USER_WORD;
-import static com.example.asus.fiveh.Intro.BEHAVE_KEY;
+
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -207,7 +207,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 public void onResponse(@NonNull Call<FiveHResponse> call, @NonNull Response<FiveHResponse> response) {
                     if (response.body() != null) {
                         Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
-                        intent.putExtra(BEHAVE_KEY, ApplicationData.current_user.getUser_type());
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         finish();
                         startActivity(intent);
