@@ -1,14 +1,10 @@
 package com.example.asus.fiveh;
 
-import android.content.Context;
-import android.content.DialogInterface;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -16,21 +12,22 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.asus.fiveh.main_ad_adapter.MainAdAdapter;
-import com.example.asus.fiveh.models.Ad;
-import com.example.asus.fiveh.utils.Utils;
+import com.example.asus.fiveh.adapters.FlowersAdapter;
+import com.example.asus.fiveh.models.FiveHResponse;
+import com.example.asus.fiveh.models.Flower;
+import com.example.asus.fiveh.viewmodels.FlowerViewModel;
 
 import java.util.List;
 
@@ -38,210 +35,55 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.example.asus.fiveh.utils.Utils.ADVERTISER;
-import static com.example.asus.fiveh.utils.Utils.LOGINUSERNAME_KEY;
-import static com.example.asus.fiveh.utils.Utils.NOTLOGGEDIN;
-import static com.example.asus.fiveh.utils.Utils.NOT_MEMBER;
-import static com.example.asus.fiveh.utils.Utils.USER_TYPE;
+import static com.example.asus.fiveh.ApplicationData.ADVERTISER_WORD;
+import static com.example.asus.fiveh.ApplicationData.USER_WORD;
+
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+
     FloatingActionButton fab;
     RecyclerView main_rv;
-    MainAdAdapter adAdapter;
-    List<Ad> data = null;
     SwipeRefreshLayout swiperefreshlayout;
+    NavigationView navigationView;
+    DrawerLayout drawer;
+    Toolbar toolbar;
+
+    FlowersAdapter flowersAdapter;
+    private FlowerViewModel mFlowerViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-        setContentView(R.layout.navigation);
-        Utils.USER_TYPE = ADVERTISER;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        swiperefreshlayout = findViewById(R.id.swiperefreshlayout);
-        swiperefreshlayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                swiperefreshlayout.setRefreshing(false);
-                if (isOnline()) {
-                    doHTTP();
-                }
-            }
-        });
+        setContentView(R.layout.main);
+        toolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
-        fab = findViewById(R.id.fab);
-        if (isOnline()) {
-            doHTTP();
-        }
-        createDrawer(toolbar);
+        findviews();
+        justFab();
+        justDrawer();
+        justRecyclerView();
+        swiperefreshlayout.setOnRefreshListener(getOnRefreshListener());
+        mFlowerViewModel = ViewModelProviders.of(this).get(FlowerViewModel.class);
+        mFlowerViewModel.getAllFlowers().observe(this, getObserver());
     }
 
-    private void createDrawer(Toolbar toolbar) {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+    private void justRecyclerView() {
+        flowersAdapter = new FlowersAdapter(this);
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-    }
-
-    private void createRecyclerview() {
-        main_rv = findViewById(R.id.main_rv);
-        adAdapter = new MainAdAdapter(this, data);
-
-        GridLayoutManager layoutManager;
-        if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            layoutManager = new GridLayoutManager(this, 1);
-        } else {
-            layoutManager = new GridLayoutManager(this, 2);
-        }
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+//
         main_rv.setLayoutManager(layoutManager);
 
+        main_rv.setAdapter(flowersAdapter);
         DividerItemDecoration itemDecoration = new DividerItemDecoration(main_rv.getContext(), layoutManager.getOrientation());
         main_rv.addItemDecoration(itemDecoration);
-        main_rv.setAdapter(adAdapter);
     }
 
-    private void doHTTP() {
-        RetrofitAPI service = new RetrofitClient().getMainClient().create(RetrofitAPI.class);
-        Call<List<Ad>> call = service.listAds();
-        call.enqueue(new Callback<List<Ad>>() {
-            @Override
-            public void onResponse(Call<List<Ad>> call, Response<List<Ad>> response) {
-                if (response.isSuccessful()) {
-                    data = response.body();
-                    if (data != null) {
-                        Log.i(TAG, "onResponse: Number of Ads received: " + data.size());
-                        createRecyclerview();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Ad>> call, Throwable t) {
-                Log.i(TAG, "onFailure" + t.getMessage());
-                createRecyclerview();
-            }
-        });
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setHomeButtonEnabled(false);      // Disable the button
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false); // Remove the left caret
-            getSupportActionBar().setDisplayShowHomeEnabled(false); // Remove the icon
-        }
-        return true;
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-        Intent intent = null;
-
-        if (id == R.id.nav_my_profile) {
-            intent = new Intent(this, MyProfile.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intent);
-        } else if (id == R.id.nav_my_accounts) {
-            // Handle the camera action
-            if (USER_TYPE == ADVERTISER) {
-                intent = new Intent(this, MyActiveAds.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivity(intent);
-            } else if (USER_TYPE == Utils.GREED) {
-                intent = new Intent(this, MyMoney.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivity(intent);
-            }
-        } else if (id == R.id.nav_my_points) {
-            Snackbar.make(findViewById(R.id.main_root), "Not Implemented yet", Snackbar
-                    .LENGTH_SHORT).show();
-        } else if (id == R.id.nav_settings) {
-            Snackbar.make(findViewById(R.id.main_root), "Not Implemented yet", Snackbar
-                    .LENGTH_SHORT).show();
-        } else if (id == R.id.nav_about) {
-            build_about();
-        } else if (id == R.id.logout) {
-            RetrofitAPI service = new RetrofitClient().getAuthClient().create(RetrofitAPI.class);
-            service.call_5H_logout().enqueue(new Callback<com.example.asus.fiveh.models.Response>() {
-                @Override
-                public void onResponse(Call<com.example.asus.fiveh.models.Response> call, Response<com.example.asus.fiveh.models.Response> response) {
-                    if (response.body() != null) {
-                        Log.i(TAG, "onResponse: " + (response.body().getResult()));
-                        Log.i(TAG, "onResponse: " + response.body().getMsg());
-                    } else {
-                        Log.i(TAG, "onResponse: no JSON!");
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<com.example.asus.fiveh.models.Response> call, Throwable t) {
-                    Toast.makeText(MainActivity.this, "onFailure: " + TAG, Toast.LENGTH_SHORT).show();
-                }
-            });
-            finish();
-        }
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-    private void build_about() {
-        AlertDialog.Builder builder;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
-        } else {
-            builder = new AlertDialog.Builder(this);
-        }
-        builder.setTitle("حول")
-                .setMessage("تطبيق 5H للإعلان")
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // continue with delete
-                    }
-                })
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
-    }
-
-    protected void logout_actions() {
-        USER_TYPE = NOT_MEMBER;
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(LOGINUSERNAME_KEY, NOTLOGGEDIN);
-        editor.apply();
-        Intent intent;
-        intent = new Intent(this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        finish();
-        startActivity(intent);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (USER_TYPE == ADVERTISER) {
-            fab.setVisibility(View.VISIBLE);
+    private void justFab() {
+        if (ApplicationData.current_user.getUser_type().equals(ADVERTISER_WORD)) {
+            // todo: new method or what?
+            fab.show();
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -252,11 +94,141 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    protected boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        assert cm != null;
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        return netInfo != null && netInfo.isConnectedOrConnecting();
+    private void justDrawer() {
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
+
+        LinearLayout linearLayout = navigationView.getHeaderView(0).findViewById(R.id.image_user_bundle);
+        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
     }
+
+    private void findviews() {
+        main_rv = findViewById(R.id.main_rv);
+        fab = findViewById(R.id.fab);
+        navigationView = findViewById(R.id.nav_view);
+        drawer = findViewById(R.id.drawer_layout);
+        swiperefreshlayout = findViewById(R.id.swiperefreshlayout);
+    }
+
+    @NonNull
+    private Observer<List<Flower>> getObserver() {
+//        return new Observer<List<Flower>>() {
+//            @Override
+//            public void onChanged(@Nullable final List<Flower> flowers) {
+//                // Update the cached copy of the words in the adapter.
+//                flowersAdapter.setFlowers(flowers);
+//            }
+//        };
+        return flowers -> {
+            // Update the cached copy of the words in the adapter.
+            flowersAdapter.setFlowers(flowers);
+        };
+    }
+
+    private void goToAccountsOrArchive() {
+        Intent intent;
+        if (ApplicationData.current_user.getUser_type().equals(USER_WORD)) {
+            intent = new Intent(this, MyAccounts.class);
+            startActivity(intent);
+        } else if (ApplicationData.current_user.getUser_type().equals(ADVERTISER_WORD)) {
+            intent = new Intent(this, MyArchive.class);
+            startActivity(intent);
+        }
+    }
+
+    @NonNull
+    private SwipeRefreshLayout.OnRefreshListener getOnRefreshListener() {
+        return new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swiperefreshlayout.setRefreshing(false);
+                mFlowerViewModel.refreshAllFlowers();
+            }
+        };
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        if (ApplicationData.current_user.getUser_type().equals(ADVERTISER_WORD)) {
+            menu.findItem(R.id.nav_my_points).setVisible(false);
+            menu.findItem(R.id.nav_my_accounts).setTitle(R.string.my_archive);
+        }
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(false);      // Disable the button
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false); // Remove the left caret
+            getSupportActionBar().setDisplayShowHomeEnabled(false); // Remove the icon
+        }
+        return true;
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+        Intent intent;
+
+        if (id == R.id.nav_my_profile) {
+            intent = new Intent(this, MyProfile.class);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        } else if (id == R.id.nav_my_accounts) {
+            goToAccountsOrArchive();
+        } else if (id == R.id.nav_my_points) {
+            intent = new Intent(this, MyPoints.class);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        } else if (id == R.id.nav_settings) {
+            Snackbar.make(findViewById(R.id.main_root), "Not Implemented yet", Snackbar
+                    .LENGTH_SHORT).show();
+        } else if (id == R.id.nav_about) {
+            intent = new Intent(this, About.class);
+            startActivity(intent);
+        } else if (id == R.id.logout) {
+            RetrofitAPI service = new RetrofitClient().getAuthClient().create(RetrofitAPI.class);
+            service.call_5H_logout().enqueue(new Callback<FiveHResponse>() {
+                @Override
+                public void onResponse(@NonNull Call<FiveHResponse> call, @NonNull Response<FiveHResponse> response) {
+                    if (response.body() != null) {
+                        Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        finish();
+                        startActivity(intent);
+                        Log.i(TAG, "onResponse: " + (response.body().getResult()));
+                        Log.i(TAG, "onResponse: " + response.body().getMsg());
+                    } else {
+                        Log.i(TAG, "onResponse: no JSON!");
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<FiveHResponse> call, @NonNull Throwable t) {
+                    // todo
+                    Toast.makeText(null, "onFailure: " + TAG, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
 }
 

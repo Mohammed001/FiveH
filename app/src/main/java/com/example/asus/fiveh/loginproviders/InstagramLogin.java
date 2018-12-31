@@ -1,19 +1,12 @@
 package com.example.asus.fiveh.loginproviders;
 
-import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.asus.fiveh.R;
 import com.example.asus.fiveh.insta.InstagramApp;
 
@@ -71,38 +64,38 @@ public class InstagramLogin {
     }
 
     public void instaDisplayInfoDialogView() {
-        android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(
-                context);
-        alertDialog.setTitle("Profile Info");
-
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.profile_view, (FrameLayout) context.findViewById(R.id.root));
-        alertDialog.setView(view);
-        TextView tvName = view.findViewById(R.id.tvUserName);
-        TextView tvNoOfFollwers = view
-                .findViewById(R.id.tvNoOfFollowers);
-        TextView tvNoOfFollowing = view
-                .findViewById(R.id.tvNoOfFollowing);
-
-        ImageView ivProfile = view
-                .findViewById(R.id.ivProfileImage);
-
-        String url = userInfoHashmap.get(InstagramApp.TAG_PROFILE_PICTURE);
-        Glide.with(context).load(url).into(ivProfile);
-
-        String name = userInfoHashmap.get(InstagramApp.TAG_USERNAME);
-        tvName.setText(name == null ? "null" : name);
-        tvNoOfFollowing.setText(userInfoHashmap.get(InstagramApp.TAG_FOLLOWS));
-        tvNoOfFollwers.setText(userInfoHashmap
-                .get(InstagramApp.TAG_FOLLOWED_BY));
-        alertDialog.create().show();
+//        android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(
+//                context);
+//        alertDialog.setTitle("Profile Info");
+//
+//        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        View view = inflater.inflate(R.layout.temp_profile_view, (FrameLayout) context.findViewById(R.id.root));
+//        alertDialog.setView(view);
+//        TextView tvName = view.findViewById(R.id.tvUserName);
+//        TextView tvNoOfFollwers = view
+//                .findViewById(R.id.tvNoOfFollowers);
+//        TextView tvNoOfFollowing = view
+//                .findViewById(R.id.tvNoOfFollowing);
+//
+//        ImageView ivProfile = view
+//                .findViewById(R.id.ivProfileImage);
+//
+//        String url = userInfoHashmap.get(InstagramApp.TAG_PROFILE_PICTURE);
+//        Glide.with(context).load(url).into(ivProfile);
+//
+//        String name = userInfoHashmap.get(InstagramApp.TAG_USERNAME);
+//        tvName.setText(name == null ? "null" : name);
+//        tvNoOfFollowing.setText(userInfoHashmap.get(InstagramApp.TAG_FOLLOWS));
+//        tvNoOfFollwers.setText(userInfoHashmap
+//                .get(InstagramApp.TAG_FOLLOWED_BY));
+//        alertDialog.create().show();
     }
 
     public void doinstalogin() {
         mApp.authorize();
         String name = userInfoHashmap.get(InstagramApp.TAG_USERNAME);
         Snackbar.make(context.findViewById(R.id.root), "welcome: " + name, Snackbar.LENGTH_SHORT).show();
-        // todo: logout code is {mApp.resetAccessToken();}
+        // todo: logout_icon code is {mApp.resetAccessToken();}
     }
 
     public void instaOnCreate() {

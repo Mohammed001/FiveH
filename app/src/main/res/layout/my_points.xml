@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/space_in_my_points"
+        tools:context=".MyPoints">
+
+        <Space
+            android:layout_width="@dimen/space_in_my_points"
+            android:layout_height="@dimen/space_in_my_points" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/circular_gradient"
+                android:gravity="center"
+                android:text="@string/_2500_points"
+                android:textStyle="bold" />
+
+            <Space
+                android:layout_width="8dp"
+                android:layout_height="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:text="@string/debug_participation_type_free" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="@dimen/space_in_my_points"
+            android:layout_height="@dimen/space_in_my_points" />
+
+        <Space
+            android:layout_width="@dimen/space_in_my_points"
+            android:layout_height="@dimen/space_in_my_points" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:background="@drawable/boarder_rounded_corner5"
+                android:contentDescription="@string/debugtext"
+                android:src="@drawable/my_points_convert_points_to_cash" />
+
+            <Space
+                android:layout_width="25dp"
+                android:layout_height="16dp" />
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:background="@drawable/boarder_rounded_corner5"
+                android:contentDescription="@string/debugtext"
+                android:src="@drawable/my_points_donate_to_charities" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="@dimen/space_in_my_points"
+            android:layout_height="@dimen/space_in_my_points" />
+
+        <Space
+            android:layout_width="@dimen/space_in_my_points"
+            android:layout_height="@dimen/space_in_my_points" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray" />
+
+        <Space
+            android:layout_width="@dimen/space_in_my_points"
+            android:layout_height="@dimen/space_in_my_points" />
+
+        <Space
+            android:layout_width="@dimen/space_in_my_points"
+            android:layout_height="@dimen/space_in_my_points" />
+        <!-- Signup Button -->
+        <TextView
+            style="@style/Base.TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/increase_your_balance_btn" />
+
+        <Space
+            android:layout_width="@dimen/space_in_my_points"
+            android:layout_height="@dimen/space_in_my_points" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@string/explain_increase_your_points" />
+
+        <Space
+            android:layout_width="@dimen/space_in_my_points"
+            android:layout_height="@dimen/space_in_my_points" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/participation_type"
+                android:textColor="@android:color/holo_green_dark" />
+
+            <Space
+                android:layout_width="@dimen/space_in_my_points"
+                android:layout_height="@dimen/space_in_my_points" />
+
+            <TextView
+                android:id="@+id/my_points_choose_participation_type_alert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:background="@drawable/boarder_rounded_corner4"
+                android:padding="8dp"
+                android:text="@string/choose_participation_type" />
+
+        </LinearLayout>
+
+
+        <Space
+            android:layout_width="@dimen/space_in_my_points"
+            android:layout_height="@dimen/space_in_my_points" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/debug_explain_bundle" />
+
+        <Space
+            android:layout_width="4dp"
+            android:layout_height="4dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/debug_explain_bundle_2"
+            android:textColor="@android:color/holo_green_dark" />
+
+
+        <Space
+            android:layout_width="@dimen/space_in_my_points"
+            android:layout_height="@dimen/space_in_my_points" />
+        <Space
+            android:layout_width="@dimen/space_in_my_points"
+            android:layout_height="@dimen/space_in_my_points" />
+
+        <!-- Signup Button -->
+        <Button
+            style="@style/my_points_button_style"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/boarder_rounded_corner2"
+            android:gravity="center"
+            android:text="@string/participate_btn" />
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

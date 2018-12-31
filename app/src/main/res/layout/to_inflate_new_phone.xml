@@ -17,11 +17,12 @@
         tools:targetApi="o" />
 
     <ImageView
+        android:id="@+id/minus_icon_remove_phone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="0.5"
         android:contentDescription="@string/debugtext"
-        android:src="@drawable/remove_view" />
+        android:src="@drawable/remove_view_icon" />
 
 </LinearLayout>

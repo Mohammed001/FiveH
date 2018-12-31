@@ -23,6 +23,14 @@
         <item>فيسبوك</item>
         <item>تويتر</item>
         <item>انستغرام</item>
+        <item>لينكد ان</item>
+        <item>موقعنا</item>
+    </string-array>
+
+    <string-array name="options_when_choose_participation_type">
+        <item>فضي</item>
+        <item>ذهبي</item>
+        <item>ماسي</item>
     </string-array>
 
     <string-array name="options_when_signup">
@@ -71,5 +79,32 @@
     <string name="delete_label">حذف</string>
     <string name="stats_label">احصائيات</string>
     <string name="preview_label">معاينة</string>
+    <string name="active_accounts_in_my_accounts">تمت اضافة هذه الحسابات مسبقاً</string>
+    <string name="advertisment_type">نوع الاعلان</string>
+    <string name="choose_advertisment_type">اختر نوع الاعلان</string>
+    <string name="advertisement_bundle">حزمة الاعلان</string>
+    <string name="choose_advertisement_bundle">اختر حزمة الاعلان</string>
+    <string name="advertisement_text">نص الاعلان</string>
+    <string name="explain_more">توضيح الاعلان</string>
+
+    <!--من صفحة نقاطي-->
+    <string name="your_points">عدد النقاط</string>
+    <string name="increase_your_balance_btn">ضاعف رصيدك</string>
+    <string name="explain_increase_your_points">
+        بحسب الباقة التي تختاره, تتيح لك هذه الخدمة مضاعفة رصيدك على كل اعلان تتفاعل معه. مع العلم أنه لا يمكنك الاستفادة من هذه الميزة حتى يبلغ عدد نقاطك 2500 نقطة
+    </string>
+    <string name="start_over_btn">تجديد</string>
+    <string name="participate_btn">اشتراك</string>
+    <string name="convert_your_points_to_money_label">تحويل النقاط إلى كاش</string>
+    <string name="donate_to_charities">التبرع لجهات خيرية</string>
+    <string name="about_msg">تطبيق FiveH</string>
+    <string name="my_archive">أرشيف اعلاناتي</string>
+    <string name="participation_type">نوع الاشتراك</string>
+    <string name="choose_participation_type">اختر نوع الاشتراك</string>
+    <string name="debug_participation_type_free">نوع الاشتراك   مجاني</string>
+    <string name="_2018_2019_fiveh_app">تطبيق FiveH 2018–2019</string>
+    <string name="fiveh_for_ads">FiveH للإعلان</string>
+    <string name="read_more_label">قراءة المزيد</string>
+    <string name="read_less_label">  قراءة أقل</string>
 
 </resources>

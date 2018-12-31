@@ -1,8 +1,12 @@
 package com.example.asus.fiveh;
 
-import com.example.asus.fiveh.models.Ad;
-import com.example.asus.fiveh.models.Response;
+import android.arch.lifecycle.LiveData;
 
+import com.example.asus.fiveh.models.Ad;
+import com.example.asus.fiveh.models.Flower;
+import com.example.asus.fiveh.models.FiveHResponse;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -10,25 +14,24 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface RetrofitAPI {
+
     @GET("feeds/flowers.json")
-    Call<List<Ad>> listAds();
+    Call<ArrayList<Flower>> listFlowers();
 
-    // hazem@sadv.sa
-    @GET("connectToLinkedIn.php")
-    Call<Response> call_5H_signin(@Query("email") String user_name, @Query("pass") String password);
+    // _____________________ ((( start it )))) _____________________
 
-    @GET("logout.php")
-    Call<Response> call_5H_logout();
+    @GET("login.php")
+    Call<FiveHResponse> call_5H_login(@Query("email") String user_name, @Query("pass") String password);
 
     //    signup.php
     @GET("signup.php")
-    void call_5H_signup(@Query("connectToLinkedIn") String user_name,
-                                  @Query("pass") String password,
-                                  @Query("user_first_name") String firstn,
-                                  @Query("user_last_name") String lastn,
-                                  @Query("user_email") String email
-    );
+    Call<FiveHResponse> call_5H_signup(@Query("user_email") String email, @Query("pass") String password);
 
+    @GET("logout.php")
+    Call<FiveHResponse> call_5H_logout();
+
+    @GET("ads.php")
+    Call<List<Ad>> listAds(@Query("page") int page);
 
 }
 

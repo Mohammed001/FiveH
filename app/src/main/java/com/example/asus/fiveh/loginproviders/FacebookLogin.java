@@ -15,19 +15,15 @@ import java.util.Arrays;
 public class FacebookLogin {
     private AppCompatActivity context;
 
+    private CallbackManager callbackManager;
+
     public FacebookLogin(AppCompatActivity context) {
         this.context = context;
     }
 
-    private CallbackManager callbackManager;
-
-
     public void initfb() {
         callbackManager = CallbackManager.Factory.create();
-        // facebookLoginButton.setAuthType(AUTH_TYPE);
-        // If you are using in a fragment, call facebookLoginButton.setFragment(this);
 
-        // Callback registration
         LoginManager.getInstance().registerCallback(callbackManager, new
                 FacebookCallback<LoginResult>() {
                     @Override
@@ -50,11 +46,9 @@ public class FacebookLogin {
                 });
     }
 
-
     public void facebookInOnActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
-
 
     public void doFacebookLogin() {
         LoginManager.getInstance().logInWithReadPermissions(

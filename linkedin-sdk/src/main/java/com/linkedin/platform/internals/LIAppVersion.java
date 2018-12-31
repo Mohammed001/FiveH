@@ -18,7 +18,8 @@ public class LIAppVersion {
         PackageManager packageManager = ctx.getPackageManager();
         try {
             PackageInfo packageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
-            return packageInfo.versionCode >= BuildConfig.LI_APP_SUPPORTED_VER_CODE;
+//            return packageInfo.versionCode >= BuildConfig.LI_APP_SUPPORTED_VER_CODE;
+            return packageInfo.getLongVersionCode() >= BuildConfig.LI_APP_SUPPORTED_VER_CODE;
         } catch (PackageManager.NameNotFoundException e) {
         }
         return false;

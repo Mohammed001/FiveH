@@ -11,12 +11,12 @@
 
         <item
             android:id="@+id/nav_my_points"
-            android:icon="@drawable/my_points"
+            android:icon="@drawable/my_points_icon"
             android:title="@string/my_points" />
 
         <item
             android:id="@+id/nav_my_accounts"
-            android:icon="@drawable/my_accounts"
+            android:icon="@drawable/my_accounts_icon"
             android:title="@string/my_accounts" />
 
     </group>
@@ -25,7 +25,7 @@
         <menu>
             <item
                 android:id="@+id/nav_settings"
-                android:icon="@drawable/settings"
+                android:icon="@drawable/settings_icon"
                 android:title="@string/app_settings" />
             <item
                 android:id="@+id/nav_about"
@@ -34,7 +34,7 @@
 
             <item
                 android:id="@+id/logout"
-                android:icon="@drawable/logout"
+                android:icon="@drawable/logout_icon"
                 android:title="@string/log_out" />
         </menu>
     </item>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:background="@android:color/holo_blue_light"
+    tools:layout_gravity="center">
+
+    <LinearLayout
+        android:id="@+id/DRAWINGS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/line1"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="3"
+            android:background="#ffffff" />
+
+        <TextView
+            android:id="@+id/circle"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="0.6"
+            android:background="@drawable/sign_up_or_circle"
+            android:gravity="center"
+            android:text="@string/or_text_in_circle"
+            android:textColor="@android:color/white" />
+
+        <View
+            android:id="@+id/line2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="3"
+            android:background="#ffffff" />
+
+    </LinearLayout>
+
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="8dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <!--facebook login-->
+
+        <ImageView
+            android:id="@+id/connectWithFbButton"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@mipmap/facebook_icon"
+            android:gravity="center" />
+
+        <!--<com.facebook.login.widget.LoginButton-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:gravity="center"-->
+        <!--android:visibility="invisible" />-->
+
+
+        <Space
+            android:layout_width="@dimen/login_space"
+            android:layout_height="1dp" />
+
+        <!--google login-->
+
+        <ImageView
+            android:id="@+id/google_login_imgview"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@mipmap/google_icon"
+            android:contentDescription="@string/debugtext"
+            android:gravity="center" />
+
+        <Space
+            android:layout_width="@dimen/login_space"
+            android:layout_height="1dp" />
+
+        <!--twitter login-->
+        <FrameLayout
+            android:layout_width="25dp"
+            android:layout_height="25dp">
+
+            <ImageView
+                android:id="@+id/twitter_login"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@mipmap/twitter_icon"
+                android:gravity="center"
+                android:visibility="visible" />
+
+            <com.twitter.sdk.android.core.identity.TwitterLoginButton
+                android:id="@+id/twitter_login_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:foregroundGravity="center"
+                android:visibility="invisible" />
+
+        </FrameLayout>
+
+        <Space
+            android:layout_width="@dimen/login_space"
+            android:layout_height="1dp" />
+
+        <!--insta login-->
+        <ImageView
+            android:id="@+id/insta_login"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@mipmap/insta_icon"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+</LinearLayout>

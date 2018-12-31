@@ -36,9 +36,19 @@
 
     <string-array name="options_when_create_ad">
         <item>Facebook</item>
-        <item>Tweeter</item>
+        <item>Twitter</item>
         <item>Instagram</item>
+        <item>LinkedIn</item>
+        <item>Our website</item>
     </string-array>
+
+
+    <string-array name="options_when_choose_participation_type">
+        <item>Silver</item>
+        <item>Golden</item>
+        <item>Diamond</item>
+    </string-array>
+
 
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -100,5 +110,32 @@
     <string name="delete_label">delete</string>
     <string name="stats_label">stats</string>
     <string name="preview_label">preview</string>
+    <string name="active_accounts_in_my_accounts">These accounts have been added previously</string>
+    <string name="advertisment_type">Advertisment type</string>
+    <string name="choose_advertisment_type">choose advertisment type</string>
+    <string name="advertisement_bundle">Advertisement bundle</string>
+    <string name="choose_advertisement_bundle">choose advertisement bundle</string>
+    <string name="advertisement_text">Advertisement text</string>
+    <string name="explain_more">Explain more</string>
+    <string name="your_points">your points</string>
+    <string name="debug_2500_points" translatable="false">2500 points</string>
+    <string name="increase_your_balance_btn">increase your balance</string>
+    <string name="explain_increase_your_points">according to your bundle, this service lets you increase your balance when you interact with each Ad you see. notice that you cann\'t take advantage of this feature until you got 2500 points in your behalf.</string>
+    <string name="start_over_btn">start over</string>
+    <string name="participate_btn">participate</string>
+    <string name="convert_your_points_to_money_label">convert your points to money</string>
+    <string name="donate_to_charities">donate to charities</string>
+    <string name="about_msg">FiveH application</string>
+    <string name="my_archive">My Archive</string>
+    <string name="participation_type">participation type</string>
+    <string name="choose_participation_type">choose participation type</string>
+    <string name="_2500_points" translatable="false">2500\npoints</string>
+    <string name="debug_participation_type_free">participation type Free</string>
+    <string name="debug_explain_bundle" translatable="false">Your balance will double twice for each click on an AD.</string>
+    <string name="debug_explain_bundle_2" translatable="false">bundle cost = 500 points</string>
+    <string name="_2018_2019_fiveh_app">2018-2019 FiveH App\nAll rights reserved</string>
+    <string name="fiveh_for_ads">FiveH for Ads</string>
+    <string name="read_more_label">&#160;read more</string>
+    <string name="read_less_label">&#160;&#160;read less</string>
 
 </resources>
